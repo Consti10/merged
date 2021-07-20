@@ -24,3 +24,9 @@ rockdev/update.img
 
 #I use CLion ad ide, but do not add that stuff in github
 .idea/*
+
+# These directories have some stupid big files (Neural network-s) and we don't need them anyways
+external/rknn-toolkit/*
+external/rknpu/*
+external/tensorflow/*
+
