@@ -34,12 +34,29 @@ static void sigterm_handler(int sig) {
 }
 
 static uint64_t lastTimeStamp=0;
-static RK_U32 m_framerate;
 static int sockfd;
 static struct sockaddr_in address={};
 static const int UDP_PACKET_MAX_SIZE=65507;
 static const int M_PORT=5600;
 static char* M_IP="192.168.0.11";
+
+static uint8_t fakeNALU[4]={0,0,0,1};
+
+// this thread should run as close to realtime as possible
+static void __attribute__((unused)) setThreadParamsMaxRealtime(pthread_t target){
+    int policy=SCHED_FIFO;
+    struct sched_param param;
+    param.sched_priority=sched_get_priority_max(policy);
+    int result= pthread_setschedparam(target,policy,&param);
+    if(result!=0){
+        printf("WARNING cannot set ThreadParamsMaxRealtime\n");
+    }
+}
+
+static void __attribute__((unused)) setThreadParamsMaxRealtime2(){
+    setThreadParamsMaxRealtime(pthread_self());
+}
+
 
 static uint64_t getTimeMs(){
     struct timeval time;
@@ -70,6 +87,16 @@ static void createSocket(){
 static void __attribute__((unused)) mySendTo(void* data,int data_length){
     if(data_length>UDP_PACKET_MAX_SIZE){
         printf("Data size exceeds UDP packet size\n");
+        // if the data size exceeds the size of one UDP packet, just chunck it - note though that this means
+        // that one udp frame now might not contain a whole NALU, but only parts of it. RTP would be better.
+        int remaining=data_length;
+        int offset=0;
+        while(remaining>0){
+        	int chunckSize=remaining > UDP_PACKET_MAX_SIZE ? UDP_PACKET_MAX_SIZE : remaining;
+        	mySendTo(&((uint8_t*)data)[offset],chunckSize);
+        	remaining-=chunckSize;
+        	offset+=chunckSize;
+        }
         return;
     }
     int result= sendto(sockfd, data, data_length, 0, (struct sockaddr *) &(address),
@@ -77,8 +104,16 @@ static void __attribute__((unused)) mySendTo(void* data,int data_length){
     if(result<0){
         printf("Cannot send data\n");
     }else{
-        printf("Succesfully sent data\n");
+        //printf("Successfully sent data\n");
     }
+}
+
+
+
+
+// send a "empty NALU" to decrease latency (obviosly this works, but we want RTP instead)
+static void __attribute__((unused)) sendFakeNALU(){
+    mySendTo(fakeNALU,sizeof(fakeNALU));
 }
 
 
@@ -97,8 +132,10 @@ void video_packet_cb(MEDIA_BUFFER mb) {
     printf("Get Video Encoded packet(%s):ptr:%p, fd:%d, size:%zu, mode:%d\n",
            nalu_type, RK_MPI_MB_GetPtr(mb), RK_MPI_MB_GetFD(mb),
            RK_MPI_MB_GetSize(mb), RK_MPI_MB_GetModeID(mb));
-    // send out data via udp (raw)
+    // send out NALU data via udp (raw)
     mySendTo( RK_MPI_MB_GetPtr(mb),RK_MPI_MB_GetSize(mb));
+    // send a fake nalu to reduce latency (next frame to determine end of prev. frame issue).
+    sendFakeNALU();
 
     //Consti10: print time to check for fps
     uint64_t ts=getTimeMs();
@@ -156,11 +193,13 @@ static void print_usage(const RK_CHAR *name) {
 }
 
 int main(int argc, char *argv[]) {
+    // I think this also affects child processes, but not sure - doesn't make a difference 
+    // on this system though.
+    //setThreadParamsMaxRealtime2();
     RK_U32 u32Width = 1920;
     RK_U32 u32Height = 1080;
     RK_U32 encode_type = 0;
-    //RK_U32  __attribute__((unused)) m_framerate = 30;
-    m_framerate=30;
+    RK_U32 m_framerate=30;
     RK_CHAR *device_name = "rkispp_m_bypass";
     RK_CHAR *iq_file_dir = NULL;
     RK_S32 s32CamId = 0;
@@ -193,7 +232,6 @@ int main(int argc, char *argv[]) {
                 device_name = optarg;
                 break;
             case 'f':
-                //printf("framerate %d\n",atoi(optarg));
                 m_framerate=atoi(optarg);
                 break;
             case 'i':
@@ -236,7 +274,7 @@ int main(int argc, char *argv[]) {
     RK_MPI_SYS_Init();
     VI_CHN_ATTR_S vi_chn_attr;
     vi_chn_attr.pcVideoNode = device_name;
-    vi_chn_attr.u32BufCnt = 4; // should be >= 4
+    vi_chn_attr.u32BufCnt = 6; // should be >= 4 | Consti10: was 4 by default
     vi_chn_attr.u32Width = u32Width;
     vi_chn_attr.u32Height = u32Height;
     vi_chn_attr.enPixFmt = m_image_type;
@@ -269,8 +307,14 @@ int main(int argc, char *argv[]) {
     venc_chn_attr.stVencAttr.u32VirWidth = u32Width;
     venc_chn_attr.stVencAttr.u32VirHeight = u32Height;
     venc_chn_attr.stVencAttr.u32Profile = 77;
-    venc_chn_attr.stRcAttr.stH264Cbr.u32Gop = m_framerate;
-    venc_chn_attr.stRcAttr.stH264Cbr.u32BitRate = 1920 * 1080 * 30 / 14;
+    // Consti10: if we use 1 as GOP, we obviously increase bit rate a lot, but each frame can be decoded independently.
+    // however, we probably want to make this user-configurable later. For latency testing though it is nice to have it at 1,
+    // since it makes everything more consistently
+    venc_chn_attr.stRcAttr.stH264Cbr.u32Gop = 1;
+    //venc_chn_attr.stRcAttr.stH264Cbr.u32BitRate = 1920 * 1080 * 30 / 14;
+    //1920 * 1080 * 30 / 14 == 4443428.57143 (4.4 MBit/s)
+    // use a fixed X MBit/s as bit rate  
+    venc_chn_attr.stRcAttr.stH264Cbr.u32BitRate = 5*1000*1000;
     venc_chn_attr.stRcAttr.stH264Cbr.fr32DstFrameRateDen = 0;
     venc_chn_attr.stRcAttr.stH264Cbr.fr32DstFrameRateNum = m_framerate;
     venc_chn_attr.stRcAttr.stH264Cbr.u32SrcFrameRateDen = 0;
