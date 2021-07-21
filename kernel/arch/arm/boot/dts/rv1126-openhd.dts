@@ -461,7 +461,8 @@
 };
 
 
-/* isp cma buffer don't fiddle with it, dual camera(1920 * 1080) need 92M buffer */
+// isp cma buffer don't fiddle with it, dual camera(1920 * 1080) need 92M buffer
+// consti10: I am not sure if you need this one, but never tested removing it. Make sure here is enough though.
 &isp_reserved {
 	//size = <0x5c00000>;
 	size = <0xb800000>;
