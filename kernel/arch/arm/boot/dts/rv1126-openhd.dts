@@ -327,15 +327,12 @@
 		port@0 {
 			csi_dphy1_input: endpoint@1 {
 				remote-endpoint = <&ucam_out1>;
-				data-lanes = <1 2>;//sure
-				//data-lanes = <1 2 3 4>;
+				data-lanes = <1 2>;
 			};
 		};
 		port@1 {
 			csi_dphy1_output: endpoint@0 {
 				remote-endpoint = <&isp_virt1>;
-				data-lanes = <1 2>;//sure
-				//data-lanes = <1 2 3 4>;
 			};
 		};
 	};
