@@ -303,8 +303,7 @@
 			mipi_in_ucam0: endpoint@1 {
 				reg = <1>;
 				remote-endpoint = <&ucam_out0>;
-				data-lanes = <1 2>;
-			//	data-lanes = <1 2 3 4>;//sure
+				data-lanes = <1 2 3 4>;
 			};
 		};
 		port@1 {
@@ -315,8 +314,6 @@
 			csidphy0_out: endpoint@0 {
 				reg = <0>;
 				remote-endpoint = <&mipi_csi2_input>;
-				data-lanes = <1 2>;//sure
-				//data-lanes = <1 2 3 4>;
 			};
 		};
 	};
@@ -324,7 +321,7 @@
 
 
 
-&csi_dphy1 {
+/*&csi_dphy1 {
 	status = "okay";
 	ports {
 		port@0 {
@@ -342,7 +339,7 @@
 			};
 		};
 	};
-};
+};*/
 
 
 
@@ -398,7 +395,7 @@
 	};
 };
 
-/*
+
 &i2c1 {
         status = "okay";
         clock-frequency = <400000>;
@@ -411,10 +408,10 @@
                    power-domains = <&power RV1126_PD_VI>;
                    pinctrl-names = "rockchip,camera_default";
                    pinctrl-0 = <&mipicsi_clk0>;
-//                   avdd-supply = <&vcc3v3_sys>;
-//                   dovdd-supply = <&vcc_1v8>;
-//                   dvdd-supply = <&vcc_dvdd>;
-//                   reset-gpios = <&gpio1 RK_PD5 GPIO_ACTIVE_LOW>;
+                   avdd-supply = <&vcc3v3_sys>;
+                   dovdd-supply = <&vcc_1v8>;
+                   dvdd-supply = <&vcc_dvdd>;
+                   reset-gpios = <&gpio1 RK_PD5 GPIO_ACTIVE_LOW>;
                    rockchip,camera-module-index = <0>;
                    rockchip,camera-module-facing = "front";
                    rockchip,camera-module-name = "YT10092";
@@ -428,7 +425,7 @@
                    };
         };
 	
-	        gc2053_2: gc2053_2@3f {
+	        /*gc2053_2: gc2053_2@3f {
                 compatible = "galaxycore,gc2053";
                 reg = <0x3f>;
                 clocks = <&cru CLK_MIPICSI_OUT>;
@@ -451,69 +448,8 @@
                                 data-lanes = <1 2>;
                         };
                 };
-        };
+        };*/
 
-
-};
-*/
-
-
-&i2c1 {
-	status = "okay";
-	clock-frequency = <400000>;
-
-
-	gc2053_2: gc2053_2@3f {
-		compatible = "galaxycore,gc2053";
-		reg = <0x3f>;
-		clocks = <&cru CLK_MIPICSI_OUT>;
-		clock-names = "xvclk";
-		
-		power-domains = <&power RV1126_PD_VI>;
-		pinctrl-names = "rockchip,camera_default";
-		pinctrl-0 = <&mipicsi_clk1>;
-
-//		pwd-gpios = <&gpio3 RK_PA4 GPIO_ACTIVE_HIGH>;
-//		reset-gpios = <&gpio2 RK_PA0 GPIO_ACTIVE_LOW>;
-  		rockchip,camera-module-index = <1>;
-  		rockchip,camera-module-facing = "front";
-  		rockchip,camera-module-name = "CMK-OT1726-PG1";
-  		rockchip,camera-module-lens-name = "29IR-2MP-F25";
-//		ir-cut = <&cam_ircut0>;
-		port {
-			ucam_out1: endpoint {
-				remote-endpoint = <&csi_dphy1_input>;
-				data-lanes = <1 2>;
-			};
-		};
-	};
-	
-	gc2053: gc2053@37 {
-		compatible = "galaxycore,gc2053";
-		reg = <0x37>;
-
-		clocks = <&cru CLK_MIPICSI_OUT>;
-		clock-names = "xvclk";
-
-		power-domains = <&power RV1126_PD_VI>;
-		pinctrl-names = "rockchip,camera_default";
-		pinctrl-0 = <&mipicsi_clk0>;
-//		power-gpios = <&gpio3 RK_PA6 GPIO_ACTIVE_HIGH>;
-//		pwdn-gpios = <&gpio1 RK_PD4 GPIO_ACTIVE_LOW>;
-//		reset-gpios = <&gpio1 RK_PD5 GPIO_ACTIVE_LOW>;
-
-		rockchip,camera-module-index = <0>;
-		rockchip,camera-module-facing = "front";
-		rockchip,camera-module-name = "YT-RV1109-2-V1";
-		rockchip,camera-module-lens-name = "40IR-2MP-F20";
-		port {
-			ucam_out0: endpoint {
-				remote-endpoint = <&mipi_in_ucam0>;
-				data-lanes = <1 2>;
-			};
-		};
-	};
-	
 
 };
 
@@ -530,8 +466,8 @@
 
 /* isp cma buffer don't fiddle with it, dual camera(1920 * 1080) need 92M buffer */
 &isp_reserved {
-	size = <0x5c00000>;
-	//size = <0xb800000>;
+	//size = <0x5c00000>;
+	size = <0xb800000>;
 };
 
 
@@ -601,8 +537,7 @@
 			mipi_csi2_input: endpoint@1 {
 				reg = <1>;
 				remote-endpoint = <&csidphy0_out>;
-				data-lanes = <1 2>;//sure
-				//data-lanes = <1 2 3 4>;
+				data-lanes = <1 2 3 4>;
 			};
 		};
 
@@ -614,8 +549,7 @@
 			mipi_csi2_output: endpoint@0 {
 				reg = <0>;
 				remote-endpoint = <&cif_mipi_in>;
-				data-lanes = <1 2>;//sure
-				//data-lanes = <1 2 3 4>;
+				data-lanes = <1 2 3 4>;
 			};
 		};
 	};
@@ -724,10 +658,10 @@
 	status = "okay";
 	port {
 		/* MIPI CSI-2 endpoint */
+		// Consti10: I think here ends this crap ?
 		cif_mipi_in: endpoint {
 			remote-endpoint = <&mipi_csi2_output>;
-			data-lanes = <1 2>;//sure
-			//data-lanes = <1 2 3 4>;
+			data-lanes = <1 2 3 4>;
 		};
 	};
 };
@@ -739,8 +673,7 @@
 		/* MIPI CSI-2 endpoint */
 		mipi_lvds_sditf: endpoint {
 			remote-endpoint = <&isp_in>;
-			data-lanes = <1 2>;//sure
-			//data-lanes = <1 2 3 4>;
+			data-lanes = <1 2 3 4>;
 		};
 	};
 };
@@ -763,7 +696,7 @@
 	};
 };
 
-&rkisp_vir1 {
+/*&rkisp_vir1 {
 	status = "okay";
 	ports {
 		port@0 {
@@ -772,7 +705,7 @@
 			};
 		};
 	};
-};
+};*/
 
 
 
@@ -780,12 +713,12 @@
 	status = "okay";
 };
 
-&rkispp {
+/*&rkispp {
 	status = "okay";
-	/* the max input w h and fps of mulit sensor */
-	max-input = <1920 1080 30>;
-	//max-input = <3840 2160 30>;
-};
+	//the max input w h and fps of mulit sensor - not sure why they write that here
+	//max-input = <1920 1080 30>;
+	max-input = <3840 2160 30>;
+};*/
 
 
 
