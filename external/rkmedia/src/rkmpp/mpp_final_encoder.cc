@@ -203,10 +203,16 @@ bool MPPMJPEGConfig::InitConfig(MPPEncoder &mpp_enc, MediaConfig &cfg) {
     img_info = cfg.img_cfg.image_info;
 
     // Encoder param check.
-    ENCODER_CFG_CHECK(vid_cfg.frame_rate, 1, 60, ENCODER_CFG_INVALID, "fpsNum");
+    /*ENCODER_CFG_CHECK(vid_cfg.frame_rate, 1, 60, ENCODER_CFG_INVALID, "fpsNum");
     ENCODER_CFG_CHECK(vid_cfg.frame_rate_den, 1, 16, 1, "fpsDen");
     ENCODER_CFG_CHECK(vid_cfg.frame_in_rate, 1, 60, ENCODER_CFG_INVALID,
                       "fpsInNum");
+    ENCODER_CFG_CHECK(vid_cfg.frame_in_rate_den, 1, 16, 1, "fpsInDen");*/
+    //Consti10: rockchip (artificially) limits to 60 fps
+    ENCODER_CFG_CHECK(vid_cfg.frame_rate, 1, 60*4, ENCODER_CFG_INVALID, "fpsNum");
+    ENCODER_CFG_CHECK(vid_cfg.frame_rate_den, 1, 16, 1, "fpsDen");
+    ENCODER_CFG_CHECK(vid_cfg.frame_in_rate, 1, 60*4, ENCODER_CFG_INVALID,
+                        "fpsInNum");
     ENCODER_CFG_CHECK(vid_cfg.frame_in_rate_den, 1, 16, 1, "fpsInDen");
 
     if (!vid_cfg.rc_mode) {
@@ -642,11 +648,18 @@ bool MPPCommonConfig::InitConfig(MPPEncoder &mpp_enc, MediaConfig &cfg) {
   }
 
   // Encoder param check.
-  ENCODER_CFG_CHECK(vconfig.frame_rate, 1, 60, ENCODER_CFG_INVALID, "fpsNum");
+  /*ENCODER_CFG_CHECK(vconfig.frame_rate, 1, 60, ENCODER_CFG_INVALID, "fpsNum");
   ENCODER_CFG_CHECK(vconfig.frame_rate_den, 1, 16, 1, "fpsDen");
   ENCODER_CFG_CHECK(vconfig.frame_in_rate, 1, 60, ENCODER_CFG_INVALID,
                     "fpsInNum");
-  ENCODER_CFG_CHECK(vconfig.frame_in_rate_den, 1, 16, 1, "fpsInDen");
+  ENCODER_CFG_CHECK(vconfig.frame_in_rate_den, 1, 16, 1, "fpsInDen");*/
+  //Consti10: rockchip (artificially) limits to 60 fps
+  ENCODER_CFG_CHECK(vid_cfg.frame_rate, 1, 60*4, ENCODER_CFG_INVALID, "fpsNum");
+  ENCODER_CFG_CHECK(vid_cfg.frame_rate_den, 1, 16, 1, "fpsDen");
+  ENCODER_CFG_CHECK(vid_cfg.frame_in_rate, 1, 60*4, ENCODER_CFG_INVALID,
+                      "fpsInNum");
+  ENCODER_CFG_CHECK(vid_cfg.frame_in_rate_den, 1, 16, 1, "fpsInDen");
+
   ENCODER_CFG_CHECK(vconfig.gop_size, 1, 3000,
                     (vconfig.frame_rate > 10) ? vconfig.frame_rate : 30,
                     "gopSize");
