@@ -1,0 +1,7 @@
+taken rambazamba
+
+opened build.sh and uncommented the crap in line 778
+
+removed buildroot/build directory
+
+replaced it fully with A201 sdk -> buildroot/build directory
