@@ -39,6 +39,8 @@ static struct sockaddr_in address={};
 static const int UDP_PACKET_MAX_SIZE=65507;
 static const int M_PORT=5600;
 static char* M_IP="192.168.0.11";
+static uint64_t frameDeltaAvgSum=0;
+static uint64_t frameDeltaAvgCount=0;
 
 static uint8_t fakeNALU[4]={0,0,0,1};
 
@@ -68,8 +70,8 @@ static uint64_t getTimeMs(){
 static uint64_t __attribute__((unused)) getTimeUs(){
     struct timeval time;
     gettimeofday(&time, NULL);
-    uint64_t millis = (time.tv_sec * ((uint64_t)1000*1000)) + ((uint64_t)time.tv_usec);
-    return millis;
+    uint64_t micros = (time.tv_sec * ((uint64_t)1000*1000)) + ((uint64_t)time.tv_usec);
+    return micros;
 }
 
 
@@ -142,6 +144,14 @@ void video_packet_cb(MEDIA_BUFFER mb) {
     uint64_t delta=ts-lastTimeStamp;
     uint64_t buffer_ts=RK_MPI_MB_GetTimestamp(mb);
     //uint64_t mb_latency=ts-(buffer_ts/1000);
+    frameDeltaAvgSum+=delta;
+    frameDeltaAvgCount++;
+    if(frameDeltaAvgCount>100){
+        float avgFrameDelta=(float)((double)frameDeltaAvgSum / (double)frameDeltaAvgCount);
+        printf("Avg of frame delta: %f\n",avgFrameDelta);
+        frameDeltaAvgSum=0;
+        frameDeltaAvgCount=0;
+    }
     lastTimeStamp=ts;
     printf("Current time %" PRIu64 "(ms), delta %" PRIu64 "(ms) MB ts:%" PRIu64 "\n",ts,delta,buffer_ts);
     RK_MPI_MB_TsNodeDump(mb);
@@ -291,6 +301,8 @@ int main(int argc, char *argv[]) {
         case 0:
             venc_chn_attr.stVencAttr.enType = RK_CODEC_TYPE_H264;
             venc_chn_attr.stRcAttr.enRcMode = VENC_RC_MODE_H264CBR;
+            // Consti10: isn't it best to manually set the level ?!
+            venc_chn_attr.stVencAttr.stAttrH264e.u32Level = 51;
             break;
         case 1:
             venc_chn_attr.stVencAttr.enType = RK_CODEC_TYPE_H265;
@@ -306,7 +318,9 @@ int main(int argc, char *argv[]) {
     venc_chn_attr.stVencAttr.u32PicHeight = u32Height;
     venc_chn_attr.stVencAttr.u32VirWidth = u32Width;
     venc_chn_attr.stVencAttr.u32VirHeight = u32Height;
-    venc_chn_attr.stVencAttr.u32Profile = 77;
+    // Consti10: use baseline instead of main ?
+    //venc_chn_attr.stVencAttr.u32Profile = 77;
+    venc_chn_attr.stVencAttr.u32Profile = 66;
     // Consti10: if we use 1 as GOP, we obviously increase bit rate a lot, but each frame can be decoded independently.
     // however, we probably want to make this user-configurable later. For latency testing though it is nice to have it at 1,
     // since it makes everything more consistently
