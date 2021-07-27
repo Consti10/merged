@@ -1,0 +1,10 @@
+export QTDIR=/usr/lib/
+export LD_LIBRARY_PATH=/lib:$QTDIR:$LD_LIBRARY_PATH
+export QT_QWS_FONTDIR=$QTDIR/fonts/
+#export QWS_DISPLAY=LinuxFb:/dev/fb0
+#export QWS_SIZE=800x480
+export POINTERCAL_FILE=/etc/pointercal
+export QWS_DISPLAY="LinuxFb:mmWidth80:mmHeight160:0"
+export QT_PLUGIN_PATH=$QTDIR/plugins/
+export QWS_MOUSE_PROTO=Tslib:/dev/input/event0
+export PATH=$QTDIR:$PATH

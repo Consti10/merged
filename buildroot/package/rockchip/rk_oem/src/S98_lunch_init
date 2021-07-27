@@ -1,0 +1,48 @@
+#!/bin/sh
+#
+# Start/stop aybering app
+#
+source /etc/profile.d/RkEnv.sh
+
+
+SRS=/oem/usr/bin/srs
+JSON_TOOL=/oem/usr/bin/jsonparse
+
+case "$1" in
+  start)
+
+	echo "Starting srs and aybering app..."
+#    v4l2-ctl -d /dev/v4l-subdev6 --set-ctrl "band_stop_filter=0"
+
+	dhcp=$($JSON_TOOL /network/dhcp int)
+	if [ $dhcp -eq 0 ]; then
+		ip=`$JSON_TOOL /network/ip string`
+		netmask=`$JSON_TOOL /network/netmask string`
+		gatewayip=`$JSON_TOOL /network/gatewayip string`
+		dns1=`$JSON_TOOL /network/dns1 string`
+		echo "ip=$ip netmask=$netmask"
+		echo "gatewayip=$gatewayip dns1=$dns1"
+		ifconfig eth0 $ip $netmask
+		echo "nameserver $dns1" > /tmp/resolv.conf
+		route add default gw $gatewayip
+	else
+		echo "we run in dhcp mode"
+		route add default gw $gatewayip
+	fi
+	sleep 1
+	/oem/usr/bin/camera &
+	;;
+  stop)
+	echo "Stopping srs and aybering program..."
+	#start-stop-daemon -K -x "$NGINX" -p "$PIDFILE" -o
+	;;
+
+  restart)
+	"$0" stop
+	sleep 1 # Prevent race condition: ensure nginx stops before start.
+	"$0" start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart|reload|force-reload}"
+	exit 1
+esac

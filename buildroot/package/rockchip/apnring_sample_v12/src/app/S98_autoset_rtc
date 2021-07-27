@@ -1,0 +1,9 @@
+#!/bin/sh
+insmod /ko/rtc-bm8563.ko
+insmod /ko/8188eu.ko
+insmod /ko/qmi_wwan_q.ko
+hwclock -s
+/app/mipi_4lane_800x480.sh
+mv /app/gc2053* /oem/etc/iqfiles/
+mv /app/imx*  /oem/etc/iqfiles/
+mv /app/S98_lunch_init  /etc/init.d/

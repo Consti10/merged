@@ -1,0 +1,4 @@
+config BR2_PACKAGE_APNRING_SAMPLE_V12
+        bool  "apnring sample v12"
+        help
+		rv1126 qt_port rtc 4G demo support

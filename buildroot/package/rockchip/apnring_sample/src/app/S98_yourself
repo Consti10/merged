@@ -1,0 +1,8 @@
+#!/bin/sh
+insmod /ko/rtc-bm8563.ko
+hwclock -s
+insmod /ko/icn6211.ko
+mv /app/gc2*   /oem/etc/iqfiles/
+mv /app/imx*  /oem/etc/iqfiles/
+#/app/mipi_4lane_800x480.sh
+
