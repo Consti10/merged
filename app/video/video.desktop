@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=video
+Name[zh_CN]=视频
+Exec=/usr/bin/videoPlayer
+Icon=/usr/share/icon/icon_video.png
+Type=Application
