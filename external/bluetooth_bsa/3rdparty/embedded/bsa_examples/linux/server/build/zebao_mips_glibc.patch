@@ -1,0 +1,148 @@
+diff --git a/brcm/bsa/common/bsa_version.c b/brcm/bsa/common/bsa_version.c
+index 31f3915d..64b0f926 100644
+--- a/brcm/bsa/common/bsa_version.c
++++ b/brcm/bsa/common/bsa_version.c
+@@ -11,5 +11,5 @@
+ 
+ #include "bt_types.h"
+ 
+-const UINT8 bsa_version_string[] = "BSA0107_05.01.00";
+-const UINT8 bsa_version_info_string[] = "";
++const UINT8 bsa_version_string[] = "BSA0107_05.01.00_ZeBao_mips_glibc-00";
++const UINT8 bsa_version_info_string[] = "ZeBao mips glibc 00";
+diff --git a/bsa_examples/linux/app_common/build/make.common b/bsa_examples/linux/app_common/build/make.common
+index 92cf6ac3..121afe79 100755
+--- a/bsa_examples/linux/app_common/build/make.common
++++ b/bsa_examples/linux/app_common/build/make.common
+@@ -47,6 +47,9 @@ CD         := cd
+ TAR        := tar
+ AWK        := awk
+ SORT       := sort
++AR         := ar
++STRIP      := strip
++RANLIB     := ranlib
+ 
+ #
+ # Compiler configuration
+@@ -58,35 +61,49 @@ FORTIFY ?= TRUE
+ # ------------------    Executables   ----------------------
+ #
+ ifeq ($(CPU), mips)
++  MIPS_TOOLCHAIN_PATH = ~/Toolchains/ZeBao/mips-gcc540-glibc222-64bit-r3.3.0/
++  MIPSGCC ?= $(MIPS_TOOLCHAIN_PATH)/bin/mips-linux-gnu-gcc
+ 
+   # priority is given to the environment setting MIPSGCC and MIPSGCCLIBPATH
+   ifdef MIPSGCC
+     CC := $(MIPSGCC)
+     LINK := $(MIPSGCC)
++    AR     = $(MIPS_TOOLCHAIN_PATH)/bin/mips-linux-gnu-ar
++    STRIP  = $(MIPS_TOOLCHAIN_PATH)/bin/mips-linux-gnu-strip
++    RANLIB = $(MIPS_TOOLCHAIN_PATH)/bin/mips-linux-gnu-ranlib
+   else
+     # standard mips compiler
+     CC := mipsel-uclibc-gcc
+     LINK := mipsel-uclibc-gcc
+   endif
+   # path default value
+-  MIPSGCCLIBPATH ?= /opt/toolchains/crosstools_hf-linux-2.6.18.0_gcc-4.2-10ts_uclibc-nptl-0.9.29-20070423_20080721/mipsel-linux-uclibc/lib
++#  MIPSGCCLIBPATH ?= /opt/toolchains/crosstools_hf-linux-2.6.18.0_gcc-4.2-10ts_uclibc-nptl-0.9.29-20070423_20080721/mipsel-linux-uclibc/lib
++  MIPSGCCLIBPATH ?= $(MIPS_TOOLCHAIN_PATH)/mips-linux-gnu/lib
+ 
+   CCCPUFLAGS := $(MIPSCCFLAGS)
+   LINKCPUFLAGS := $(patsubst %,-L %,$(MIPSGCCLIBPATH)) $(MIPSLINKFLAG)
+ 
+ else
+ ifeq ($(CPU), arm)
++  ARMGCC ?= $(ARM_TOOLCHAIN_PATH)/bin/arm-openwrt-linux-muslgnueabi-gcc
++
++  ARMCCFLAGS = -DNO_EXECINFO_LIB -D__THROW= -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIC
++  ARMLINKFLAG = -Wl,-z,now -Wl,-z,relro -fPIE -pie
+ 
+   # priority is given to the environment setting ARMGCC and ARMGCCLIBPATH
+   ifdef ARMGCC
+     CC = $(ARMGCC)
+     LINK = $(ARMGCC)
++
++    AR     = $(ARM_TOOLCHAIN_PATH)/bin/arm-openwrt-linux-muslgnueabi-ar
++    STRIP  = $(ARM_TOOLCHAIN_PATH)/bin/arm-openwrt-linux-muslgnueabi-strip
++    RANLIB = $(ARM_TOOLCHAIN_PATH)/bin/arm-openwrt-linux-muslgnueabi-ranlib
+   else
+     # standard ARM compiler
+     LINK = arm_v7_vfp_le-gcc
+   endif
+   # path library default value
+-  ARMGCCLIBPATH ?= /opt/toolchains/ToolChain_arm_v7/arm_v7_vfp_le/target/lib/
++  ARMGCCLIBPATH ?= $(ARM_TOOLCHAIN_PATH)/lib
+ 
+   CCCPUFLAGS := $(ARMCCFLAGS)
+   LINKCPUFLAGS := $(patsubst %,-L %,$(ARMGCCLIBPATH)) $(ARMLINKFLAG)
+diff --git a/bsa_examples/linux/server/build/Makefile b/bsa_examples/linux/server/build/Makefile
+index 0e682a46..86fb9533 100755
+--- a/bsa_examples/linux/server/build/Makefile
++++ b/bsa_examples/linux/server/build/Makefile
+@@ -158,6 +158,8 @@ $(objlist): | $(objdir)
+ $(bluetooth_app): $(objlist)
+ 	@$(ECHO) Linking application $@
+ 	@$(LINK) $(LINKFLAGS) -o $@ $(objlist) $(LINKLIBS)
++	@$(CP) $@ $@-stripped
++	@$(STRIP) $@-stripped
+ 
+ .PHONY: clean
+ ifeq ($(strip $(BSA_MESH_INCLUDED)),TRUE)
+diff --git a/bsa_examples/linux/server/build/Makefile.all b/bsa_examples/linux/server/build/Makefile.all
+index ce3449b7..204b0fb9 100755
+--- a/bsa_examples/linux/server/build/Makefile.all
++++ b/bsa_examples/linux/server/build/Makefile.all
+@@ -29,48 +29,16 @@ CPU ?= $(BUILD_CPU)
+ 
+ LIBBSA_DIR := ../../libbsa/build/
+ APP_DIRS := \
+-	../../app_nsa/build/ \
+-	../../app_hl/build/ \
+ 	../../app_hh/build/ \
+-	../../app_hd/build/ \
+ 	../../app_manager/build/ \
+-	../../app_pbs/build/ \
+-	../../app_pbc/build/ \
+-	../../app_mce/build/ \
+-	../../app_mesh/build/ \
+-	../../app_ops/build/ \
+-	../../app_opc/build/ \
+-	../../app_av/build/ \
+-	../../app_avk/build/ \
+-	../../app_fts/build/ \
+-	../../app_ftc/build/ \
+ 	../../app_hs/build/ \
++	../../app_avk/build/ \
++	../../app_av/build/ \
+ 	../../app_ag/build/ \
+ 	../../app_dg/build/ \
+-	../../app_pan/build/ \
+-	../../app_tm/build/ \
+-	../../app_3d/build/ \
+ 	../../app_ble/build/ \
+-	../../app_ble_pm/build/ \
+-	../../app_ble_hrc/build/ \
+-	../../app_ble_cscc/build/ \
+-	../../app_ble_blp/build/ \
+-	../../app_ble_rscc/build/ \
+-        ../../app_ble_ancs/build/ \
+-	../../app_ble_htp/build/ \
+-	../../app_ble_wifi/build/ \
+-	../../app_ble_tvselect/build/ \
+-	../../app_sc/build/ \
+-	../../app_sac/build/ \
+-	../../simple_app/build/ \
+-	../../app_fm/build/ \
+-	../../app_switch/build/ \
+-	../../app_headless/build \
+-	../../app_ble_eddystone/build \
+-	../../app_ble_test/build \
+-	../../app_cce/build \
+-	../../app_ble_ibeacon/build/ \
+-	../../app_ble_wifi_introducer/build/
++	../../simple_app/build      \
++    ../../app_tm/build/
+ 
+ PROJECT_EXAMPLE_SERVER_DIR := ../../../../bsa_project_example/my_project/bsa_server/build
+ 
