@@ -1,0 +1,35 @@
+// in sensor, 60fps
+// iqfile : modified resolution only
+// alternating line issue
+// -f 30 : -> gives pretty much 60fps in output callback
+[  360.886140] imx415 1-001a: set vblank 0x66e vts 2743
+[  360.887653] imx415 1-001a: set exposure(shr0) 2537 = cur_vts(2743) - val(206)
+[  361.006199] imx415 1-001a: set vblank 0x66e vts 2743
+[  361.008409] imx415 1-001a: set exposure(shr0) 2537 = cur_vts(2743) - val(206)
+[  361.227593] imx415 1-001a: set vblank 0x4a5 vts 2286
+[  361.249676] imx415 1-001a: set exposure(shr0) 1600 = cur_vts(2286) - val(686)
+[  361.299521] imx415 1-001a: set exposure(shr0) 914 = cur_vts(2286) - val(1372)
+[  361.417653] imx415 1-001a: set exposure(shr0) 230 = cur_vts(2286) - val(2056)
+// -f 60  -> gives pretty much 60fps in output callback, additional rolling image problem
+[  699.085566] imx415 1-001a: set vblank 0x66e vts 2743
+[  699.086336] imx415 1-001a: set exposure(shr0) 2537 = cur_vts(2743) - val(206)
+[  699.189199] imx415 1-001a: set vblank 0x66e vts 2743
+[  699.191370] imx415 1-001a: set exposure(shr0) 2537 = cur_vts(2743) - val(206)
+[  699.411808] imx415 1-001a: set vblank 0x2e vts 1143
+[  699.431882] imx415 1-001a: set exposure(shr0) 457 = cur_vts(1143) - val(686)
+
+
+// in sensor, 60fps
+// iqfile: the one from imx307, modified to match imx415 ?!
+-f 30: -> gives pretty much 60 fps, image is dim, but else no imperfections
+[ 1692.571752] imx415 1-001a: set vblank 0x66e vts 2743
+[ 1692.638427] imx415 1-001a: set vblank 0x66e vts 2743
+[ 1692.638833] imx415 1-001a: set exposure(shr0) 2057 = cur_vts(2743) - val(686)
+[ 1692.858773] imx415 1-001a: set vblank 0x4a5 vts 2286
+
+-f 60: one or more frames appear, then it crashes - messages are:
+[00:32:03.967559][CAMHW]:XCAM ERROR SensorHw.cpp:715: handle_sof: sof_id[28]: set exposure failed!!!
+[ 1872.881547] imx415 1-001a: set vblank 0x66e vts 2743
+[ 1872.939531] imx415 1-001a: set vblank 0x66e vts 2743
+[ 1872.940004] imx415 1-001a: set exposure(shr0) 2057 = cur_vts(2743) - val(686)
+[ 1873.159288] imx415 1-001a: set vblank 0x2e vts 1143
