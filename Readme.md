@@ -4,12 +4,9 @@ Intital steps:
 2) remove buildroot/build directory and replace it with the corresponding rep from the "older sdk"
 3) opened build.sh and uncommented the crap in line 778
 
-To make the A201 board compatible with imx415 connected to csi0, I have created new .dts and .mk files
-under
- kernel/arch/arm/boot/dts created rv1126-openhd.dts
-and
-under
- device/rockchip/rv1126_rv1109 created BoardConfig-openhd (copy paste BoardConfig-aybering & specified to use the above .dts file)
+To make the A201 board compatible with imx415 connected to csi0, I have created new .dts and .mk files \
+1) kernel/arch/arm/boot/dts created rv1126-openhd.dts
+2) device/rockchip/rv1126_rv1109 created BoardConfig-openhd (copy paste BoardConfig-aybering & specified to use the above .dts file)
  
  
 # Building info for development team
