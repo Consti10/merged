@@ -9,7 +9,8 @@ external/rockx/python/*.whl
 IMAGE/*
 
 #also do not track this hughe file :)
-kernel/kernel.git/*
+kernel.git/*
+packed-refsu-boot.git/*
 
 # do not track the log (it increases with every build run)
 br.log
