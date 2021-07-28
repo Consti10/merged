@@ -22,11 +22,11 @@ br.log
 rockdev/*
 
 
-#and this whole repo:
+#and this whole directory:
 .rootfs/*
 
 
-#I use CLion ad ide, but do not add that stuff in github
+#I use CLion as ide, but do not add that stuff in github
 .idea/*
 
 # These directories have some stupid big files (Neural network-s) and we don't need them anyways
