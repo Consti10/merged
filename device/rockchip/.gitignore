@@ -1,2 +1,3 @@
 .BoardConfig.mk
-.target_product
+# do not exclude .target_product, it is an symlink only ?!
+#.target_product
