@@ -1242,10 +1242,10 @@ static int imx415_enum_frame_interval(struct v4l2_subdev *sd,
 #define CROP_START(SRC, DST) (((SRC) - (DST)) / 2 / 4 * 4)
 //#define DST_WIDTH 3840
 //#define DST_HEIGHT 2160
-//#define DST_WIDTH 1920
-//#define DST_HEIGHT 1080
-#define DST_WIDTH 1280
-#define DST_HEIGHT 720
+#define DST_WIDTH 1920
+#define DST_HEIGHT 1080
+//#define DST_WIDTH 1280
+//#define DST_HEIGHT 720
 
 /*
  * The resolution of the driver configuration needs to be exactly
