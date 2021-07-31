@@ -93,6 +93,7 @@ SourceStreamFlow::~SourceStreamFlow() {
                GetFlowTag());
 }
 
+
 void SourceStreamFlow::ReadThreadRun() {
   prctl(PR_SET_NAME, this->tag.c_str());
   source_start_cond_mtx->lock();
@@ -110,8 +111,20 @@ void SourceStreamFlow::ReadThreadRun() {
     }
     auto buffer = stream->Read();
 #ifdef RKMEDIA_TIMESTAMP_DEBUG
-    if (buffer)
-      buffer->TimeStampReset();
+    //if (buffer)
+    //  buffer->TimeStampReset();
+    //Consti10:
+    if(buffer){
+        int64_t now=easymedia::gettimeofday();
+        int64_t bufferSystemTime=buffer->GetAtomicClock();
+        int64_t delayUs=now - bufferSystemTime;
+        float delayMs=delayUs/ 1000.0;
+        printf("Consti10:buffSystemTime:[%lld] now:[%lld] delay:[%f] (ms)\n", bufferSystemTime,
+             now, delayMs);
+        buffer->TimeStampReset();
+        //buffer->TimeStampRecord("Consti10:OldSystemValue",bufferSystemTime);
+        buffer->TimeStampRecord("Consti10:DummyTimeStamp",now);
+    }
 #endif //RKMEDIA_TIMESTAMP_DEBUG
     SendInput(buffer, 0);
   }

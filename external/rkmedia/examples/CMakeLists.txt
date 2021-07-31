@@ -505,7 +505,7 @@ install(TARGETS rkmedia_muxer_test RUNTIME DESTINATION "bin")
 ############################################################
 # STRESS TEST
 ############################################################
-option(COMPILES_STRESS_TEST "Enable stress tests" OFF)
+option(COMPILES_STRESS_TEST "Enable stress tests" ON)
 if(COMPILES_STRESS_TEST)
   add_subdirectory(stressTest)
 endif()
@@ -514,7 +514,7 @@ endif()
 ############################################################
 # UNINT TEST
 ############################################################
-option(COMPILES_UNIT_TEST "Enable unit tests" OFF)
+option(COMPILES_UNIT_TEST "Enable unit tests" ON)
 if(COMPILES_UNIT_TEST)
   add_subdirectory(unitTest)
 endif()
