@@ -1,0 +1,22 @@
+echo 0x300 > /sys/module/video_rkisp/parameters/debug
+
+echo 0x300 > /sys/module/video_rkispp/parameters/debug
+
+echo 0x300 > /sys/module/rk_vcodec/parameters/mpp_dev_debug
+
+// nothing interesting
+echo 0x300 > /sys/module/video_rkcif/parameters/debug
+echo 0x000 > /sys/module/videobuf2_v4l2/parameters/debug
+
+
+-f 44
+
+rv1126 has vepu541 ?!
+
+
+
+v4l2-ctl --stream-mmap --stream-count=1000 -d
+ /dev/video0 --stream-to=/dev/null
+ 
+ 
+ nc -ul 5600 > /dev/udp/192.168.61.245/5600

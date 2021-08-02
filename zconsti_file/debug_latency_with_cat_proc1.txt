@@ -1,0 +1,86 @@
+1080p 30fps
+
+[root@RV1126_RV1109:/]# cat /proc/rkisp*
+rkisp0     Version:v01.04.01
+clk_isp    594000000
+aclk_isp   500000000
+hclk_isp   250000000
+rkispp0    Version:v01.04.01
+clk_ispp   500000000
+aclk_ispp  500000000
+hclk_ispp  250000000
+rkispp1    Version:v01.04.01
+clk_ispp   500000000
+aclk_ispp  500000000
+hclk_ispp  250000000
+[root@RV1126_RV1109:/]# cat /proc/rkisp*
+rkisp0     Version:v01.04.01
+clk_isp    594000000
+aclk_isp   500000000
+hclk_isp   250000000
+Interrupt  Cnt:179 ErrCnt:0
+Input      rkcif_mipi_lvds Format:SGBRG10_1X10 Size:1920x1080@180fps Offset(0,0)
+Isp Read   mode:frame1 (frame:49 rate:33ms idle) cnt(total:47 X1:46 X2:0 X3:-1)
+Consti10: curr time: [206039349688] curr frame ts: [206022672000] prev frame ts: [205988933000]
+ | sod curr:[206011809935] prev: [205977934307]
+Output     rkispp0 ON Format:FBC420 Size:1920x1080 (frame:49 rate:32ms)
+DPCC0      ON(0x5)
+DPCC1      ON(0x5)
+DPCC2      ON(0x5)
+BLS        ON(0x1)
+SDG        OFF(0x80446197)
+LSC        ON(0x1)
+AWBGAIN    ON(0x80446197) (gain: 0x01100110, 0x01da01b7)
+DEBAYER    ON(0x7000111)
+CCM        ON(0x80000001)
+GAMMA_OUT  ON(0x80000001)
+CPROC      ON(0xf)
+IE         OFF(0x0) (effect: BLACKWHITE)
+WDR        OFF(0x30cf0)
+HDRTMO     ON(0xa4185a15)
+HDRMGE     OFF(0x0)
+RAWNR      ON(0x80100001)
+GIC        ON(0x80000001)
+DHAZ       ON(0x80101019)
+3DLUT      OFF(0x2)
+GAIN       ON(0x80010110)
+LDCH       OFF(0x0)
+CSM        FULL(0x80446197)
+SIAF       OFF(0x0)
+SIAWB      OFF(0x0)
+YUVAE      ON(0x400100f3)
+SIHST      ON(0x38000107)
+RAWAF      ON(0x7)
+RAWAWB     ON(0x37e887)
+RAWAE0     ON(0x40000003)
+RAWAE1     ON(0x400000f5)
+RAWAE2     ON(0x400000f5)
+RAWAE3     ON(0x400000f5)
+RAWHIST0   ON(0x40000501)
+RAWHIST1   ON(0x60000501)
+RAWHIST2   ON(0x60000501)
+RAWHIST3   ON(0x60000501)
+rkispp0    Version:v01.04.01
+clk_ispp   500000000
+aclk_ispp  500000000
+hclk_ispp  250000000
+Interrupt  Cnt:144 ErrCnt:0
+Input      rkisp0 Format:FBC420 Size:1920x1080 (frame:49 rate:32ms delay:4ms)
+Output     rkispp_m_bypass Format:FBC0 Size:1920x1080 (frame:49 rate:32ms delay:12ms)
+TNR        ON(0x200000f) (mode: 3to1) (global gain: disable) (frame:49 time:4ms idle) CNT:0x0 STATE:0x1e000000
+NR         ON(0x7) (external gain: enable) (frame:49 time:3ms idle) 0x5f0:0x0 0x5f4:0x0
+SHARP      ON(0x19) (YNR input filter: ON) (local ratio: OFF) 0x630:0x0
+FEC        OFF(0x2) (frame:0 time:0ms idle) 0xc90:0x0
+ORB        OFF(0x0)
+Monitor    ON Cnt:0
+rkispp1    Version:v01.04.01
+clk_ispp   500000000
+aclk_ispp  500000000
+hclk_ispp  250000000
+
+
+206039349688-206022672000 = 16677688 / (1000*1000) = 16.677688
+206039349688-205988933000 = 50416688 / (1000*1000) = 50.416688
+206039349688- 206011809935= 27539753 / (1000*1000) = 27.539753
+206039349688- 205977934307= 61415381 / (1000*1000) = 61.415381
+

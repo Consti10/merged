@@ -1,0 +1,32 @@
+#[Consti10:ReadBufferTS]:[11157249360]: 82.501ms
+#[SourceFlow:v4l2_capture_stream:SendInput]:[11157258046]: 8.686ms
+#[SourceFlow:v4l2_capture_stream:FetchInput]:[11157258065]: 0.019ms
+#[SourceFlow:v4l2_capture_stream:SetOutput]:[11157258076]: 0.011ms
+#[VideoEncoderFlow:SendInput]:[11157258096]: 0.020ms
+#[VideoEncoderFlow:FetchInput]:[11157290799]: 32.703ms
+#[VideoEncoderFlow:SetOutput]:[11157295998]: 5.199ms
+
+
+11157767699
+11157776239
+11157776257
+11157776271
+11157776291
+
+11157776291 -11157767699 = 8592
+
+------------
+
+#[Consti10:ReadBufferTS]:[11157249360]: 82.501ms
+#[SourceFlow:v4l2_capture_stream:SendInput]:[11157258046]: 8.686ms
+#[SourceFlow:v4l2_capture_stream:FetchInput]:[11157258065]: 0.019ms
+#[SourceFlow:v4l2_capture_stream:SetOutput]:[11157258076]: 0.011ms
+#[VideoEncoderFlow:SendInput]:[11157258096]: 0.020ms
+#[VideoEncoderFlow:FetchInput]:[11157290799]: 32.703ms
+#[VideoEncoderFlow:SetOutput]:[11157295998]: 5.199ms
+
+11157258046 - 11157249360 =  8686
+11157295998 - 11157249360 = 46638 
+
+
+3391030492-3391021994 = 
