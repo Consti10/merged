@@ -67,6 +67,12 @@ static int isp_show(struct seq_file *p, void *v)
 			   dev->csi_dev.frame_cnt_x1,
 			   dev->csi_dev.frame_cnt_x2,
 			   dev->csi_dev.frame_cnt_x3);
+	seq_printf(p,"Consti10: curr time: [%lld] curr frame ts: [%lld] prev frame ts: [%lld]\n | sod curr:[%lld] prev: [%lld]\n",ktime_get_ns(),
+            dev->dmarx_dev.cur_frame.timestamp,
+            dev->dmarx_dev.pre_frame.timestamp,
+            dev->dmarx_dev.cur_frame.sof_timestamp,
+            dev->dmarx_dev.pre_frame.sof_timestamp);
+
 	seq_printf(p, "%-10s rkispp%d %s Format:%s%s Size:%dx%d (frame:%d rate:%dms)\n",
 		   "Output",
 		   dev->dev_id,
