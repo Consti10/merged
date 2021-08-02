@@ -1,0 +1,23 @@
+search for 116570798
+
+[  116.575037] rkisp0: Consti10:rkisp_dev_trigger_handle frameId:124 curr time: [116571536574] curr frame ts: [116570798000] sof_ts:[116559799323] latency1:[738574] latency2:[11737251]
+
+Consti10:buffSystemTime:[116570798] now:[116584856] delay:[14.058000] (ms)
+Get Video Encoded packet(IDR Slice):ptr:0x94902000, fd:115, size:8815, mode:4
+Current time 116597(ms), delta 36(ms) MB ts:116570798
+#[Consti10:DummyTimeStamp]:[116584856]: 116584.856ms
+#[SourceFlow:v4l2_capture_stream:SendInput]:[116585007]: 0.151ms
+#[SourceFlow:v4l2_capture_stream:FetchInput]:[116585022]: 0.015ms
+#[SourceFlow:v4l2_capture_stream:SetOutput]:[116585032]: 0.010ms
+#[VideoEncoderFlow:SendInput]:[116585050]: 0.018ms
+#[VideoEncoderFlow:FetchInput]:[116585135]: 0.085ms
+#[VideoEncoderFlow:SetOutput]:[116595966]: 10.831ms
+
+
+at 116571536574 at kisp_dev_trigger_handle 
+at 116584856 at buffSystemTime
+
+
+116571536574 - 116570798*1000 = 738574 / (1000*1000) = 0.738574 (ms)
+116584856*1000-116570798*1000 = 14058000/(1000*1000) = 14.058 (ms) 
+

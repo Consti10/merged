@@ -602,6 +602,10 @@ static void rkisp_dev_trigger_handle(struct rkisp_device *dev, u32 cmd)
 	int i, times = -1, max = 0, id = 0;
 	int len[DEV_MAX] = { 0 };
 	u32 mode = 0;
+	//Consti10:
+    uint64_t now_us=0;
+    uint64_t latency1=0;
+    uint64_t latency2=0;
 
 	spin_lock_irqsave(&hw->rdbk_lock, lock_flags);
 	if (cmd == T_CMD_END)
@@ -629,6 +633,13 @@ static void rkisp_dev_trigger_handle(struct rkisp_device *dev, u32 cmd)
 		isp->dmarx_dev.cur_frame.id = t.frame_id;
 		isp->dmarx_dev.cur_frame.sof_timestamp = t.sof_timestamp;
 		isp->dmarx_dev.cur_frame.timestamp = t.frame_timestamp;
+		now_us=ktime_get_ns();
+		latency1=now_us-isp->dmarx_dev.cur_frame.timestamp;
+		latency2=now_us-isp->dmarx_dev.cur_frame.sof_timestamp;
+		v4l2_dbg(2,rkisp_debug,&dev->v4l2_dev,
+           "Consti10:rkisp_dev_trigger_handle frameId:%d curr time: [%lld] curr frame ts: [%lld] sof_ts:[%lld] latency1:[%lld] latency2:[%lld]\n",
+                 isp->dmarx_dev.cur_frame.id,now_us,isp->dmarx_dev.cur_frame.timestamp,isp->dmarx_dev.cur_frame.sof_timestamp,latency1,latency2);
+
 		mode = t.mode;
 		times = t.times;
 		hw->cur_dev_id = id;
@@ -648,6 +659,10 @@ int rkisp_csi_trigger_event(struct rkisp_device *dev, u32 cmd, void *arg)
 	struct isp2x_csi_trigger *trigger = NULL;
 	unsigned long lock_flags = 0;
 	int val, ret = 0;
+
+    v4l2_dbg(2, rkisp_debug, &dev->v4l2_dev,
+             "Consti10:rkisp_csi_trigger_event command: %d\n",
+             cmd);
 
 	if (dev->dmarx_dev.trigger != T_MANUAL)
 		return 0;
