@@ -148,10 +148,11 @@ static const char * const rv1126_ispp_clks[] = {
 };
 
 static const struct ispp_clk_info rv1126_ispp_clk_rate[] = {
-	{
+    //Consti10: HACK - always use max clock speed regardeless of resolution
+	/*{
 		.clk_rate = 50,
 		.refer_data = 0,
-	}, {
+	} {
 		.clk_rate = 250,
 		.refer_data = 1920 //width
 	}, {
@@ -160,7 +161,7 @@ static const struct ispp_clk_info rv1126_ispp_clk_rate[] = {
 	}, {
 		.clk_rate = 400,
 		.refer_data = 3072,
-	}, {
+	},*/ {
 		.clk_rate = 500,
 		.refer_data = 3840,
 	}
