@@ -3635,6 +3635,11 @@ static void rkcif_vb_done_oneframe(struct rkcif_stream *stream,
 				   struct vb2_v4l2_buffer *vb_done)
 {
 	const struct cif_output_fmt *fmt = stream->cif_fmt_out;
+	//for latency testing
+    //struct rkcif_device *dev = stream->cifdev;
+    uint64_t now_us=0;
+    uint64_t latency1=0;
+    //
 	u32 i;
 
 	/* Dequeue a filled buffer */
@@ -3643,8 +3648,16 @@ static void rkcif_vb_done_oneframe(struct rkcif_stream *stream,
 				      stream->pixm.plane_fmt[i].sizeimage);
 	}
 
-	if (stream->cifdev->hdr.mode == NO_HDR)
-		vb_done->vb2_buf.timestamp = ktime_get_ns();
+	//if (stream->cifdev->hdr.mode == NO_HDR)
+	//	vb_done->vb2_buf.timestamp = ktime_get_ns();
+	//Consti10: Timestamp debug
+    if (stream->cifdev->hdr.mode == NO_HDR){
+        now_us=ktime_get_ns();
+        latency1=now_us-vb_done->vb2_buf.timestamp;
+        v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
+                 "Consti10:rkcif_vb_done_oneframe now:[%lld] buffTs:[%lld] latency:[%lld]\n",now_us,vb_done->vb2_buf.timestamp,latency1);
+        vb_done->vb2_buf.timestamp = now_us;
+    }
 
 	vb2_buffer_done(&vb_done->vb2_buf, VB2_BUF_STATE_DONE);
 }
@@ -3667,6 +3680,10 @@ void rkcif_irq_oneframe(struct rkcif_device *cif_dev)
 	 *  -         FRAME_END: cif has saved frame to memory, a frame ready
 	 */
 	stream = &cif_dev->stream[RKCIF_STREAM_CIF];
+
+	//Consti10: Cannot get messages from here in dmesg
+    v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
+             "Consti10:rkcif_irq_oneframe\n");
 
 	if ((intstat & PST_INF_FRAME_END)) {
 		rkcif_write_register(cif_dev, CIF_REG_DVP_INTSTAT,
@@ -3918,6 +3935,10 @@ static void rkcif_rdbk_frame_end(struct rkcif_stream *stream)
 	u64 l_ts, m_ts, s_ts, time = 30000000LL;
 	int ret, fps = -1;
 
+    //Consti10: Cannot get messages from here in dmesg
+    v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
+             "Consti10:rkcif_rdbk_frame_end dev->hdr.mode: %d\n",dev->hdr.mode);
+
 	if (dev->hdr.mode == HDR_X2) {
 		if (stream->id != RKCIF_STREAM_MIPI_ID1 ||
 		    dev->stream[RKCIF_STREAM_MIPI_ID0].state != RKCIF_STATE_STREAMING ||
@@ -4066,6 +4087,10 @@ static void rkcif_update_stream(struct rkcif_device *cif_dev,
 	struct rkcif_buffer *active_buf = NULL;
 	struct vb2_v4l2_buffer *vb_done = NULL;
 	unsigned long lock_flags = 0;
+
+	// yes
+    v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
+             "Consti10:rkcif_update_stream\n");
 
 	spin_lock(&stream->fps_lock);
 	if (stream->frame_phase & CIF_CSI_FRAME1_READY) {
@@ -4577,6 +4602,10 @@ void rkcif_irq_pingpong(struct rkcif_device *cif_dev)
 	struct rkcif_stream *stream;
 	struct v4l2_mbus_config *mbus;
 	unsigned int intstat, i = 0xff;
+
+	//yes
+    v4l2_dbg(1, rkcif_debug, &cif_dev->v4l2_dev,
+             "Consti10:rkcif_irq_pingpong\n");
 
 	if (!cif_dev->active_sensor)
 		return;
