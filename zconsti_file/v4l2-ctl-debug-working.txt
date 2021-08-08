@@ -1,0 +1,356 @@
+[root@RV1126_RV1109:/]# v4l2-ctl --list-devices
+ ():
+	/dev/v4l-subdev5
+
+rkisp-statistics (platform: rkisp):
+	/dev/video14
+	/dev/video15
+	/dev/video16
+
+rkispp_input_params (platform: rkispp):
+	/dev/video23
+	/dev/video24
+	/dev/video31
+	/dev/video32
+
+rkcif (platform:rkcif_mipi_lvds):
+	/dev/video0
+	/dev/video1
+	/dev/video2
+	/dev/video3
+	/dev/video4
+
+rkisp_mainpath (platform:rkisp-vir0):
+	/dev/video5
+	/dev/video6
+	/dev/video7
+	/dev/video8
+	/dev/video9
+	/dev/video10
+	/dev/video11
+	/dev/video12
+	/dev/video13
+
+rkispp_input_image (platform:rkispp-vir0):
+	/dev/video17
+	/dev/video18
+	/dev/video19
+	/dev/video20
+	/dev/video21
+	/dev/video22
+
+rkispp_input_image (platform:rkispp-vir1):
+	/dev/video25
+	/dev/video26
+	/dev/video27
+	/dev/video28
+	/dev/video29
+	/dev/video30
+---------------------------------------------------------------------------------
+root@RV1126_RV1109:/]# v4l2-ctl -d /dev/video0 --all
+Driver Info:
+	Driver name      : rkcif
+	Card type        : rkcif
+	Bus info         : platform:rkcif_mipi_lvds
+	Driver version   : 4.19.111
+	Capabilities     : 0x84201000
+		Video Capture Multiplanar
+		Streaming
+		Extended Pix Format
+		Device Capabilities
+	Device Caps      : 0x04201000
+		Video Capture Multiplanar
+		Streaming
+		Extended Pix Format
+Media Driver Info:
+	Driver name      : rkcif
+	Model            : rkcif_mipi_lvds
+	Serial           : 
+	Bus info         : 
+	Media version    : 4.19.111
+	Hardware revision: 0x00000000 (0)
+	Driver version   : 4.19.111
+Interface Info:
+	ID               : 0x03000002
+	Type             : V4L Video
+Entity Info:
+	ID               : 0x00000001 (1)
+	Name             : stream_cif_mipi_id0
+	Function         : V4L2 I/O
+	Pad 0x01000004   : 0: Sink
+	  Link 0x02000024: from remote pad 0x1000013 of entity 'rockchip-mipi-csi2': Data, Enabled
+	  Link 0x0200002c: from remote pad 0x1000014 of entity 'rockchip-mipi-csi2': Data
+	  Link 0x02000034: from remote pad 0x1000015 of entity 'rockchip-mipi-csi2': Data
+	  Link 0x0200003c: from remote pad 0x1000016 of entity 'rockchip-mipi-csi2': Data
+Priority: 2
+Format Video Capture Multiplanar:
+	Width/Height      : 1920/1080
+	Pixel Format      : 'GB10' (10-bit Bayer GBGB/RGRG)
+	Field             : None
+	Number of planes  : 1
+	Flags             : 
+	Colorspace        : Default
+	Transfer Function : Default
+	YCbCr/HSV Encoding: Default
+	Quantization      : Default
+	Plane 0           :
+	   Bytes per Line : 2560
+	   Size Image     : 2764800
+Crop Capability Video Capture:
+	Bounds      : Left 12, Top 8, Width 1920, Height 1080
+	Default     : Left 12, Top 8, Width 1920, Height 1080
+	Pixel Aspect: 1/1
+Crop Capability Video Output:
+	Bounds      : Left 0, Top 0, Width 0, Height 0
+	Default     : Left 0, Top 0, Width 0, Height 0
+	Pixel Aspect: 1/1
+Crop: Left 12, Top 8, Width 1920, Height 1080
+Selection: crop, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: crop_default, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: crop_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_default, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_padded, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: native_size, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: crop, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: crop_default, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: crop_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_default, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_padded, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: native_size, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+
+
+-------------------------------------------
+
+[root@RV1126_RV1109:/]# v4l2-ctl -d /dev/video1 --all
+Driver Info:
+	Driver name      : rkcif
+	Card type        : rkcif
+	Bus info         : platform:rkcif_mipi_lvds
+	Driver version   : 4.19.111
+	Capabilities     : 0x84201000
+		Video Capture Multiplanar
+		Streaming
+		Extended Pix Format
+		Device Capabilities
+	Device Caps      : 0x04201000
+		Video Capture Multiplanar
+		Streaming
+		Extended Pix Format
+Media Driver Info:
+	Driver name      : rkcif
+	Model            : rkcif_mipi_lvds
+	Serial           : 
+	Bus info         : 
+	Media version    : 4.19.111
+	Hardware revision: 0x00000000 (0)
+	Driver version   : 4.19.111
+Interface Info:
+	ID               : 0x03000006
+	Type             : V4L Video
+Entity Info:
+	ID               : 0x00000005 (5)
+	Name             : stream_cif_mipi_id1
+	Function         : V4L2 I/O
+	Pad 0x01000008   : 0: Sink
+	  Link 0x02000026: from remote pad 0x1000013 of entity 'rockchip-mipi-csi2': Data
+	  Link 0x0200002e: from remote pad 0x1000014 of entity 'rockchip-mipi-csi2': Data, Enabled
+	  Link 0x02000036: from remote pad 0x1000015 of entity 'rockchip-mipi-csi2': Data
+	  Link 0x0200003e: from remote pad 0x1000016 of entity 'rockchip-mipi-csi2': Data
+Priority: 2
+Format Video Capture Multiplanar:
+	Width/Height      : 1920/1080
+	Pixel Format      : 'GB10' (10-bit Bayer GBGB/RGRG)
+	Field             : None
+	Number of planes  : 1
+	Flags             : 
+	Colorspace        : Default
+	Transfer Function : Default
+	YCbCr/HSV Encoding: Default
+	Quantization      : Default
+	Plane 0           :
+	   Bytes per Line : 2560
+	   Size Image     : 2764800
+Crop Capability Video Capture:
+	Bounds      : Left 12, Top 8, Width 1920, Height 1080
+	Default     : Left 12, Top 8, Width 1920, Height 1080
+	Pixel Aspect: 1/1
+Crop Capability Video Output:
+	Bounds      : Left 0, Top 0, Width 0, Height 0
+	Default     : Left 0, Top 0, Width 0, Height 0
+	Pixel Aspect: 1/1
+Crop: Left 12, Top 8, Width 1920, Height 1080
+Selection: crop, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: crop_default, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: crop_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_default, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_padded, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: native_size, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: crop, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: crop_default, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: crop_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_default, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_padded, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: native_size, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+
+-------------------------------------------------------------------
+[root@RV1126_RV1109:/]# v4l2-ctl -d /dev/video2 --all
+Driver Info:
+	Driver name      : rkcif
+	Card type        : rkcif
+	Bus info         : platform:rkcif_mipi_lvds
+	Driver version   : 4.19.111
+	Capabilities     : 0x84201000
+		Video Capture Multiplanar
+		Streaming
+		Extended Pix Format
+		Device Capabilities
+	Device Caps      : 0x04201000
+		Video Capture Multiplanar
+		Streaming
+		Extended Pix Format
+Media Driver Info:
+	Driver name      : rkcif
+	Model            : rkcif_mipi_lvds
+	Serial           : 
+	Bus info         : 
+	Media version    : 4.19.111
+	Hardware revision: 0x00000000 (0)
+	Driver version   : 4.19.111
+Interface Info:
+	ID               : 0x0300000a
+	Type             : V4L Video
+Entity Info:
+	ID               : 0x00000009 (9)
+	Name             : stream_cif_mipi_id2
+	Function         : V4L2 I/O
+	Pad 0x0100000c   : 0: Sink
+	  Link 0x02000028: from remote pad 0x1000013 of entity 'rockchip-mipi-csi2': Data
+	  Link 0x02000030: from remote pad 0x1000014 of entity 'rockchip-mipi-csi2': Data
+	  Link 0x02000038: from remote pad 0x1000015 of entity 'rockchip-mipi-csi2': Data, Enabled
+	  Link 0x02000040: from remote pad 0x1000016 of entity 'rockchip-mipi-csi2': Data
+Priority: 2
+Format Video Capture Multiplanar:
+	Width/Height      : 1920/1080
+	Pixel Format      : 'GB10' (10-bit Bayer GBGB/RGRG)
+	Field             : None
+	Number of planes  : 1
+	Flags             : 
+	Colorspace        : Default
+	Transfer Function : Default
+	YCbCr/HSV Encoding: Default
+	Quantization      : Default
+	Plane 0           :
+	   Bytes per Line : 2560
+	   Size Image     : 2764800
+Crop Capability Video Capture:
+	Bounds      : Left 12, Top 8, Width 1920, Height 1080
+	Default     : Left 12, Top 8, Width 1920, Height 1080
+	Pixel Aspect: 1/1
+Crop Capability Video Output:
+	Bounds      : Left 0, Top 0, Width 0, Height 0
+	Default     : Left 0, Top 0, Width 0, Height 0
+	Pixel Aspect: 1/1
+Crop: Left 12, Top 8, Width 1920, Height 1080
+Selection: crop, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: crop_default, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: crop_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_default, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_padded, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: native_size, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: crop, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: crop_default, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: crop_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_default, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_padded, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: native_size, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+
+-----------------------------------------
+[root@RV1126_RV1109:/]# v4l2-ctl -d /dev/video3 --all
+Driver Info:
+	Driver name      : rkcif
+	Card type        : rkcif
+	Bus info         : platform:rkcif_mipi_lvds
+	Driver version   : 4.19.111
+	Capabilities     : 0x84201000
+		Video Capture Multiplanar
+		Streaming
+		Extended Pix Format
+		Device Capabilities
+	Device Caps      : 0x04201000
+		Video Capture Multiplanar
+		Streaming
+		Extended Pix Format
+Media Driver Info:
+	Driver name      : rkcif
+	Model            : rkcif_mipi_lvds
+	Serial           : 
+	Bus info         : 
+	Media version    : 4.19.111
+	Hardware revision: 0x00000000 (0)
+	Driver version   : 4.19.111
+Interface Info:
+	ID               : 0x0300000e
+	Type             : V4L Video
+Entity Info:
+	ID               : 0x0000000d (13)
+	Name             : stream_cif_mipi_id3
+	Function         : V4L2 I/O
+	Pad 0x01000010   : 0: Sink
+	  Link 0x0200002a: from remote pad 0x1000013 of entity 'rockchip-mipi-csi2': Data
+	  Link 0x02000032: from remote pad 0x1000014 of entity 'rockchip-mipi-csi2': Data
+	  Link 0x0200003a: from remote pad 0x1000015 of entity 'rockchip-mipi-csi2': Data
+	  Link 0x02000042: from remote pad 0x1000016 of entity 'rockchip-mipi-csi2': Data, Enabled
+Priority: 2
+Format Video Capture Multiplanar:
+	Width/Height      : 640/480
+	Pixel Format      : 'NV12' (Y/CbCr 4:2:0)
+	Field             : None
+	Number of planes  : 1
+	Flags             : 
+	Colorspace        : Default
+	Transfer Function : Default
+	YCbCr/HSV Encoding: Default
+	Quantization      : Default
+	Plane 0           :
+	   Bytes per Line : 640
+	   Size Image     : 460800
+Crop Capability Video Capture:
+	Bounds      : Left 12, Top 8, Width 1920, Height 1080
+	Default     : Left 12, Top 8, Width 1920, Height 1080
+	Pixel Aspect: 1/1
+Crop Capability Video Output:
+	Bounds      : Left 0, Top 0, Width 0, Height 0
+	Default     : Left 0, Top 0, Width 0, Height 0
+	Pixel Aspect: 1/1
+Crop: Left 0, Top 0, Width 640, Height 480
+Selection: crop, Left 0, Top 0, Width 640, Height 480, Flags: 
+Selection: crop_default, Left 0, Top 0, Width 640, Height 480, Flags: 
+Selection: crop_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_default, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_padded, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: native_size, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: crop, Left 0, Top 0, Width 640, Height 480, Flags: 
+Selection: crop_default, Left 0, Top 0, Width 640, Height 480, Flags: 
+Selection: crop_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_default, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: compose_padded, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+Selection: native_size, Left 12, Top 8, Width 1920, Height 1080, Flags: 
+
+
+
