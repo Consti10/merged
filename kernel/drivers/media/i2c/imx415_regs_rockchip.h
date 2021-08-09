@@ -68,8 +68,10 @@ struct regval {
 #define IMX415_PIX_VWIDTH_H 0x3047
 
 // regarding "INCK"
-#define IMX415_BCWAIT_TIME 0x3009
-#define IMX415_CPWAIT_TIME 0x300B
+#define IMX415_BCWAIT_TIME_L 0x3008
+#define IMX415_BCWAIT_TIME_H 0x3009
+#define IMX415_CPWAIT_TIME_L 0x300A
+#define IMX415_CPWAIT_TIME_H 0x300B
 #define IMX415_SYS_MODE 0x3033 // weird is there something wrong in the spec sheet ? also referred to as 0x034
 #define IMX415_INCKSEL1 0x3115
 #define IMX415_INCKSEL2 0x3116
@@ -115,13 +117,13 @@ struct regval {
 
 static __maybe_unused const struct regval imx415_global_10bit_3864x2192_regs[] = {
         {0x3002, 0x00},
-        {0x3008, 0x7F}, //37.125[Mhz]
-        {0x300A, 0x5B},
+        {IMX415_BCWAIT_TIME_L, 0x7F}, //37.125[Mhz]
+        {IMX415_CPWAIT_TIME_L, 0x5B},
         {0x3031, 0x00},
         {0x3032, 0x00},
         {0x30C1, 0x00},
-        {0x3116, 0x24},
-        {0x311E, 0x24},
+        {IMX415_INCKSEL2, 0x24},
+        {IMX415_INCKSEL5, 0x24},
         {0x32D4, 0x21},
         {0x32EC, 0xA1},
         {0x3452, 0x7F},
@@ -194,8 +196,8 @@ static __maybe_unused const struct regval imx415_global_10bit_3864x2192_regs[] =
         {0x3BC4, 0xA2},
         {0x3BC8, 0xBD},
         {0x3BCA, 0xBD},
-        {0x4004, 0x48},
-        {0x4005, 0x09},
+        {IMX415_TXCLKESC_FREQ_L, 0x48},
+        {IMX415_TXCLKESC_FREQ_H, 0x09},
         {REG_NULL, 0x00},
 };
 
@@ -204,11 +206,11 @@ static __maybe_unused const struct regval imx415_global_10bit_3864x2192_regs[] =
  */
 static __maybe_unused const struct regval imx415_global_12bit_3864x2192_regs[] = {
         {0x3002, 0x00},
-        {0x3008, 0x7F},
-        {0x300A, 0x5B},
+        {IMX415_BCWAIT_TIME_L, 0x7F},
+        {IMX415_CPWAIT_TIME_L, 0x5B},
         {0x30C1, 0x00},
-        {0x3116, 0x24},
-        {0x311E, 0x24},
+        {IMX415_INCKSEL2, 0x24},
+        {IMX415_INCKSEL5, 0x24},
         {0x32D4, 0x21},
         {0x32EC, 0xA1},
         {0x3452, 0x7F},
@@ -280,8 +282,8 @@ static __maybe_unused const struct regval imx415_global_12bit_3864x2192_regs[] =
         {0x3BC4, 0xA2},
         {0x3BC8, 0xBD},
         {0x3BCA, 0xBD},
-        {0x4004, 0x48},
-        {0x4005, 0x09},
+        {IMX415_TXCLKESC_FREQ_L, 0x48},
+        {IMX415_TXCLKESC_FREQ_H, 0x09},
         {REG_NULL, 0x00},
 };
 
@@ -837,8 +839,8 @@ static __maybe_unused const struct regval imx415_linear_10bit_binning2x2_1782_re
 //0x08CA | 0x446
 // cropping
 static __maybe_unused const struct regval imx415_linear_10bit_cropping_1782_regs[] = {
-        {IMX415_VMAX_L, 0x6}, //maybe same
-        {IMX415_VMAX_M, 0x44}, //maybe same
+        {IMX415_VMAX_L, 0xCA}, //maybe same
+        {IMX415_VMAX_M, 0x08}, //maybe same
         {IMX415_HMAX_L,IMX415_FETCH_16BIT_L(0x226)},
         {IMX415_HMAX_H,IMX415_FETCH_16BIT_H(0x226)},
         {0x302C, 0x00}, //cannot find
@@ -955,5 +957,29 @@ static __maybe_unused int calculateFrameRate(int pixel_rate,int image_width,int 
     return pixel_rate / (hts_def*vts_def);
 }*/
 
+//IMX219 spec sheet:
+// Frame_Rate[frame/s]= 1 / (Time_per_line[sec]*(Frame length)
+// Time_Per_line[sec] = Line_length_pck[pix] / (2*Pix_clock_Freq[Mhz]
+
+//1H period (unit: [µs]) : Fix 1H time in a mode before cropping and calculate it by the value of "Number of INCK in
+//1H" in the table of "Operating Mode" and "List of Operation Modes and Output Rates".
+
+// 1 ÷ (35,6 ÷ 10^6 × 1125)
+// where 35.6== 1H period (microseconds) and 1125==V (lines)
+// X = 1H period[clock] * INCK[mhz]
+
+//1H period = 365 | INCK = 74.25 Mhz | 1V period=2238
+// 1 / ((365 / 74.25) / 10^6*2238)=90,895736164
+
+//0x16E=366 | 0x08CA = 2250
+// 1 / ((366 / 37.125) / 10^6 * 2250) = 45,081967213
+// 1 / ((366 / 37.125) / 10^6 * 2286) = 44,372014974
+
+// Spec sheet 4k 90 fps
+// 0x16E = 366
+// 366 / 37,125 = 9,858585859
+// 366 / 74.25 = 4.92929292929
+// 1 / (5.0 / 10^6 * 2250)=88,888888889
+// 1 / (4.92929292929/ 10^6 * 2250)=90.1639344263
 
 #endif //MEDIASEVER_IMX415_REGS_ROCKCHIP_H
