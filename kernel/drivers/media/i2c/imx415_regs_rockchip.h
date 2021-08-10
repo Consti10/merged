@@ -201,6 +201,7 @@ static __maybe_unused const struct regval imx415_global_10bit_3864x2192_regs[] =
         {REG_NULL, 0x00},
 };
 
+
 /*
  * Xclk 37.125Mhz
  */
@@ -682,10 +683,12 @@ static __maybe_unused const struct regval imx415_linear_10bit_3864x2192_1782_reg
         {REG_NULL, 0x00},
 };
 
+// 0xCA
+
 // 4k but in 2376 mode - yeah works. Allows up to 4k90fps
 static __maybe_unused const struct regval imx415_linear_10bit_3864x2192_2376_regs[] = {
-        {IMX415_VMAX_L, 0xCA}, //maybe same
-        {IMX415_VMAX_M, 0x08}, //maybe same
+        {IMX415_VMAX_L, IMX415_FETCH_24BIT_L(0x08ca)}, //maybe same
+        {IMX415_VMAX_M, IMX415_FETCH_24BIT_M(0x08ca)}, //maybe same
         {IMX415_HMAX_L,IMX415_FETCH_16BIT_L(0x16E)},
         {IMX415_HMAX_H,IMX415_FETCH_16BIT_H(0x16E)},
         {0x302C, 0x00}, //cannot find
@@ -727,10 +730,14 @@ static __maybe_unused const struct regval imx415_linear_10bit_3864x2192_2376_reg
 
 // 4k with 2x2 binning == 1080p
 static __maybe_unused const struct regval imx415_linear_10bit_3864x2192_2376_regs_binning[] = {
-        {IMX415_VMAX_L, 0xCA}, //maybe same
-        {IMX415_VMAX_M, 0x08}, //maybe same
-        {IMX415_HMAX_L,IMX415_FETCH_16BIT_L(0x16E)}, //0x16E / 2 =  366 / 2 = 183 | 300==0x12C
+        {IMX415_VMAX_L, IMX415_FETCH_24BIT_L(0x08ca)}, //maybe same
+        {IMX415_VMAX_M, IMX415_FETCH_24BIT_M(0x08ca)}, //maybe same
+        {IMX415_HMAX_L,IMX415_FETCH_16BIT_L(0x16E)}, //0x16E / 2 =  366 / 2 = 183 | 300==0x12C | 244
         {IMX415_HMAX_H,IMX415_FETCH_16BIT_H(0x16E)},
+        // hm just write different vmax
+        //{IMX415_HMAX_L,IMX415_FETCH_16BIT_L(0xF4)},
+        //{IMX415_HMAX_H,IMX415_FETCH_16BIT_H(0xF4)},
+        //
         {0x302C, 0x00}, //cannot find
         {0x302D, 0x00}, //cannot find
         {IMX415_SYS_MODE, 0x0},
@@ -973,7 +980,16 @@ static __maybe_unused int calculateFrameRate(int pixel_rate,int image_width,int 
 
 //0x16E=366 | 0x08CA = 2250
 // 1 / ((366 / 37.125) / 10^6 * 2250) = 45,081967213
+// 1 / ((366 / 74,25) / 10^6 * 2250) = 90,163934426
 // 1 / ((366 / 37.125) / 10^6 * 2286) = 44,372014974
+// 1 / ((366 / 37.125) / 10^6 * 1222) = 83,006895441
+// 1 / ((244 / 37.125) / 10^6 * 2250) = 67,62295082
+// 1 / ((244 / 37.125) / 10^6 * 1222) = 124,510343162
+// 1 / ((365 / 74,25) / 10^6 * 2238) = 90,895736164
+// 1 / ((365 / 74,25) / 10^6 * 1222) = 166,468623187
+// 1 / ((365 / 74,25) / 10^6 * 1715) = 118,614960661
+// 244==0xF4
+// 1222
 
 // Spec sheet 4k 90 fps
 // 0x16E = 366
@@ -981,5 +997,8 @@ static __maybe_unused int calculateFrameRate(int pixel_rate,int image_width,int 
 // 366 / 74.25 = 4.92929292929
 // 1 / (5.0 / 10^6 * 2250)=88,888888889
 // 1 / (4.92929292929/ 10^6 * 2250)=90.1639344263
+
+// 0x4400=17408 0x0898=2200
+//(1920+(6+6+12)) ÷ 4 ÷ 2=243
 
 #endif //MEDIASEVER_IMX415_REGS_ROCKCHIP_H

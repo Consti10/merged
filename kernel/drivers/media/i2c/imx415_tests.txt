@@ -33,3 +33,10 @@
 [ 1872.939531] imx415 1-001a: set vblank 0x66e vts 2743
 [ 1872.940004] imx415 1-001a: set exposure(shr0) 2057 = cur_vts(2743) - val(686)
 [ 1873.159288] imx415 1-001a: set vblank 0x2e vts 1143
+
+// INCK set to 72.5  , -f 90 gives:
+[root@RV1126_RV1109:/]# dmesg | grep "vblank"
+[10638.820749] imx415 1-001a: set vblank 0x1bdd vts 8230
+[10638.929671] imx415 1-001a: set vblank 0x1bdd vts 8230
+[10639.207721] imx415 1-001a: set vblank 0x4a5 vts 2286
+and ~ delta 21

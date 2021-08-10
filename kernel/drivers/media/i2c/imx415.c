@@ -366,6 +366,7 @@ static const struct imx415_mode supported_modes[] = {
             },
             .exp_def = 0x08ca - 0x08, //2250-8=2248
             .hts_def = 0x16E * IMX415_4LANES * 2, // 366*4*2 = 2928
+            //.hts_def = 0xF4 * IMX415_4LANES * 2,
             .vts_def = 0x08ca ,                     // 2250        | seems to be VMAX from spec sheet
             .global_reg_list = imx415_global_10bit_3864x2192_regs,
             .reg_list = imx415_linear_10bit_3864x2192_2376_regs_binning,
