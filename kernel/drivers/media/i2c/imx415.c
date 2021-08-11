@@ -67,7 +67,8 @@
 
 #define OF_CAMERA_HDR_MODE		"rockchip,camera-hdr-mode"
 
-#define IMX415_XVCLK_FREQ_37M		37125000
+//#define IMX415_XVCLK_FREQ_37M		37125000
+#define IMX415_XVCLK_FREQ_74M    74250000
 
 /* TODO: Get the real chip id from reg */
 #define CHIP_ID				0xE0
@@ -86,6 +87,10 @@
 #define IMX415_SF2_GAIN_REG_H		0x3095
 #define IMX415_SF2_GAIN_REG_L		0x3094
 
+// from doc:
+// Sets the shutter sweep time.
+//8 to (Number of lines per frame - 4)
+//* Others: Setting prohibited
 #define IMX415_LF_EXPO_REG_H		0x3052 //SHR0 written to from "V4L2_CID_EXPOSURE" command
 #define IMX415_LF_EXPO_REG_M		0x3051 //SHR0
 #define IMX415_LF_EXPO_REG_L		0x3050 //SHR0
@@ -108,7 +113,9 @@
 #define IMX415_RHS2_REG_L		0x3064
 #define IMX415_RHS2_DEFAULT		0x004D
 
-#define	IMX415_EXPOSURE_MIN		4
+// Consti10: I think the rockchip guys messed that up.
+// minimum is 8, maxiumum is vts-4
+#define	IMX415_EXPOSURE_MIN		8
 #define	IMX415_EXPOSURE_STEP		1
 #define IMX415_VTS_MAX			0x7fff //=32767
 
@@ -1128,10 +1135,10 @@ static int __imx415_power_on(struct imx415 *imx415)
 	/* At least 1us between XCLR and clk */
 	/* fix power on timing if insmod this ko */
 	usleep_range(10 * 1000, 20 * 1000);
-	ret = clk_set_rate(imx415->xvclk, IMX415_XVCLK_FREQ_37M);
+	ret = clk_set_rate(imx415->xvclk, IMX415_XVCLK_FREQ_74M);
 	if (ret < 0)
 		dev_warn(dev, "Failed to set xvclk rate\n");
-	if (clk_get_rate(imx415->xvclk) != IMX415_XVCLK_FREQ_37M)
+	if (clk_get_rate(imx415->xvclk) != IMX415_XVCLK_FREQ_74M)
 		dev_warn(dev, "xvclk mismatched\n");
 	ret = clk_prepare_enable(imx415->xvclk);
 	if (ret < 0) {
@@ -1333,11 +1340,14 @@ static int imx415_set_ctrl(struct v4l2_ctrl *ctrl)
 	case V4L2_CID_VBLANK:
 		if (imx415->cur_mode->hdr_mode == NO_HDR) {
 			/* Update max exposure while meeting expected vblanking */
-			max = imx415->cur_mode->height + ctrl->val - 8;
+			// Consti10: I think rockchip messed that up
+			max = imx415->cur_mode->height + ctrl->val - 4;
 			__v4l2_ctrl_modify_range(imx415->exposure,
 					 imx415->exposure->minimum, max,
 					 imx415->exposure->step,
 					 imx415->exposure->default_value);
+
+			//
 		}
 		break;
 	}
@@ -1409,7 +1419,7 @@ static int imx415_set_ctrl(struct v4l2_ctrl *ctrl)
 		ret |= imx415_write_reg(imx415->client, IMX415_VMAX_H,
 				       IMX415_REG_VALUE_08BIT,
 				       IMX415_FETCH_VTS_H(vts));
-		dev_dbg(&client->dev, "set vblank 0x%x vts %d\n",
+		dev_dbg(&client->dev, "set vblank ctr_val:%d vts:%d\n",
 			ctrl->val, vts);
 		break;
 	case V4L2_CID_HFLIP:
@@ -1493,8 +1503,8 @@ static int imx415_initialize_controls(struct imx415 *imx415)
 				IMX415_VTS_MAX - mode->height,
 				1, vblank_def);
 	imx415->cur_vts = mode->vts_def;
-
-	exposure_max = mode->vts_def - 8;
+	// Consti10: I think rockchip messed that up
+	exposure_max = mode->vts_def - 4;
 	imx415->exposure = v4l2_ctrl_new_std(handler, &imx415_ctrl_ops,
 				V4L2_CID_EXPOSURE, IMX415_EXPOSURE_MIN,
 				exposure_max, IMX415_EXPOSURE_STEP,
