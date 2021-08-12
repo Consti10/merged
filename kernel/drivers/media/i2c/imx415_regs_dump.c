@@ -203,3 +203,259 @@ static __maybe_unused const struct regval imx415_linear_10bit_cropping_1782_regs
 
         {REG_NULL, 0x00},
 };
+
+// maybe this just works - yeah
+/*{
+        .bus_fmt = MEDIA_BUS_FMT_SGBRG10_1X10,
+        .width = 1920,
+        .height = 1080,
+        .max_fps = {
+                .numerator = 10000,
+                .denominator = 300000,
+        },
+        .exp_def = 0x08ca - 0x08, //2250-8=2248
+        .hts_def = 0x044c * IMX415_4LANES * 2, //1100*4*2=8800
+        .vts_def = 0x08ca,                     // 2250
+        //.vts_def = 58 + 1080,
+        .global_reg_list = imx415_global_10bit_3864x2192_regs,
+        .reg_list = imx415_linear_10bit_3864x2192_891M_regs_binning,
+        .hdr_mode = NO_HDR,
+        .mipi_freq_idx = 0,
+        .bpp = 10,
+},*/
+/*{
+        .bus_fmt = MEDIA_BUS_FMT_SGBRG10_1X10,
+        .width = 3864,
+        .height = 2192,
+        //.width = 1920,
+        //.height = 1080,
+        .max_fps = {
+                .numerator = 10000,
+                // per spec sheet, we should actually be able to do 38.5 fps
+                .denominator = 300000,
+                //.denominator = 385000, looks as if i do so, setting fps to 38 from application results in 30fps now ?!
+        },
+        .exp_def = 0x08ca - 0x08, //2250-8=2248
+        .hts_def = 0x044c * IMX415_4LANES * 2, //1100*4*2=8800 | seems to be just HMAX from spec sheet
+        .vts_def = 0x08ca ,                     // 2250        | seems to be VMAX from spec sheet
+        .global_reg_list = imx415_global_10bit_3864x2192_regs,
+        .reg_list = imx415_linear_10bit_3864x2192_891M_regs,
+        .hdr_mode = NO_HDR,
+        .mipi_freq_idx = 0,
+        .bpp = 10,
+},*/
+/**Works{
+            .bus_fmt = MEDIA_BUS_FMT_SGBRG10_1X10,
+            .width = 3864,
+            .height = 2192,
+            .max_fps = {
+                    .numerator = 10000,
+                    .denominator = 600000,
+            },
+            .exp_def = 0x08ca - 0x08, //2250-8=2248
+            //.hts_def = 0x044c * IMX415_4LANES * 2, //1100*4*2=8800 | seems to be just HMAX from spec sheet
+            .hts_def = 0x226 * IMX415_4LANES * 2,
+            .vts_def = 0x08ca ,                     // 2250        | seems to be VMAX from spec sheet
+            .global_reg_list = imx415_global_10bit_3864x2192_regs,
+            .reg_list = imx415_linear_10bit_3864x2192_1782_regs,
+            .hdr_mode = NO_HDR,
+            .mipi_freq_idx = 2,
+            .bpp = 10,
+    },*/
+
+/**{
+            .bus_fmt = MEDIA_BUS_FMT_SGBRG10_1X10,
+            .width = 1920+(6+6+12),
+            .height = 1080+(1+6+4+4+1+1),
+            .max_fps = {
+                    .numerator = 10000,
+                    .denominator = 720000,
+            },
+            .exp_def = 0x08ca - 0x08, //2250-8=2248
+            .hts_def = 0x226 * IMX415_4LANES * 2,
+            .vts_def = 0x08ca ,                     // 2250        | seems to be VMAX from spec sheet
+            .global_reg_list = imx415_global_10bit_3864x2192_regs,
+            .reg_list = imx415_linear_10bit_binning2x2_1782_regs,
+            .hdr_mode = NO_HDR,
+            .mipi_freq_idx = 2,
+            .bpp = 10,
+    },*/
+/*arghh{
+        .bus_fmt = MEDIA_BUS_FMT_SGBRG10_1X10,
+        .width = 1920,
+        .height = 1080,
+        .max_fps = {
+                .numerator = 10000,
+                .denominator = 900000,
+        },
+        .exp_def = 0x446 - 0x08, //2250-8=2248 | = (1080+46)=1126=0x446
+        .hts_def = 0x226 * IMX415_4LANES * 2,
+        .vts_def = 0x446 ,                     // 2250        | seems to be VMAX from spec sheet
+        .global_reg_list = imx415_global_10bit_3864x2192_regs,
+        .reg_list = imx415_linear_10bit_cropping_1782_regs,
+        .hdr_mode = NO_HDR,
+        .mipi_freq_idx = 2,
+        .bpp = 10,
+},*/
+/*{
+    .bus_fmt = MEDIA_BUS_FMT_SGBRG10_1X10,
+    .width = 3864,
+    .height = 2192,
+    .max_fps = {
+        .numerator = 10000,
+        // per spec sheet, we should actually be able to do 38.5 fps
+        .denominator = 300000,
+        //.denominator = 385000, looks as if i do so, setting fps to 38 from application results in 30fps now ?!
+    },
+    .exp_def = 0x08ca - 0x08, //2250-8=2248
+    .hts_def = 0x044c * IMX415_4LANES * 2, //1100*4*2=8800
+    .vts_def = 0x08ca,                     // 2250
+    .global_reg_list = imx415_global_10bit_3864x2192_regs,
+    .reg_list = imx415_linear_10bit_3864x2192_891M_regs,
+    .hdr_mode = NO_HDR,
+    .mipi_freq_idx = 0,
+    .bpp = 10,
+},
+{
+    .bus_fmt = MEDIA_BUS_FMT_SGBRG10_1X10,
+    .width = 3864,
+    .height = 2192,
+    .max_fps = {
+        .numerator = 10000,
+        .denominator = 300000,
+    },
+    .exp_def = 0x08fc * 2 - 0x0da8,
+    .hts_def = 0x0226 * IMX415_4LANES * 2,
+     //
+     // IMX415 HDR mode T-line is half of Linear mode,
+     // make vts double to workaround.
+     //
+    .vts_def = 0x08fc * 2,
+    .global_reg_list = imx415_global_10bit_3864x2192_regs,
+    .reg_list = imx415_hdr2_10bit_3864x2192_1485M_regs,
+    .hdr_mode = HDR_X2,
+    .mipi_freq_idx = 1,
+    .bpp = 10,
+    .vc[PAD0] = V4L2_MBUS_CSI2_CHANNEL_1,
+    .vc[PAD1] = V4L2_MBUS_CSI2_CHANNEL_0,//L->csi wr0
+    .vc[PAD2] = V4L2_MBUS_CSI2_CHANNEL_1,
+    .vc[PAD3] = V4L2_MBUS_CSI2_CHANNEL_1,//M->csi wr2
+},
+{
+    .bus_fmt = MEDIA_BUS_FMT_SGBRG10_1X10,
+    .width = 3864,
+    .height = 2192,
+    .max_fps = {
+        .numerator = 10000,
+        .denominator = 200000,
+    },
+    .exp_def = 0x13e,
+    .hts_def = 0x021A * IMX415_4LANES * 2,
+    //
+    //IMX415 HDR mode T-line is half of Linear mode,
+    // make vts double to workaround.
+    //
+    .vts_def = 0x06BD * 4,
+    .global_reg_list = imx415_global_10bit_3864x2192_regs,
+    .reg_list = imx415_hdr3_10bit_3864x2192_1485M_regs,
+    .hdr_mode = HDR_X3,
+    .mipi_freq_idx = 1,
+    .bpp = 10,
+    .vc[PAD0] = V4L2_MBUS_CSI2_CHANNEL_2,
+    .vc[PAD1] = V4L2_MBUS_CSI2_CHANNEL_1,//M->csi wr0
+    .vc[PAD2] = V4L2_MBUS_CSI2_CHANNEL_0,//L->csi wr0
+    .vc[PAD3] = V4L2_MBUS_CSI2_CHANNEL_2,//S->csi wr2
+},
+{
+    .bus_fmt = MEDIA_BUS_FMT_SGBRG10_1X10,
+    .width = 3864,
+    .height = 2192,
+    .max_fps = {
+        .numerator = 10000,
+        .denominator = 200000,
+    },
+    .exp_def = 0x13e,
+    .hts_def = 0x01ca * IMX415_4LANES * 2,
+    //
+    // IMX415 HDR mode T-line is half of Linear mode,
+    // make vts double to workaround.
+    //
+    .vts_def = 0x07ea * 4,
+    .global_reg_list = imx415_global_10bit_3864x2192_regs,
+    .reg_list = imx415_hdr3_10bit_3864x2192_1782M_regs,
+    .hdr_mode = HDR_X3,
+    .mipi_freq_idx = 2,
+    .bpp = 10,
+    .vc[PAD0] = V4L2_MBUS_CSI2_CHANNEL_2,
+    .vc[PAD1] = V4L2_MBUS_CSI2_CHANNEL_1,//M->csi wr0
+    .vc[PAD2] = V4L2_MBUS_CSI2_CHANNEL_0,//L->csi wr0
+    .vc[PAD3] = V4L2_MBUS_CSI2_CHANNEL_2,//S->csi wr2
+},
+{
+    // 1H period = (1100 clock) = (1100 * 1 / 74.25MHz)
+    .bus_fmt = MEDIA_BUS_FMT_SGBRG12_1X12,
+    .width = 3864,
+    .height = 2192,
+    .max_fps = {
+        .numerator = 10000,
+        .denominator = 300000,
+    },
+    .exp_def = 0x08ca - 0x08,
+    .hts_def = 0x044c * IMX415_4LANES * 2,
+    .vts_def = 0x08ca,
+    .global_reg_list = imx415_global_12bit_3864x2192_regs,
+    .reg_list = imx415_linear_12bit_3864x2192_891M_regs,
+    .hdr_mode = NO_HDR,
+    .mipi_freq_idx = 0,
+    .bpp = 12,
+},
+{
+    .bus_fmt = MEDIA_BUS_FMT_SGBRG12_1X12,
+    .width = 3864,
+    .height = 2192,
+    .max_fps = {
+        .numerator = 10000,
+        .denominator = 300000,
+    },
+    .exp_def = 0x08CA * 2 - 0x0d90,
+    .hts_def = 0x0226 * IMX415_4LANES * 2,
+    //
+    // IMX415 HDR mode T-line is half of Linear mode,
+    // make vts double(that is FSC) to workaround.
+    //
+    .vts_def = 0x08CA * 2,
+    .global_reg_list = imx415_global_12bit_3864x2192_regs,
+    .reg_list = imx415_hdr2_12bit_3864x2192_1782M_regs,
+    .hdr_mode = HDR_X2,
+    .mipi_freq_idx = 2,
+    .bpp = 12,
+    .vc[PAD0] = V4L2_MBUS_CSI2_CHANNEL_1,
+    .vc[PAD1] = V4L2_MBUS_CSI2_CHANNEL_0,//L->csi wr0
+    .vc[PAD2] = V4L2_MBUS_CSI2_CHANNEL_1,
+    .vc[PAD3] = V4L2_MBUS_CSI2_CHANNEL_1,//M->csi wr2
+},
+{
+    .bus_fmt = MEDIA_BUS_FMT_SGBRG12_1X12,
+    .width = 3864,
+    .height = 2192,
+    .max_fps = {
+        .numerator = 10000,
+        .denominator = 200000,
+    },
+    .exp_def = 0x114,
+    .hts_def = 0x0226 * IMX415_4LANES * 2,
+    //
+    //IMX415 HDR mode T-line is half of Linear mode,
+    // make vts double(that is FSC) to workaround.
+    //
+    .vts_def = 0x0696 * 4,
+    .global_reg_list = imx415_global_12bit_3864x2192_regs,
+    .reg_list = imx415_hdr3_12bit_3864x2192_1782M_regs,
+    .hdr_mode = HDR_X3,
+    .mipi_freq_idx = 2,
+    .bpp = 12,
+    .vc[PAD0] = V4L2_MBUS_CSI2_CHANNEL_2,
+    .vc[PAD1] = V4L2_MBUS_CSI2_CHANNEL_1,//M->csi wr0
+    .vc[PAD2] = V4L2_MBUS_CSI2_CHANNEL_0,//L->csi wr0
+    .vc[PAD3] = V4L2_MBUS_CSI2_CHANNEL_2,//S->csi wr2
+},*/
