@@ -920,15 +920,24 @@ static __maybe_unused const struct regval imx415_linear_10bit_3864x2192_2376_reg
         // vertical offset = 12+540   | VST = x*2
         // horizontal length of selected area= 1920 | but output should be 12+1920+12 | HWIDTH=same
         // vertical length of selected area = 1080+13+3                               | VWIDTH = x*2
-        {IMX415_WINMODE,0x04}, //WINMODE //0: All-pixel mode, Horizontal/Vertical 2/2-line binning 4: Window cropping mode
+        /*{IMX415_WINMODE,0x04}, //WINMODE //0: All-pixel mode, Horizontal/Vertical 2/2-line binning 4: Window cropping mode
         {IMX415_PIX_HST_L,IMX415_FETCH_16BIT_L(12+960)}, //PIX_HST Effective pixel Start position (Horizontal direction) | Default in spec: 0x000
         {IMX415_PIX_HST_H,IMX415_FETCH_16BIT_H(12+960)}, //""
         {IMX415_PIX_HWIDTH_L,IMX415_FETCH_16BIT_L(1920)}, //PIX_HWIDTH Effective pixel Cropping width (Horizontal direction) | Default in spec: 0x0F18==3864
         {IMX415_PIX_HWIDTH_H,IMX415_FETCH_16BIT_H(1920)},  //""
         {IMX415_PIX_VST_L,IMX415_FETCH_16BIT_L((12+540)*2)}, //PIX_VST Effective pixel Star position (Vertical direction) Designated in V units ( Line×2 ) | Default in spec: 0x000
         {IMX415_PIX_VST_H,IMX415_FETCH_16BIT_H((12+540)*2)}, //""
-        {IMX415_PIX_VWIDTH_L,IMX415_FETCH_16BIT_L((1080+13+3)*2)}, //PIX_VWIDTH Effective pixel Cropping width (Vertical direction) Designated in V units ( Line×2 ) | Default in spec: 0x1120==4384
-        {IMX415_PIX_VWIDTH_H,IMX415_FETCH_16BIT_H((1080+13+3)*2)},
+        {IMX415_PIX_VWIDTH_L,IMX415_FETCH_16BIT_L((13+1080+3)*2)}, //PIX_VWIDTH Effective pixel Cropping width (Vertical direction) Designated in V units ( Line×2 ) | Default in spec: 0x1120==4384
+        {IMX415_PIX_VWIDTH_H,IMX415_FETCH_16BIT_H((13+1080+3)*2)},*/
+        {IMX415_WINMODE,0x04}, //WINMODE //0: All-pixel mode, Horizontal/Vertical 2/2-line binning 4: Window cropping mode
+        {IMX415_PIX_HST_L,IMX415_FETCH_16BIT_L(1920)}, //PIX_HST Effective pixel Start position (Horizontal direction) | Default in spec: 0x000
+        {IMX415_PIX_HST_H,IMX415_FETCH_16BIT_H(1920)}, //""
+        {IMX415_PIX_HWIDTH_L,IMX415_FETCH_16BIT_L(12+1920+12)}, //PIX_HWIDTH Effective pixel Cropping width (Horizontal direction) | Default in spec: 0x0F18==3864
+        {IMX415_PIX_HWIDTH_H,IMX415_FETCH_16BIT_H(12+1920+12)},  //""
+        {IMX415_PIX_VST_L,IMX415_FETCH_16BIT_L((1080)*2)}, //PIX_VST Effective pixel Star position (Vertical direction) Designated in V units ( Line×2 ) | Default in spec: 0x000
+        {IMX415_PIX_VST_H,IMX415_FETCH_16BIT_H((1080)*2)}, //""
+        {IMX415_PIX_VWIDTH_L,IMX415_FETCH_16BIT_L((1+12+8+1080+8+2+1)*2)}, //PIX_VWIDTH Effective pixel Cropping width (Vertical direction) Designated in V units ( Line×2 ) | Default in spec: 0x1120==4384
+        {IMX415_PIX_VWIDTH_H,IMX415_FETCH_16BIT_H((1+12+8+2160+8+2+1)*2)},
         //
         //{0x30D9,0x02}, //DIG_CLP_VSTAET ? 0x02=binning 0x06=All-pixel scan mode , default 0x06
         //{0x30DA,0x01}, //DIG_CLP_VNUM ? 0x01=binning 0x02=all-pixel scan mode, default 0x02
@@ -1045,5 +1054,28 @@ static __maybe_unused int calculateFrameRate(int pixel_rate,int image_width,int 
 //1296x732 is obtained from the sensor through center cropping and binning. 1296x732 will
 //be referred to as 1280x720 throughout the document.
 //1296x732 * 2 = 2592 * 1464
+
+// def values of the cropping regs:
+// PIX_HWIDTH=0x0F18  == 3864 | PIX_VWIDTH=0x1120 == 4384  *0.5=2192
+// -> ergo:
+
+// 4k pixels:
+// Horizontal: 12+3840+12      = 3864
+// Vertical: 1+12+8+2160+8+2+1 = 2192
+
+// 2x2 binning pixels:
+// Horizontal: 6+1920+6+12     = 1944
+// Vertical: 1+6+4+1080+4+1+1  = 1097
+
+// 1080p cropping:
+// HorizontalW: 12+1920+12          = 1944
+// VerticalH  : 1+12+8+1080+8+2+1   = 1112
+// offset Horizontal: 3864 - 1944 = 1920
+// offset Vertical  : 2192 - 1112 = 1080
+
+
+// pixel_rate = 1188000000 / 10 * 2 * 4 = 950400000
+
+// 1 / ((366 / 74,25) / 10^6 * 6948) = 29,198165293
 
 #endif //MEDIASEVER_IMX415_REGS_ROCKCHIP_H
