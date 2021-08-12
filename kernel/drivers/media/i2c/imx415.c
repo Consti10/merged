@@ -361,7 +361,7 @@ static const struct imx415_mode supported_modes[] = {
             .mipi_freq_idx = 3,
             .bpp = 10,
     },*/
-    {
+    /**XXXworking{
             .bus_fmt = MEDIA_BUS_FMT_SGBRG10_1X10,
             //.width = 3840+(12+12),
             //.height = 2160+(1+12+8+8+2+1),
@@ -377,6 +377,26 @@ static const struct imx415_mode supported_modes[] = {
             .vts_def = 0x08ca ,                     // 2250        | seems to be VMAX from spec sheet
             .global_reg_list = imx415_global_10bit_3864x2192_regs,
             .reg_list = imx415_linear_10bit_3864x2192_2376_regs_binning,
+            .hdr_mode = NO_HDR,
+            .mipi_freq_idx = 3,
+            .bpp = 10,
+    },*/
+    {
+            .bus_fmt = MEDIA_BUS_FMT_SGBRG10_1X10,
+            //.width = 3840+(12+12),
+            //.height = 2160+(1+12+8+8+2+1),
+            .width = 12+1920+12,
+            .height = 1+12+(1080+13+3)+2+1,
+            .max_fps = {
+                    .numerator =     10000,
+                    .denominator = 1800000,
+            },
+            .exp_def = 0x08ca - 0x08, //2250-8=2248
+            .hts_def = 0x16E * IMX415_4LANES * 2, // 366*4*2 = 2928
+            //.hts_def = 0xF4 * IMX415_4LANES * 2,
+            .vts_def = 0x08ca ,                     // 2250        | seems to be VMAX from spec sheet
+            .global_reg_list = imx415_global_10bit_3864x2192_regs,
+            .reg_list = imx415_linear_10bit_3864x2192_2376_regs_cropping,
             .hdr_mode = NO_HDR,
             .mipi_freq_idx = 3,
             .bpp = 10,
@@ -579,6 +599,9 @@ static const struct imx415_mode supported_modes[] = {
 	},*/
 };
 
+static void debugSomeRegisters(struct imx415 *imx415){
+    debugRegisterRead2(imx415->client,IMX415_SHR0_L,IMX415_REG_VALUE_24BIT,"SHRO");
+}
 
 
 static int imx415_get_reso_dist(const struct imx415_mode *mode,
@@ -650,20 +673,9 @@ static void consti10_setup_weird_stuff(struct imx415* imx415){
     pixel_rate = (u32)link_freq_items[mode->mipi_freq_idx] / mode->bpp * 2 * IMX415_4LANES;
     __v4l2_ctrl_s_ctrl_int64(imx415->pixel_rate,
                              pixel_rate);
-    dev_dbg(&imx415->client->dev,"Consti10: hBlank:%d, vBlank:(%d:%d),mipiFreqIdx:%d,pixelRate:%d",(int)h_blank,(int)vblank_min,(int)vblank_def,(int)mode->mipi_freq_idx,(int)pixel_rate);
+    dev_dbg(&imx415->client->dev,"Consti10: hBlank:%d, vBlank:(min:%d def:%d),mipiFreqIdx:%d,pixelRate:%d",(int)h_blank,(int)vblank_min,(int)vblank_def,(int)mode->mipi_freq_idx,(int)pixel_rate);
     // set values: hBlank:4936, vBlank:(46:58),mipiFreqIdx:0,pixelRate:356800000
 }
-
-// crap they don't have get ctrl in kernel code
-/*static void consti10_debug_current_v4l2_values(struct imx415* imx415){
-    s32 curr_h_blank=-1,curr_v_blank=-1,curr_pixel_rate=-1;
-    dev_dbg(&imx415->client->dev, "Consti10: %s\n",__FUNCTION__);
-    curr_h_blank=__v4l2_ctrl_s_ctrl_int64(imx415->vblank);
-    curr_v_blank=__v4l2_ctrl_s_ctrl_int64(imx415->hblank);
-    curr_pixel_rate=__v4l2_ctrl_s_ctrl_int64(imx415->pixel_rate);
-
-    dev_dbg(&imx415->client->dev, "Consti10: curr_h_blank:%d,curr_v_blank:%d,curr_pixel_rate:%d,",(int)curr_h_blank,(int)curr_v_blank,(int)curr_pixel_rate);
-}*/
 
 
 static int imx415_set_fmt(struct v4l2_subdev *sd,
@@ -1335,6 +1347,8 @@ static int imx415_set_ctrl(struct v4l2_ctrl *ctrl)
 
     dev_dbg(&imx415->client->dev, "Consti10: %s\n",__FUNCTION__);
 
+    debugSomeRegisters(imx415);
+
 	/* Propagate change of current control to all related controls */
 	switch (ctrl->id) {
 	case V4L2_CID_VBLANK:
@@ -1342,12 +1356,27 @@ static int imx415_set_ctrl(struct v4l2_ctrl *ctrl)
 			/* Update max exposure while meeting expected vblanking */
 			// Consti10: I think rockchip messed that up
 			max = imx415->cur_mode->height + ctrl->val - 4;
+
+            dev_dbg(&client->dev, "Consti10: Need to update exposure, curr_vts:%d new_vts:%d\n",imx415->cur_vts,(imx415->cur_mode->height + ctrl->val));
+
 			__v4l2_ctrl_modify_range(imx415->exposure,
 					 imx415->exposure->minimum, max,
 					 imx415->exposure->step,
 					 imx415->exposure->default_value);
 
-			//
+			//Consti10: Assuming the driver first changes the exposure, then the vblank, we have to update the exposure,right ?!
+			// apparently not, really weird
+            /*shr0 = max;
+            ret = imx415_write_reg(imx415->client, IMX415_LF_EXPO_REG_L,
+                                   IMX415_REG_VALUE_08BIT,
+                                   IMX415_FETCH_EXP_L(shr0));
+            ret |= imx415_write_reg(imx415->client, IMX415_LF_EXPO_REG_M,
+                                    IMX415_REG_VALUE_08BIT,
+                                    IMX415_FETCH_EXP_M(shr0));
+            ret |= imx415_write_reg(imx415->client, IMX415_LF_EXPO_REG_H,
+                                    IMX415_REG_VALUE_08BIT,
+                                    IMX415_FETCH_EXP_H(shr0));*/
+
 		}
 		break;
 	}
@@ -1536,20 +1565,6 @@ err_free_handler:
 	return ret;
 }
 
-static void debugRegisterRead(struct imx415 *imx415,u16 reg){
-    struct device *dev = &imx415->client->dev;
-    u32 value=0;
-    int ret;
-    dev_dbg(dev, "Consti10: Start reading registerY\n");
-    ret = imx415_read_reg(imx415->client, reg,
-                          IMX415_REG_VALUE_08BIT, &value);
-    if(ret){
-        dev_dbg(dev, "Consti10: Couldn't read register %d\n",(int)reg);
-        return;
-    }
-    dev_dbg(dev,"Consti10: Value of %d is %d",(int)reg,(int)value);
-}
-
 static int imx415_check_sensor_id(struct imx415 *imx415,
 				  struct i2c_client *client)
 {
@@ -1566,7 +1581,8 @@ static int imx415_check_sensor_id(struct imx415 *imx415,
 	}
 
 	// added by consti10:
-    debugRegisterRead(imx415,IMX415_REG_CHIP_ID);
+    debugRegisterRead(imx415->client,IMX415_REG_CHIP_ID);
+    debugRegisterRead2(imx415->client,IMX415_REG_CHIP_ID,IMX415_REG_VALUE_08BIT,"CHIP_ID");
 
 	dev_info(dev, "Detected imx415 id %06x\n", CHIP_ID);
 

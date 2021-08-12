@@ -90,6 +90,35 @@ static int imx415_read_reg(struct i2c_client *client, u16 reg, unsigned int len,
     return 0;
 }
 
+// Read and print a register, be as much verbose as possible
+static void debugRegisterRead(struct i2c_client *client,u16 reg){
+    struct device *dev = &client->dev;
+    u32 value=0;
+    int ret;
+    dev_dbg(dev, "Consti10: Start reading registerY\n");
+    ret = imx415_read_reg(client, reg,
+                          IMX415_REG_VALUE_08BIT, &value);
+    if(ret){
+        dev_dbg(dev, "Consti10: Couldn't read register %d\n",(int)reg);
+        return;
+    }
+    dev_dbg(dev,"Consti10: Value of %d is %d",(int)reg,(int)value);
+}
+
+// Read and print a register, be as much verbose as possible
+static void debugRegisterRead2(struct i2c_client *client,u16 reg,unsigned int len,const char* name){
+    struct device *dev = &client->dev;
+    u32 value=0;
+    int ret;
+    dev_dbg(dev, "Consti10X: Start reading register:%d len:%d name:%s\n",reg,len,name);
+    ret = imx415_read_reg(client, reg,
+                          len, &value);
+    if(ret){
+        dev_dbg(dev,"Consti10X: Couldn't read register %d",reg);
+        return;
+    }
+    dev_dbg(dev,"Consti10X: Value of register:%d name:%s is: %d",(int)reg,name,(int)value);
+}
 
 
 
