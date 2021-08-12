@@ -286,7 +286,7 @@ static const struct imx415_mode supported_modes[] = {
 	 * frame rate = 1 / (Vtt * 1H) = 1 / (VMAX * 1H)
 	 * VMAX >= (PIX_VWIDTH / 2) + 46 = height + 46
 	 */
-    {
+    /*{
             .bus_fmt = MEDIA_BUS_FMT_SGBRG10_1X10,
             .width = 12+3840+12,
             .height = 1+12+8+2160+8+2+1,
@@ -302,8 +302,8 @@ static const struct imx415_mode supported_modes[] = {
             .hdr_mode = NO_HDR,
             .mipi_freq_idx = 3,
             .bpp = 10,
-    },
-    /*{
+    },*/
+    {
             .bus_fmt = MEDIA_BUS_FMT_SGBRG10_1X10,
             //.width = 3840+(12+12),
             //.height = 2160+(1+12+8+8+2+1),
@@ -322,7 +322,7 @@ static const struct imx415_mode supported_modes[] = {
             .hdr_mode = NO_HDR,
             .mipi_freq_idx = 3,
             .bpp = 10,
-    },*/
+    },
     /*tested, gives 3 lines, then black image{
             .bus_fmt = MEDIA_BUS_FMT_SGBRG10_1X10,
             //.width = 3840+(12+12),
