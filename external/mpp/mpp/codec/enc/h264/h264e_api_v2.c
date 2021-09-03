@@ -117,6 +117,10 @@ static void init_h264e_cfg_set(MppEncCfgSet *cfg, MppClientType type)
         h264->log2_max_frame_num = 12;
     } break;
     }
+    //Consti10: test- no matter what (I think it is VPU_CLIENT_RKVENC, but not sure) set poc_type to 0
+    h264->poc_type = 2;
+    h264->log2_max_poc_lsb = 12;
+    h264->log2_max_frame_num = 12;
 
     /*
      * default prep:

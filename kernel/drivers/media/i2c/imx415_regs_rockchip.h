@@ -1031,6 +1031,7 @@ static __maybe_unused int calculateFrameRate(int pixel_rate,int image_width,int 
 // 1 / ((244 / 37.125) / 10^6 * 1222) = 124,510343162
 // 1 / ((365 / 74,25) / 10^6 * 2250) = 90,410958904
 // 1 / ((365 / 74,25) / 10^6 * 2238) = 90,895736164
+// 1 / ((365 / 74,25) / 10^6 * (1097*2)) = 92,718622395
 // 1 / ((365 / 74,25) / 10^6 * 1222) = 166,468623187
 // 1 / ((365 / 74,25) / 10^6 * 1715) = 118,614960661
 // 244==0xF4
@@ -1077,5 +1078,9 @@ static __maybe_unused int calculateFrameRate(int pixel_rate,int image_width,int 
 // pixel_rate = 1188000000 / 10 * 2 * 4 = 950400000
 
 // 1 / ((366 / 74,25) / 10^6 * 6948) = 29,198165293
+
+//from some other sheet:
+//HMAX | VMAX | WINPH | WINPV | WINWH | WINWV
+//4400d| 520d | 640d  | 300d  | 656d  | 496d
 
 #endif //MEDIASEVER_IMX415_REGS_ROCKCHIP_H

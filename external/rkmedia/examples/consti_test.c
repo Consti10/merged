@@ -120,7 +120,7 @@ static void __attribute__((unused)) sendFakeNALU(){
 
 
 void video_packet_cb(MEDIA_BUFFER mb) {
-    const char *nalu_type = "Unknow";
+    const char *nalu_type = "Unknown";
     switch (RK_MPI_MB_GetFlag(mb)) {
         case VENC_NALU_IDRSLICE:
             nalu_type = "IDR Slice";
@@ -128,12 +128,20 @@ void video_packet_cb(MEDIA_BUFFER mb) {
         case VENC_NALU_PSLICE:
             nalu_type = "P Slice";
             break;
+        case VENC_NALU_SPS:
+            nalu_type="SPS";
+            break;
+        case VENC_NALU_PPS:
+            nalu_type="PPS";
+            break;
         default:
             break;
     }
     printf("Get Video Encoded packet(%s):ptr:%p, fd:%d, size:%zu, mode:%d\n",
            nalu_type, RK_MPI_MB_GetPtr(mb), RK_MPI_MB_GetFD(mb),
            RK_MPI_MB_GetSize(mb), RK_MPI_MB_GetModeID(mb));
+    // hm how exactly does one get the sps/pps ?!
+
     // send out NALU data via udp (raw)
     mySendTo( RK_MPI_MB_GetPtr(mb),RK_MPI_MB_GetSize(mb));
     // send a fake nalu to reduce latency (next frame to determine end of prev. frame issue).
