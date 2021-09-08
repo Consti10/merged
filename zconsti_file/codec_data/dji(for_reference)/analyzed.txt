@@ -1,0 +1,546 @@
+ Input channel constructed: 'd49b60d', fd=100
+I: setView = com.android.internal.policy.DecorView@3e5df1 TM=true
+I: onWindowVisibilityChanged(0) true android.view.SurfaceView{3a2369d V.E...... ......I. 0,0-0,0 #7f090134 app:id/sv_video} of ViewRootImpl@10e5174[VideoActivityWithDatabase]
+D: controlInsetsForCompatibility: hideByFlags=0x1, showByFlags=0x0, flags=0x81810500, sysUiVis=0x0, matchParent=true, nonAttachedAppWindow=true
+D: setRequestedVisible: visible=false, type=0, host=constantin.video.example/constantin.video.example.decodingperf.VideoActivityWithDatabase, from=android.view.InsetsSourceConsumer.hide:236 android.view.InsetsController.collectSourceControls:1172 android.view.InsetsController.controlAnimationUnchecked:1049 android.view.InsetsController.applyAnimation:1417 android.view.InsetsController.hide:984 android.view.InsetsController.hide:967 android.view.ViewRootImpl.controlInsetsForCompatibility:2852 android.view.ViewRootImpl.performTraversals:3314 android.view.ViewRootImpl.doTraversal:2618 android.view.ViewRootImpl$TraversalRunnable.run:9971 
+I: assignNativeObject: nativeObject = 0 Surface(name=null)/@0x26ac25e / android.view.SurfaceControl.readFromParcel:1117 android.view.IWindowSession$Stub$Proxy.relayout:1820 android.view.ViewRootImpl.relayoutWindow:9005 android.view.ViewRootImpl.performTraversals:3360 android.view.ViewRootImpl.doTraversal:2618 android.view.ViewRootImpl$TraversalRunnable.run:9971 android.view.Choreographer$CallbackRecord.run:1010 android.view.Choreographer.doCallbacks:809 android.view.Choreographer.doFrame:744 android.view.Choreographer$FrameDisplayEventReceiver.run:995 
+I: Relayout returned: old=(0,0,2400,1080) new=(88,0,2400,1080) req=(2400,1080)0 dur=8 res=0x7 s={true -5476376645125191888} ch=true fn=-1
+I: windowStopped(false) true android.view.SurfaceView{3a2369d V.E...... ......I. 0,0-0,0 #7f090134 app:id/sv_video} of ViewRootImpl@10e5174[VideoActivityWithDatabase]
+I: surfaceCreated 2 #8 android.view.SurfaceView{3a2369d V.E...... ......ID 0,0-2186,1080 #7f090134 app:id/sv_video}
+D: Start with surface
+D: Receive from file dji_fpv/out.h264
+I: surfaceChanged (2186,1080) 2 #8 android.view.SurfaceView{3a2369d V.E...... ......ID 0,0-2186,1080 #7f090134 app:id/sv_video}
+V: Connection attempt already in progress
+I: applySurfaceTransforms: t = android.view.SurfaceControl$Transaction@d4798c2 surfaceControl = Surface(name=SurfaceView - constantin.video.example/constantin.video.example.decodingperf.VideoActivityWithDatabase@3a2369d@0)/@0x1356d3 frame = 1
+V: Connection attempt already in progress
+D: SPS:[profile_idc=100,constraint_set0_flag=0,constraint_set1_flag=0,constraint_set2_flag=0,constraint_set3_flag=0,constraint_set4_flag=0,constraint_set5_flag=0,reserved_zero_2bits=0,level_idc=50,seq_parameter_set_id=0,chroma_format_idc=1,residual_colour_transform_flag=0,bit_depth_luma_minus8=0,bit_depth_chroma_minus8=0,qpprime_y_zero_transform_bypass_flag=0,seq_scaling_matrix_present_flag=0,log2_max_frame_num_minus4=1,pic_order_cnt_type=2,log2_max_pic_order_cnt_lsb_minus4=0,delta_pic_order_always_zero_flag=0,offset_for_non_ref_pic=0,offset_for_top_to_bottom_field=0,num_ref_frames_in_pic_order_cnt_cycle=0,
+    num_ref_frames=1,gaps_in_frame_num_value_allowed_flag=0,pic_width_in_mbs_minus1=59,pic_height_in_map_units_minus1=44,frame_mbs_only_flag=1,mb_adaptive_frame_field_flag=0,direct_8x8_inference_flag=1,frame_cropping_flag=0,frame_crop_left_offset=0,frame_crop_right_offset=0, frame_crop_top_offset=0,frame_crop_bottom_offset=0,vui_parameters_present_flag=1,VUI:[aspect_ratio_info_present_flag=0,aspect_ratio_idc=0,s
+D: r_width=0,sar_height=0,overscan_info_present_flag=0,overscan_appropriate_flag=0,video_signal_type_present_flag=1,video_format=5,video_full_range_flag=0,colour_description_present_flag=1,colour_primaries=1,transfer_characteristics=1,matrix_coefficients=1,chroma_loc_info_present_flag=0,chroma_sample_loc_type_top_field=0,chroma_sample_loc_type_bottom_field=0,timing_info_present_flag=1,num_units_in_tick=1,time_scale=120,fixed_frame_rate_flag=0,nal_hrd_parameters_present_flag=0,vcl_hrd_parameters_present_flag=0,low_delay_hrd_flag=0,pic_struct_present_flag=0,bitstream_restriction_flag=1,motion_vectors_over_pic_boundaries_flag=1,max_bytes_per_pic_denom=0,max_bits_per_mb_denom=0,log2_max_mv_length_horizontal=13,log2_max_mv_length_vertical=11,num_reorder_frames=0,max_dec_frame_buffering=1]]
+D: SPSData:[0,0,0,1,103,100,0,50,172,77,1,224,45,211,80,16,16,20,0,0,3,0,4,0,0,3,1,224,60,112,202,128]
+D: PPS:[pic_parameter_set_id=0,seq_parameter_set_id=0,entropy_coding_mode_flag=1,pic_order_present_flag=0,num_slice_groups_minus1=0,slice_group_map_type=0,slice_group_change_direction_flag=0,slice_group_change_rate_minus1=0,pic_size_in_map_units_minus1=0,num_ref_idx_l0_active_minus1=0,num_ref_idx_l1_active_minus1=0,weighted_pred_flag=0,weighted_bipred_idc=0,pic_init_qp_minus26=0,chroma_qp_index_offset=0,deblocking_filter_control_present_flag=1,constrained_intra_pred_flag=0,redundant_pic_cnt_present_flag=0,]
+D: PPSData:[0,0,0,1,104,238,60,176]
+I: MSG_WINDOW_FOCUS_CHANGED 0 1
+I:  [] Now uninitialized
+I: [] onAllocateComponent
+I: IOmx service obtained
+I: nativeRelease nativeObject s[-5476376649419953600]
+I: nativeRelease nativeObject e[-5476376649419953600]
+I: nativeRelease nativeObject s[-5476376649419947616]
+I: nativeRelease nativeObject e[-5476376649419947616]
+I: nativeRelease nativeObject s[-5476376649419938112]
+I: nativeRelease nativeObject e[-5476376649419938112]
+I: nativeRelease nativeObject s[-5476376649419943216]
+I: [OMX.qcom.video.decoder.avc] Now Loaded
+I: nativeRelease nativeObject e[-5476376649419943216]
+I: nativeRelease nativeObject s[-5476376649419943568]
+I: nativeRelease nativeObject e[-5476376649419943568]
+I: nativeRelease nativeObject s[-5476376649419947792]
+I: nativeRelease nativeObject e[-5476376649419947792]
+I: nativeRelease nativeObject s[-5476376649419940752]
+D: Video WH:960 H:720
+D: Configuring decoder:mime: string(video/avc), width: int32(960), height: int32(720), csd-0: data, csd-1: data, low-latency: int32(1), priority: int32(0)}
+D: connecting to surface 0xb4000074d30c16d0, reason connectToSurface
+I: nativeRelease nativeObject e[-5476376649419940752]
+I: nativeRelease nativeObject s[-5476376649419946736]
+I: nativeRelease nativeObject e[-5476376649419946736]
+I: nativeRelease nativeObject s[-5476376649419942336]
+I: nativeRelease nativeObject e[-5476376649419942336]
+I: [OMX.qcom.video.decoder.avc] setting surface generation to 31389699
+D: disconnecting from surface 0xb4000074d30c16d0, reason connectToSurface(reconnect)
+D: connecting to surface 0xb4000074d30c16d0, reason connectToSurface(reconnect)
+I: app-pid(30654)
+I: [OMX.qcom.video.decoder.avc] OMX_QCOM_FramePacking_OnlyOneCompleteFrame is setting
+D: Connected to remote service
+W: Fail to set FramePackingMode(-1010)
+I: nativeRelease nativeObject s[-5476376649419943744]
+I: nativeRelease nativeObject e[-5476376649419943744]
+I: nativeRelease nativeObject s[-5476376649419969792]
+I: nativeRelease nativeObject e[-5476376649419969792]
+I: nativeRelease nativeObject s[-5476376649420439360]
+I: nativeRelease nativeObject e[-5476376649420439360]
+I: MSG_WINDOW_FOCUS_CHANGED 1 1
+D: prepareNavigationBarInfo() DecorView@3e5df1[VideoActivityWithDatabase]
+D: getNavigationBarColor() -16711423
+D: prepareNavigationBarInfo() DecorView@3e5df1[VideoActivityWithDatabase]
+D: getNavigationBarColor() -16711423
+V: Starting input: tba=constantin.video.example ic=null mNaviBarColor -16711423 mIsGetNaviBarColorSuccess true , NavVisible : true , NavTrans : false
+D: startInputInner - Id : 0
+I: packageName : constantin.video.example
+I: startInputInner - mService.startInputOrWindowGainedFocus
+V: Processing queued up service tasks: 4
+D: Input channel constructed: 'ClientS', fd=111
+D: Input channel destroyed: 'ClientS', fd=98
+I: [OMX.qcom.video.decoder.avc] Now Loaded->Idle
+I: nativeRelease nativeObject s[-5476376649420013264]
+I: nativeRelease nativeObject e[-5476376649420013264]
+I: nativeRelease nativeObject s[-5476376649419920688]
+I: nativeRelease nativeObject e[-5476376649419920688]
+I: nativeRelease nativeObject s[-5476376649419924912]
+I: nativeRelease nativeObject e[-5476376649419924912]
+D: set up nativeWindow 0xb4000074d30c16d0 for 960x720, color 0x7fa30c06, rotation 0, usage 0x20402900
+I: [OMX.qcom.video.decoder.avc] configureOutputBuffersFromNativeWindow setBufferCount : 16, minUndequeuedBuffers : 4
+I: [OMX.qcom.video.decoder.avc] Now Idle->Executing
+I: setCodecState state : 0
+I: [OMX.qcom.video.decoder.avc] Now Executing
+I: [OMX.qcom.video.decoder.avc] calling emptyBuffer 1 w/ codec specific data, size : 32
+D: NAL_UNIT_TYPE_CODED_SLICE_IDR
+I: [OMX.qcom.video.decoder.avc] calling emptyBuffer 2 w/ codec specific data, size : 8
+D: Attaching thread
+D: Successfully set priority from -10 to-16
+D: Slice header(70.974609kB):[first_mb_in_slice=0,slice_type=2,pic_parameter_set_id=0frame_num=31]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(33.839844kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=27]
+I: [OMX.qcom.video.decoder.avc] OMX_EventPortSettingsChanged 0x7f000062
+D: Actual Width and Height in output 960,720
+D: AMEDIACODEC_INFO_OUTPUT_FORMAT_CHANGED 960 720 color-range: int32(2), color-standard: int32(1), color-transfer: int32(3), mime: string(video/raw), stride: int32(1024), slice-height: int32(736), color-format: int32(2141391878), crop: Rect(0, 0, 959, 719), android._dataspace: int32(260), hdr-static-info: data, width: int32(960), height: int32(720)}
+I: setCodecState state : 1
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(42.627930kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=10]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(47.487305kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=14]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(54.139648kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=3]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(65.768555kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=4]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+I: Video W and H960,720
+D: Slice header(71.525391kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=5]
+I: surfaceChanged (1440,1080) 2 #5 android.view.SurfaceView{3a2369d V.E...... ......ID 0,0-1440,1080 #7f090134 app:id/sv_video}
+D: AUD:[0,0,0,1,9,16]
+I: applySurfaceTransforms: t = android.view.SurfaceControl$Transaction@d4798c2 surfaceControl = Surface(name=SurfaceView - constantin.video.example/constantin.video.example.decodingperf.VideoActivityWithDatabase@3a2369d@0)/@0x1356d3 frame = 3
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(71.947266kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=6]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(70.846680kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=1]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(66.898438kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=1]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(65.924805kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=1]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(68.870117kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=1]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(79.988281kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=2]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(84.006836kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=2]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(86.446289kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=2]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(90.321289kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=2]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(88.008789kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(92.640625kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(96.189453kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(94.030273kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+I: nativeRelease nativeObject s[-5476376649420472448]
+I: nativeRelease nativeObject e[-5476376649420472448]
+I: assignNativeObject: nativeObject = 0 Surface(name=null)/@0x59c271e / android.view.SurfaceControl.readFromParcel:1117 android.view.IWindowSession$Stub$Proxy.relayout:1810 android.view.ViewRootImpl.relayoutWindow:9005 android.view.ViewRootImpl.performTraversals:3360 android.view.ViewRootImpl.doTraversal:2618 android.view.ViewRootImpl$TraversalRunnable.run:9971 android.view.Choreographer$CallbackRecord.run:1010 android.view.Choreographer.doCallbacks:809 android.view.Choreographer.doFrame:744 android.view.Choreographer$FrameDisplayEventReceiver.run:995 
+I: assignNativeObject: nativeObject = 0 Surface(name=null)/@0x919c9 / android.view.SurfaceControl.readFromParcel:1117 android.view.IWindowSession$Stub$Proxy.relayout:1820 android.view.ViewRootImpl.relayoutWindow:9005 android.view.ViewRootImpl.performTraversals:3360 android.view.ViewRootImpl.doTraversal:2618 android.view.ViewRootImpl$TraversalRunnable.run:9971 android.view.Choreographer$CallbackRecord.run:1010 android.view.Choreographer.doCallbacks:809 android.view.Choreographer.doFrame:744 android.view.Choreographer$FrameDisplayEventReceiver.run:995 
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+I: nativeRelease nativeObject s[-5476376649420490752]
+I: nativeRelease nativeObject e[-5476376649420490752]
+I: nativeRelease nativeObject s[-5476376649420430560]
+I: nativeRelease nativeObject e[-5476376649420430560]
+I: nativeRelease nativeObject s[-5476376649420432496]
+I: nativeRelease nativeObject e[-5476376649420432496]
+I: Relayout returned: old=(0,0,1080,2400) new=(0,0,1080,2400) req=(1080,2400)8 dur=8 res=0x5 s={false 0} ch=true fn=120
+I: stopped(true) old=false
+D: Slice header(90.246094kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+I: nativeRelease nativeObject s[-5476376649419924912]
+I: nativeRelease nativeObject e[-5476376649419924912]
+I: nativeRelease nativeObject s[-5476376649419962224]
+I: nativeRelease nativeObject e[-5476376649419962224]
+I: nativeRelease nativeObject s[-5476376649420472448]
+I: nativeRelease nativeObject e[-5476376649420472448]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(85.983398kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(78.201172kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(84.290039kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+V: updateAppliedLetterboxDirection, direction=1, Caller=android.view.ViewRootImpl.handleDispatchLetterboxDirectionChanged:12114
+I: nativeRelease nativeObject s[-5476376649420488816]
+I: nativeRelease nativeObject e[-5476376649420488816]
+I: nativeRelease nativeObject s[-5476376649420487584]
+I: nativeRelease nativeObject e[-5476376649420487584]
+I: nativeRelease nativeObject s[-5476376649420482656]
+I: nativeRelease nativeObject e[-5476376649420482656]
+I: MSG_RESIZED_REPORT: frame=(88,0,2400,1080) ci=(0,63,126,0) vi=(0,63,126,0) or=2
+D: Slice header(90.468750kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+I: nativeRelease nativeObject s[-5476376649420007808]
+I: nativeRelease nativeObject e[-5476376649420007808]
+I: assignNativeObject: nativeObject = 0 Surface(name=null)/@0x26ac25e / android.view.SurfaceControl.readFromParcel:1117 android.view.IWindowSession$Stub$Proxy.relayout:1820 android.view.ViewRootImpl.relayoutWindow:9005 android.view.ViewRootImpl.performTraversals:3360 android.view.ViewRootImpl.doTraversal:2618 android.view.ViewRootImpl$TraversalRunnable.run:9971 android.view.Choreographer$CallbackRecord.run:1010 android.view.Choreographer.doCallbacks:809 android.view.Choreographer.doFrame:744 android.view.Choreographer$FrameDisplayEventReceiver.run:995 
+I: nativeRelease nativeObject s[-5476376649419970672]
+I: nativeRelease nativeObject e[-5476376649419970672]
+I: Relayout returned: old=(88,0,2400,1080) new=(88,0,2400,1080) req=(2312,1080)0 dur=9 res=0x1 s={true -5476376645125191888} ch=false fn=4
+D: semSetRoundedCorners: 5
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(89.308594kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(94.086914kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(89.227539kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+I: nativeRelease nativeObject s[-5476376649420007808]
+I: nativeRelease nativeObject e[-5476376649420007808]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(85.429688kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(91.577148kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(100.098633kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+I: nativeRelease nativeObject s[-5476376649419940400]
+I: nativeRelease nativeObject e[-5476376649419940400]
+I: nativeRelease nativeObject s[-5476376649419947616]
+I: nativeRelease nativeObject e[-5476376649419947616]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(95.958008kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(99.578125kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=49]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(91.499023kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=27]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(85.822266kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=10]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(85.747070kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=14]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(96.101562kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=3]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(93.053711kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=4]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(95.829102kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=5]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(85.114258kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=6]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(78.861328kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=1]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(77.138672kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=1]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(88.798828kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=1]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(89.778320kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=1]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(92.190430kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=2]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(92.733398kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=2]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(88.872070kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=2]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(94.057617kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=2]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+I: nativeRelease nativeObject s[-5476376649420007808]
+I: nativeRelease nativeObject e[-5476376649420007808]
+D: Slice header(97.923828kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(101.691406kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(102.188477kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(99.465820kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(80.471680kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(79.321289kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(79.002930kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(98.611328kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(99.525391kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(98.721680kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(90.017578kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(92.880859kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: SPS:[profile_idc=100,constraint_set0_flag=0,constraint_set1_flag=0,constraint_set2_flag=0,constraint_set3_flag=0,constraint_set4_flag=0,constraint_set5_flag=0,reserved_zero_2bits=0,level_idc=50,seq_parameter_set_id=0,chroma_format_idc=1,residual_colour_transform_flag=0,bit_depth_luma_minus8=0,bit_depth_chroma_minus8=0,qpprime_y_zero_transform_bypass_flag=0,seq_scaling_matrix_present_flag=0,log2_max_frame_num_minus4=1,pic_order_cnt_type=2,log2_max_pic_order_cnt_lsb_minus4=0,delta_pic_order_always_zero_flag=0,offset_for_non_ref_pic=0,offset_for_top_to_bottom_field=0,num_ref_frames_in_pic_order_cnt_cycle=0,
+    num_ref_frames=1,gaps_in_frame_num_value_allowed_flag=0,pic_width_in_mbs_minus1=59,pic_height_in_map_units_minus1=44,frame_mbs_only_flag=1,mb_adaptive_frame_field_flag=0,direct_8x8_inference_flag=1,frame_cropping_flag=0,frame_crop_left_offset=0,frame_crop_right_offset=0, frame_crop_top_offset=0,frame_crop_bottom_offset=0,vui_parameters_present_flag=1,VUI:[aspect_ratio_info_present_flag=0,aspect_ratio_idc=0,s
+D: r_width=0,sar_height=0,overscan_info_present_flag=0,overscan_appropriate_flag=0,video_signal_type_present_flag=1,video_format=5,video_full_range_flag=0,colour_description_present_flag=1,colour_primaries=1,transfer_characteristics=1,matrix_coefficients=1,chroma_loc_info_present_flag=0,chroma_sample_loc_type_top_field=0,chroma_sample_loc_type_bottom_field=0,timing_info_present_flag=1,num_units_in_tick=1,time_scale=120,fixed_frame_rate_flag=0,nal_hrd_parameters_present_flag=0,vcl_hrd_parameters_present_flag=0,low_delay_hrd_flag=0,pic_struct_present_flag=0,bitstream_restriction_flag=1,motion_vectors_over_pic_boundaries_flag=1,max_bytes_per_pic_denom=0,max_bits_per_mb_denom=0,log2_max_mv_length_horizontal=13,log2_max_mv_length_vertical=11,num_reorder_frames=0,max_dec_frame_buffering=1]]
+D: SPSData:[0,0,0,1,103,100,0,50,172,77,1,224,45,211,80,16,16,20,0,0,3,0,4,0,0,3,1,224,60,112,202,128]
+D: PPS:[pic_parameter_set_id=0,seq_parameter_set_id=0,entropy_coding_mode_flag=1,pic_order_present_flag=0,num_slice_groups_minus1=0,slice_group_map_type=0,slice_group_change_direction_flag=0,slice_group_change_rate_minus1=0,pic_size_in_map_units_minus1=0,num_ref_idx_l0_active_minus1=0,num_ref_idx_l1_active_minus1=0,weighted_pred_flag=0,weighted_bipred_idc=0,pic_init_qp_minus26=0,chroma_qp_index_offset=0,deblocking_filter_control_present_flag=1,constrained_intra_pred_flag=0,redundant_pic_cnt_present_flag=0,]
+D: PPSData:[0,0,0,1,104,238,60,176]
+D: NAL_UNIT_TYPE_CODED_SLICE_IDR
+D: Slice header(126.787109kB):[first_mb_in_slice=0,slice_type=2,pic_parameter_set_id=0frame_num=415]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(95.348633kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=27]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(92.582031kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=10]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(85.954102kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=14]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(68.396484kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=3]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(45.915039kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=4]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(53.617188kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=5]
+I: ViewPostIme key 0
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(49.297852kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=6]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(49.749023kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=1]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+I: ViewPostIme key 1
+D: Slice header(43.730469kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=1]
+V: Recording user engagement, ms: 1368
+D: AUD:[0,0,0,1,9,16]
+V: Activity paused, time: 237355621
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(47.130859kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=1]
+I: assignNativeObject: nativeObject = 0 Surface(name=null)/@0x59c271e / android.view.SurfaceControl.readFromParcel:1117 android.view.IWindowSession$Stub$Proxy.relayout:1810 android.view.ViewRootImpl.relayoutWindow:9005 android.view.ViewRootImpl.performTraversals:3360 android.view.ViewRootImpl.doTraversal:2618 android.view.ViewRootImpl$TraversalRunnable.run:9971 android.view.Choreographer$CallbackRecord.run:1010 android.view.Choreographer.doCallbacks:809 android.view.Choreographer.doFrame:744 android.view.Choreographer$FrameDisplayEventReceiver.run:995 
+I: assignNativeObject: nativeObject = 0 Surface(name=null)/@0x919c9 / android.view.SurfaceControl.readFromParcel:1117 android.view.IWindowSession$Stub$Proxy.relayout:1820 android.view.ViewRootImpl.relayoutWindow:9005 android.view.ViewRootImpl.performTraversals:3360 android.view.ViewRootImpl.doTraversal:2618 android.view.ViewRootImpl$TraversalRunnable.run:9971 android.view.Choreographer$CallbackRecord.run:1010 android.view.Choreographer.doCallbacks:809 android.view.Choreographer.doFrame:744 android.view.Choreographer$FrameDisplayEventReceiver.run:995 
+I: Relayout returned: old=(0,0,1080,2400) new=(0,0,1080,2400) req=(1080,2400)4 dur=6 res=0x1 s={false 0} ch=false fn=-1
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+I: stopped(false) old=true
+D: Slice header(49.520508kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=1]
+I: stopped(false) old=false
+D: AUD:[0,0,0,1,9,16]
+I: assignNativeObject: nativeObject = 0 Surface(name=null)/@0x919c9 / android.view.SurfaceControl.readFromParcel:1117 android.view.IWindowSession$Stub$Proxy.relayout:1820 android.view.ViewRootImpl.relayoutWindow:9005 android.view.ViewRootImpl.performTraversals:3360 android.view.ViewRootImpl.doTraversal:2618 android.view.ViewRootImpl$TraversalRunnable.run:9971 android.view.Choreographer$CallbackRecord.run:1010 android.view.Choreographer.doCallbacks:809 android.view.Choreographer.doFrame:744 android.view.Choreographer$FrameDisplayEventReceiver.run:995 
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+I: Relayout returned: old=(0,0,1080,2400) new=(0,0,1080,2400) req=(1080,2400)0 dur=11 res=0x7 s={true -5476376645125523248} ch=true fn=-1
+D: Slice header(49.974609kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=2]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(47.570312kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=2]
+I: MSG_WINDOW_FOCUS_CHANGED 0 1
+I: nativeRelease nativeObject s[-5476376649419953600]
+I: nativeRelease nativeObject e[-5476376649419953600]
+V: Activity resumed, time: 237355652
+I: nativeRelease nativeObject s[-5476376649420382512]
+I: nativeRelease nativeObject e[-5476376649420382512]
+I: nativeRelease nativeObject s[-5476376649420461536]
+I: nativeRelease nativeObject e[-5476376649420461536]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+I: nativeRelease nativeObject s[-5476376649419988448]
+I: nativeRelease nativeObject e[-5476376649419988448]
+I: nativeRelease nativeObject s[-5476376649420036672]
+I: nativeRelease nativeObject e[-5476376649420036672]
+I: nativeRelease nativeObject s[-5476376649419973136]
+I: nativeRelease nativeObject e[-5476376649419973136]
+D: Slice header(48.957031kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=2]
+I: nativeRelease nativeObject s[-5476376649419910128]
+I: nativeRelease nativeObject e[-5476376649419910128]
+I: nativeRelease nativeObject s[-5476376649419912416]
+I: nativeRelease nativeObject e[-5476376649419912416]
+I: nativeRelease nativeObject s[-5476376649419914176]
+I: nativeRelease nativeObject e[-5476376649419914176]
+I: nativeRelease nativeObject s[-5476376649420490576]
+I: nativeRelease nativeObject e[-5476376649420490576]
+I: nativeRelease nativeObject s[-5476376649419916464]
+I: nativeRelease nativeObject e[-5476376649419916464]
+I: nativeRelease nativeObject s[-5476376649419909072]
+I: nativeRelease nativeObject e[-5476376649419909072]
+I: MSG_WINDOW_FOCUS_CHANGED 1 1
+D: prepareNavigationBarInfo() DecorView@5e3d94c[MainActivity]
+D: getNavigationBarColor() -16711423
+D: prepareNavigationBarInfo() DecorView@5e3d94c[MainActivity]
+D: getNavigationBarColor() -16711423
+V: Starting input: tba=constantin.video.example ic=null mNaviBarColor -16711423 mIsGetNaviBarColorSuccess true , NavVisible : true , NavTrans : false
+D: startInputInner - Id : 0
+I: startInputInner - mService.startInputOrWindowGainedFocus
+D: AUD:[0,0,0,1,9,16]
+D: Input channel constructed: 'ClientS', fd=116
+D: Input channel destroyed: 'ClientS', fd=111
+I: MSG_RESIZED: frame=(0,0,1080,2400) ci=(0,88,0,126) vi=(0,0,0,126) or=1
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+I: nativeRelease nativeObject s[-5476376649419928080]
+I: nativeRelease nativeObject e[-5476376649419928080]
+D: Slice header(47.818359kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=2]
+I: assignNativeObject: nativeObject = 0 Surface(name=null)/@0x919c9 / android.view.SurfaceControl.readFromParcel:1117 android.view.IWindowSession$Stub$Proxy.relayout:1820 android.view.ViewRootImpl.relayoutWindow:9005 android.view.ViewRootImpl.performTraversals:3360 android.view.ViewRootImpl.doTraversal:2618 android.view.ViewRootImpl$TraversalRunnable.run:9971 android.view.Choreographer$CallbackRecord.run:1010 android.view.Choreographer.doCallbacks:809 android.view.Choreographer.doFrame:744 android.view.Choreographer$FrameDisplayEventReceiver.run:995 
+I: Relayout returned: old=(0,0,1080,2400) new=(0,0,1080,2400) req=(1080,2400)0 dur=7 res=0x1 s={true -5476376645125523248} ch=false fn=3
+D: AUD:[0,0,0,1,9,16]
+I: nativeRelease nativeObject s[-5476376649419908544]
+I: nativeRelease nativeObject e[-5476376649419908544]
+I: nativeRelease nativeObject s[-5476376649419915760]
+I: nativeRelease nativeObject e[-5476376649419915760]
+I: nativeRelease nativeObject s[-5476376649419915056]
+I: nativeRelease nativeObject e[-5476376649419915056]
+I: nativeRelease nativeObject s[-5476376649419914704]
+I: nativeRelease nativeObject e[-5476376649419914704]
+I: nativeRelease nativeObject s[-5476376649419910832]
+I: nativeRelease nativeObject e[-5476376649419910832]
+I: nativeRelease nativeObject s[-5476376649419913648]
+I: nativeRelease nativeObject e[-5476376649419913648]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(46.038086kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(49.403320kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(50.664062kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(48.359375kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(50.603516kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(50.109375kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(48.718750kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(50.481445kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(50.596680kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(47.258789kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(48.946289kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(47.836914kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(41.092773kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(48.021484kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(48.633789kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(43.622070kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=0]
+D: AUD:[0,0,0,1,9,16]
+D: NAL_UNIT_TYPE_CODED_SLICE_NON_IDR
+D: Slice header(47.308594kB):[first_mb_in_slice=0,slice_type=0,pic_parameter_set_id=0frame_num=49]
+I: onWindowVisibilityChanged(8) false android.view.SurfaceView{3a2369d V.E...... ........ 0,0-1440,1080 #7f090134 app:id/sv_video} of ViewRootImpl@10e5174[VideoActivityWithDatabase]
+I: surfaceDestroyed callback.size 2 #2 android.view.SurfaceView{3a2369d V.E...... ........ 0,0-1440,1080 #7f090134 app:id/sv_video}
+D: AUD:[0,0,0,1,9,16]
+D: No data was recorded
+E: sf error code: -38
+D: dequeueOutputBuffer idx: -10000 .Exit.
+D: Exit CheckOutputLoop
+I: [OMX.qcom.video.decoder.avc] Now Executing->Idle
+I: [OMX.qcom.video.decoder.avc] Now Idle->Loaded
+I: [OMX.qcom.video.decoder.avc] Now Loaded
+I:  [OMX.qcom.video.decoder.avc] Now kWhatShutdownCompleted event : 8312
+D: disconnecting from surface 0xb4000074d30c16d0, reason disconnectFromSurface
+I:  [OMX.qcom.video.decoder.avc] Now uninitialized
+I:  [] Now kWhatShutdownCompleted event : 8312
+I: Codec shutdown complete
+D: Set surface to null
+I: remove() from RT android.view.SurfaceView$2@2186b9c Surface(name=SurfaceView - constantin.video.example/constantin.video.example.decodingperf.VideoActivityWithDatabase@3a2369d@0)/@0x1356d3
+I: nativeRelease nativeObject s[-5476376649420458192]
+I: nativeRelease nativeObject e[-5476376649420458192]
+I: nativeRelease nativeObject s[-5476376649420459424]
+I: nativeRelease nativeObject e[-5476376649420459424]
+I: nativeRelease nativeObject s[-5476376649419947440]
+I: nativeRelease nativeObject e[-5476376649419947440]
+I: assignNativeObject: nativeObject = 0 Surface(name=null)/@0x154117a / android.view.SurfaceControl.readFromParcel:1117 android.view.IWindowSession$Stub$Proxy.relayout:1810 android.view.ViewRootImpl.relayoutWindow:9005 android.view.ViewRootImpl.performTraversals:3360 android.view.ViewRootImpl.doTraversal:2618 android.view.ViewRootImpl$TraversalRunnable.run:9971 android.view.Choreographer$CallbackRecord.run:1010 android.view.Choreographer.doCallbacks:809 android.view.Choreographer.doFrame:744 android.view.Choreographer$FrameDisplayEventReceiver.run:995 
+I: assignNativeObject: nativeObject = 0 Surface(name=null)/@0x26ac25e / android.view.SurfaceControl.readFromParcel:1117 android.view.IWindowSession$Stub$Proxy.relayout:1820 android.view.ViewRootImpl.relayoutWindow:9005 android.view.ViewRootImpl.performTraversals:3360 android.view.ViewRootImpl.doTraversal:2618 android.view.ViewRootImpl$TraversalRunnable.run:9971 android.view.Choreographer$CallbackRecord.run:1010 android.view.Choreographer.doCallbacks:809 android.view.Choreographer.doFrame:744 android.view.Choreographer$FrameDisplayEventReceiver.run:995 
+I: nativeRelease nativeObject s[-5476376649419979120]
+I: nativeRelease nativeObject e[-5476376649419979120]
+I: nativeRelease nativeObject s[-5476376649419909600]
+I: nativeRelease nativeObject e[-5476376649419909600]
+I: nativeRelease nativeObject s[-5476376649419910480]
+I: nativeRelease nativeObject e[-5476376649419910480]
+I: nativeRelease nativeObject s[-5476376649419909424]
+I: nativeRelease nativeObject e[-5476376649419909424]
+I: Relayout returned: old=(88,0,2400,1080) new=(88,0,2400,1080) req=(2312,1080)8 dur=14 res=0x5 s={false 0} ch=true fn=5
+I: windowStopped(true) false android.view.SurfaceView{3a2369d V.E...... ........ 0,0-1440,1080 #7f090134 app:id/sv_video} of ViewRootImpl@10e5174[VideoActivityWithDatabase]
+I: stopped(true) old=false
+D: performDestroyActivity, cleared rotationAdjustment r=ActivityRecord{681cb46 token=android.os.BinderProxy@ffd0349 {constantin.video.example/constantin.video.example.decodingperf.VideoActivityWithDatabase}}
+I: dispatchDetachedFromWindow
+D: Input channel destroyed: 'd49b60d', fd=100
+V: updateAppliedLetterboxDirection, direction=0, Caller=android.view.ViewRootImpl.handleDispatchLetterboxDirectionChanged:12114
+I: nativeRelease nativeObject s[-5476376649419915232]
+I: nativeRelease nativeObject e[-5476376649419915232]
+I: nativeRelease nativeObject s[-5476376649419911888]
+I: nativeRelease nativeObject e[-5476376649419911888]
+I: nativeRelease nativeObject s[-5476376649419916640]
+I: nativeRelease nativeObject e[-5476376649419916640]
+I: MSG_RESIZED: frame=(0,0,1080,2400) ci=(0,88,0,126) vi=(0,0,0,126) or=1
+I: nativeRelease nativeObject s[-5476376649419909072]
+I: nativeRelease nativeObject e[-5476376649419909072]
+I: assignNativeObject: nativeObject = 0 Surface(name=null)/@0x919c9 / android.view.SurfaceControl.readFromParcel:1117 android.view.IWindowSession$Stub$Proxy.relayout:1820 android.view.ViewRootImpl.relayoutWindow:9005 android.view.ViewRootImpl.performTraversals:3360 android.view.ViewRootImpl.doTraversal:2618 android.view.ViewRootImpl$TraversalRunnable.run:9971 android.view.Choreographer$CallbackRecord.run:1010 android.view.Choreographer.doCallbacks:809 android.view.Choreographer.doFrame:744 android.view.Choreographer$FrameDisplayEventReceiver.run:995 
+I: nativeRelease nativeObject s[-5476376649419923680]
+I: nativeRelease nativeObject e[-5476376649419923680]
+I: nativeRelease nativeObject s[-5476376649420433904]
+I: nativeRelease nativeObject e[-5476376649420433904]
+I: Relayout returned: old=(0,0,1080,2400) new=(0,0,1080,2400) req=(1080,2400)0 dur=9 res=0x1 s={true -5476376645125523248} ch=false fn=4
+I: nativeRelease nativeObject s[-5476376649419909072]
+I: nativeRelease nativeObject e[-5476376649419909072]
+I: nativeRelease nativeObject s[-5476376649420461008]
+I: nativeRelease nativeObject e[-5476376649420461008]
+I: nativeRelease nativeObject s[-5476376649419943216]
+I: nativeRelease nativeObject e[-5476376649419943216]
+V: Inactivity, disconnecting from the service

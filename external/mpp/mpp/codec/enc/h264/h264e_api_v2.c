@@ -118,9 +118,17 @@ static void init_h264e_cfg_set(MppEncCfgSet *cfg, MppClientType type)
     } break;
     }
     //Consti10: test- no matter what (I think it is VPU_CLIENT_RKVENC, but not sure) set poc_type to 0
-    h264->poc_type = 2;
-    h264->log2_max_poc_lsb = 12;
-    h264->log2_max_frame_num = 12;
+    // for rv1126 the list is HAVE_VDPU2 | HAVE_VEPU2 | HAVE_RKVDEC | HAVE_RKVENC and vepu541
+    // so probably VPU_CLIENT_RKVENC / vepu541 ?
+    // hmm set it in mpp_final_encoder.c ?
+    //h264->poc_type = 2;
+    // I think this one isn't used anyways with poc_type set to 2 (here 12, but in generated code it is 0)
+    //h264->log2_max_poc_lsb = 12;
+    //h264->log2_max_frame_num = 12;
+    // dji 1
+    // directly maps to log2_max_frame_num_minus4
+    //h264->log2_max_frame_num = 1;
+    //TODO: solve gaps_in_frame_num_value_allowed_flag
 
     /*
      * default prep:

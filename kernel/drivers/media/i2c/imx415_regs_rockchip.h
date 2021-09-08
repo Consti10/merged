@@ -1083,4 +1083,19 @@ static __maybe_unused int calculateFrameRate(int pixel_rate,int image_width,int 
 //HMAX | VMAX | WINPH | WINPV | WINWH | WINWV
 //4400d| 520d | 640d  | 300d  | 656d  | 496d
 
+// from imx317:
+//Frame rate [frame/s] = (72 x 10^6 ) / {HMAX register value × VMAX register value × (SVR register value + 1) }
+// For example, for readout mode 3/4:
+// (72*10^6) / (493*4451*(0+1) )=32.8116434
+// (72*10^6) / (260*2219*(0+1) )=124.796339
+// using this equation for imx415:
+// (72*10^6) / (366*2250*(0+1) )= 87.431694 ??
+// from imx317:
+// The vertical sync signal XVS can be subsampled inside the sensor according to the SVR register. When using SVR =
+// 1h, the frame rate becomes half. See “Electronic Shutter Timing” for details.
+// also from imx317:
+// The exposure start timing can be designated by setting the electronic shutter timing register SHR.
+// Note that this setting value unit is 1[HMAX] *1 period regardless of the readout drive mode
+// with foot note: 1[HMAX] = Setting value of register HMAX × 72MHz clock
+
 #endif //MEDIASEVER_IMX415_REGS_ROCKCHIP_H

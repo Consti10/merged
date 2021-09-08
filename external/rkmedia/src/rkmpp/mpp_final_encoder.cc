@@ -861,6 +861,11 @@ bool MPPCommonConfig::InitConfig(MPPEncoder &mpp_enc, MediaConfig &cfg) {
                  vconfig.profile, vconfig.level);
   }
 
+  //Consti10: try it here ?!
+  //mpp_enc_cfg_set_u32(enc_cfg, "h264:poc_type", 2);
+  //mpp_enc_cfg_set_u32(enc_cfg, "h264:log2_max_frame_num", 1);
+
+
   if (ret) {
     RKMEDIA_LOGE("MPP Encoder: cfg set s32 failed ret %d\n", ret);
     return false;

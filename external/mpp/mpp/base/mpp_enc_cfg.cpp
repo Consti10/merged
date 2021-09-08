@@ -364,6 +364,7 @@ MPP_RET mpp_enc_cfg_deinit(MppEncCfg cfg)
         } \
         MppCfgApi *api = (MppCfgApi *)info; \
         if (check_cfg_api_info(api, CFG_FUNC_TYPE_##cfg_type)) { \
+            mpp_err_f("failed2 to set %s to %d\n", name, val); \
             return MPP_NOK; \
         } \
         mpp_enc_cfg_dbg_set("name %s type %s\n", api->name, cfg_type_names[api->info.type]); \
