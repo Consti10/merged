@@ -4603,7 +4603,7 @@ void rkcif_irq_pingpong(struct rkcif_device *cif_dev)
 	struct v4l2_mbus_config *mbus;
 	unsigned int intstat, i = 0xff;
 
-	//yes
+	//Consti10 yes
     v4l2_dbg(1, rkcif_debug, &cif_dev->v4l2_dev,
              "Consti10:rkcif_irq_pingpong\n");
 
@@ -4618,6 +4618,10 @@ void rkcif_irq_pingpong(struct rkcif_device *cif_dev)
 	     cif_dev->chip_id == CHIP_RK3568_CIF)) {
 		int mipi_id;
 		u32 lastline = 0;
+
+		//Consti10
+        v4l2_dbg(1, rkcif_debug, &cif_dev->v4l2_dev,
+                 "Consti10:rkcif_irq_pingpong:mbus_type:yes\n");
 
 		intstat = rkcif_read_register(cif_dev, CIF_REG_MIPI_LVDS_INTSTAT);
 		lastline = rkcif_read_register(cif_dev, CIF_REG_MIPI_LVDS_LINE_LINE_CNT_ID0_1);
@@ -4709,6 +4713,10 @@ void rkcif_irq_pingpong(struct rkcif_device *cif_dev)
 		}
 		cif_dev->irq_stats.all_frm_end_cnt++;
 	} else {
+        //Consti10
+        v4l2_dbg(1, rkcif_debug, &cif_dev->v4l2_dev,
+                 "Consti10:rkcif_irq_pingpong:mbus_type:no\n");
+
 		u32 lastline, lastpix, ctl;
 		u32 cif_frmst, frmid, int_en;
 		struct rkcif_stream *stream;

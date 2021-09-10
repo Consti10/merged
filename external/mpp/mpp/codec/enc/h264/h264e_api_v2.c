@@ -129,6 +129,84 @@ static void init_h264e_cfg_set(MppEncCfgSet *cfg, MppClientType type)
     // directly maps to log2_max_frame_num_minus4
     //h264->log2_max_frame_num = 1;
     //TODO: solve gaps_in_frame_num_value_allowed_flag
+    //
+    // Note: here: https://github.com/rockchip-toybrick/kernel/tree/rv1126-develop-4.19/drivers/media/platform the last
+    // commit to rockchip-vpu is 4 years old -perhaps this is a corpse ? A search for "rv1126" there also gives no result
+    // whereas here: https://github.com/rockchip-toybrick/kernel/tree/rv1126-develop-4.19/drivers/video
+    // the last commit is only 3 months old, searching for rv1126 gives results
+    // perhaps the file that "talks" to the hardware is drivers/video/rockchip/mpp/mpp_rkvenc.c ?
+    // this file exposes:
+    // rkvenc_extract_task_msg with MPP_CMD_SET_REG_WRITE, MPP_CMD_SET_REG_READ, MPP_CMD_SET_REG_ADDR_OFFSET
+    // it also seems to be for h264 AND h265
+    // rkvenc_alloc_task
+    // rkvenc_run with RKVENC_MODE_ONEFRAME, RKVENC_MODE_LINKTABLE_FIX:RKVENC_MODE_LINKTABLE_UPDATE
+    // rkvenc_irq
+    // rkvenc_isr
+    // rkvenc_finish with RKVENC_MODE_ONEFRAME, RKVENC_MODE_LINKTABLE_FIX:RKVENC_MODE_LINKTABLE_UPDATE
+    // rkvenc_result with ------------------------------------" --------------------------------------
+    // rkvenc_free_task
+    // rkvenc_control wih MPP_CMD_SEND_CODEC_INFO,
+    // rkvenc_init_session & rkvenc_free_session
+    // rkvenc_dump_session
+    // rkvenc_init - reads clock speeds
+    // interesting:
+    //.alloc_task = rkvenc_alloc_task,
+    //.run = rkvenc_run,
+    //.irq = rkvenc_irq,
+    //.isr = rkvenc_isr,
+    //.finish = rkvenc_finish,
+    //.result = rkvenc_result,
+    //.free_task = rkvenc_free_task,
+    //.ioctl = rkvenc_control, !!!
+    //.init_session = rkvenc_init_session,
+    //.free_session = rkvenc_free_session,
+    //.dump_session = rkvenc_dump_session,
+    // Question: How do the "config changes" propagate through mpp
+    // For example: MPP_ENC_H264_CFG_CHANGE_PROFILE
+    // declared in                       external/mpp/inc/rk_venc_cmd.h
+    // declared with "ENTRY" syntax in   external/mpp/mpp/base/mpp_enc_cfg.cpp
+    // in h264e_proc_h264_cfg under external/mpp/mpp/codec/enc/h264/h264e_api_v2.c :
+    // if( x & MPP_ENC_H264_CFG_CHANGE_PROFILE) MppEncH264Cfg(dst)->profile = MppEncH264Cfg(src)->profile
+    // h264e_proc_h264_cfg is only used privately here - in
+    // h264e_proc_cfg : MPP_ENC_SET_CFG and MPP_ENC_SET_CODEC_CFG
+    // this function pointer is stored in api_h264e ("h264e_control",...)
+    // together with some other, searching for MPP_ENC_SET_CFG gives:
+    // external/mpp/mpp/codec/mpp_enc_impl.cpp
+    // mpp_enc_proc_cfg: case(MPP_ENC_SET_CFG)
+    // which in turn is used in mpp_enc_thread
+    // interesting param: MPP_ENC_BASE_CFG_CHANGE_LOW_DELAY ?
+    // external/rkmedia/src/rkmpp/mpp_final_encoder.cc
+    // here a lot of references, all of them inside
+    // MPPCommonConfig::InitConfig and
+    // MPPCommonConfig::CheckConfigChange
+    // for MPP_ENC_H264_CFG_CHANGE_POC_TYPE = codec.h264, poc_type
+    // dpb->poc_type = sps->pic_order_cnt_type;
+    // external/mpp/mpp/codec/enc/h264/h264e_dpb.c
+    // -> contains h264e_dpb_setup(H264eDpb *dpb, MppEncCfgSet* cfg, H264eSps *sps)
+    // there, dpb->poc_type = sps->pic_order_cnt_type;
+    // h264e_dpb_setup is only called in h264e_gen_hdr (external/mpp/mpp/codec/enc/h264/h264e_api_v2.c)
+    // "hdr" in this context probably means "header"
+    // quite simple:
+    // 1) h264e_sps_update(&p->sps, p->cfg);
+    // 2) h264e_pps_update(&p->pps, p->cfg);
+    // 3) h264e_dpb_setup
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*
      * default prep:
