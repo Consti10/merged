@@ -1,0 +1,105 @@
+/dev/video0,/dev/ideo1,/dev/video2,/dev/video3
+
+/dev/video0: 
+/dev/video1: 
+/dev/video2: 
+/dev/video3:
+
+Driver Info:         same for all
+Media Driver Info:   same for all 
+
+Interface Info:
+/dev/video0: 0x03000002
+/dev/video1: 0x03000006
+/dev/video2: 0x0300000a
+/dev/video3: 0x0300000e
+
+Entity Info:
+/dev/video0: ID: 0x00000001 (1)  | stream_cif_mipi_id0 | V4L2 I/O | 0: Sink | XXX
+/dev/video1: ID: 0x00000005 (5)  | stream_cif_mipi_id1 | V4L2 I/O | 0: Sink | XXX
+/dev/video2: ID: 0x00000009 (9)  | stream_cif_mipi_id2 | V4L2 I/O | 0: Sink | XXX 
+/dev/video3: ID: 0x0000000d (13) | stream_cif_mipi_id1 | V4L2 I/O | 0: Sink | XXX
+AND
+/dev/video0: Pad 0x01000004   : 0: Sink | Link 0x02000024: from remote pad 0x1000013 of entity 'rockchip-mipi-csi2': Data, Enabled
+/dev/video1: Pad 0x01000008   : 0: Sink | Link 0x0200002e: from remote pad 0x1000014 of entity 'rockchip-mipi-csi2': Data, Enabled
+/dev/video2: Pad 0x0100000c   : 0: Sink | Link 0x02000038: from remote pad 0x1000015 of entity 'rockchip-mipi-csi2': Data, Enabled
+/dev/video3: Pad 0x01000010   : 0: Sink | Link 0x02000042: from remote pad 0x1000016 of entity 'rockchip-mipi-csi2': Data, Enabled
+AND
+/dev/video0: Link  0x0200002->0x1000013 | 0x0200002c->0x1000014 | 0x02000034->0x1000015 | 0x0200003c->0x1000016
+/dev/video1: Link 0x02000026->0x1000013 | 0x0200002e->0x1000014 | 0x02000036->0x1000015 | 0x0200003e->0x1000016
+/dev/video2: similar
+/dev/video3: Link 0x0200002a->0x1000013 | 0x02000032->0x1000014 | 0x0200003a->0x1000015 | 0x02000042->0x1000016
+
+
+	
+Priority: 2 (same for all)	
+	
+Format Video Capture Multiplanar:
+/dev/video0,/dev/ideo1,/dev/video2: (same)
+	Width/Height      : 1920/1080
+	Pixel Format      : 'GB10' (10-bit Bayer GBGB/RGRG)
+	Field             : None
+	Number of planes  : 1
+	Flags             : 
+	Colorspace        : Default
+	Transfer Function : Default
+	YCbCr/HSV Encoding: Default
+	Quantization      : Default
+	Plane 0           :
+	   Bytes per Line : 2560
+	   Size Image     : 2764800
+Crop Capability Video Capture:
+	Bounds      : Left 12, Top 8, Width 1920, Height 1080
+	Default     : Left 12, Top 8, Width 1920, Height 1080
+	Pixel Aspect: 1/1
+Crop Capability Video Output:
+	Bounds      : Left 0, Top 0, Width 0, Height 0
+	Default     : Left 0, Top 0, Width 0, Height 0
+	Pixel Aspect: 1/1
+
+BUT /dev/video3:
+	Width/Height      : 640/480
+	Pixel Format      : 'NV12' (Y/CbCr 4:2:0)
+	Field             : None
+	Number of planes  : 1
+	Flags             : 
+	Colorspace        : Default
+	Transfer Function : Default
+	YCbCr/HSV Encoding: Default
+	Quantization      : Default
+	Plane 0           :
+	   Bytes per Line : 640
+	   Size Image     : 460800
+Crop Capability Video Capture:
+	Bounds      : Left 12, Top 8, Width 1920, Height 1080
+	Default     : Left 12, Top 8, Width 1920, Height 1080
+	Pixel Aspect: 1/1
+Crop Capability Video Output:
+	Bounds      : Left 0, Top 0, Width 0, Height 0
+	Default     : Left 0, Top 0, Width 0, Height 0
+	Pixel Aspect: 1/1
+	
+	
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+	
+
+
+
+
+
+
+

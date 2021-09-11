@@ -111,7 +111,9 @@ MPP_RET ret = get_val_by_key(impl, key, TYPE_FRAME, &meta_val);
 	
 
 
-
+// searching for KEY_INPUT_FRAME for some reason gives no good hits, but if I search for 
+// KEY_ROI_DATA (declared in MppMetaKey_e struct in external/mpp/inc/mpp_meta.h ) I get hits in 
+// external/mpp/mpp/hal/rkenc/h264e/hal_h264e_vepu541.c
 
 
 

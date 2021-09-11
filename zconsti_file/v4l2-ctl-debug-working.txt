@@ -352,5 +352,3 @@ Selection: compose_bounds, Left 12, Top 8, Width 1920, Height 1080, Flags:
 Selection: compose_padded, Left 12, Top 8, Width 1920, Height 1080, Flags: 
 Selection: native_size, Left 12, Top 8, Width 1920, Height 1080, Flags: 
 
-
-
