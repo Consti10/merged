@@ -6,6 +6,118 @@ RK_S32 camera_source_get_frame(CamSource *ctx)
 rkmedia:  external/rkmedia/src/stream/camera/v4l2_capture_stream.cc
 std::shared_ptr<MediaBuffer>  V4L2CaptureStream::Read
 
+wrapped again in
+external/rkmedia/src/flow/source_stream_flow.cc
+
+class SourceStreamFlow : public Flow
+-> Flow:
+
+simple:
+SourceStreamFlow::ReadThreadRun(){
+while(loop){
+	auto buffer = stream->Read();
+	SendInput(buffer, 0);
+}
+
+Also, in V4L2CaptureStream::Read, the timestamp of the Rockchip MediaBuffer is set to the timestamp of the v4l2_buffer:
+struct v4l2_buffer buf;
+int ret = v4l2_ctx->IoCtrl(VIDIOC_DQBUF, &buf);
+struct timeval buf_ts = buf.timestamp;
+std::shared_ptr<MediaBuffer> ret_buf;
+ret_buf->SetAtomicTimeVal(buf_ts);
+ret_buf->SetTimeVal(buf_ts);
+
+Where is this (v4l2) timestamp written: ?!
+In
+kernel/drivers/media/platform/rockchip/cif/capture.c
+
+There is this file: https://rockchip.fr/RK312X%20TRM/chapter-21-camera-interface-(cif).pdf
+"The Camera interface, receives the data from Camera or CCIR656 encoder, and
+transfers the data into system main memory by AXI bus."
+There one frame stop mode / pingpong mode is also explained:
+one frame stop: capture only one frame
+pingpong: after one frame (F1) is captured, CIF will start to capture
+the next frame automatically, and host must assign new address
+pointer of frame1 and clear the frame1 status, this CIF will capture the
+third frame automatically (by new F1 address). ...
+In YUV mode or ccir656 mode, data is stored in seperate Y data and UV data buffer
+
+
+void rkcif_irq_pingpong(struct rkcif_device *cif_dev)
+AND
+void rkcif_irq_lite_lvds(struct rkcif_device *cif_dev)
+call rkcif_update_stream
+
+For rkcif_irq_pingpong:
+if ((mbus->type == V4L2_MBUS_CSI2 || mbus->type == V4L2_MBUS_CCP2 && .. RV1126)
+	...
+	rkcif_update_stream(cif_dev, stream, mipi_id);
+}else{
+	...
+	rkcif_assign_new_buffer_oneframe(stream,RKCIF_YUV_ADDR_STATE_UPDATE);
+	...
+	rkcif_vb_done_oneframe(stream, vb_done);
+}
+		 
+
+
+void rkcif_update_stream(struct rkcif_device *cif_dev,struct rkcif_stream *stream,int mipi_id)
+pingpong ?, since:
+if(frame_phase & CIF_CSI_FRAME1_READY){
+	if(next_buf){
+		active_buf=next_buf;
+	stream->fps_stats.frm1_timestamp = ktime_get_ns();
+}else if(frame_phase & CIF_CSI_FRAME0_READY){
+	if(curr_buf)
+		active_buf=curr_buf;
+}
+//Note: this frm1_timestamp is onl used to internally calculate some fps value
+...
+if (active_buf) {
+		vb_done = &active_buf->vb;
+		vb_done->vb2_buf.timestamp = ktime_get_ns();
+		vb_done->sequence = stream->frame_idx;
+	}
+....
+if (cif_dev->hdr.mode == NO_HDR) {
+		if (active_buf)
+			rkcif_vb_done_oneframe(stream, vb_done);
+			
+// Isn't this timestamp then overwritten by rkcif_vb_done_oneframe ?
+// shouldn't matter though, since here we call code directly without any scheduling overhead
+
+
+void rkcif_rdbk_frame_end(struct rkcif_stream *stream){
+if(HDR_X3){
+...
+write timestamp in complicated way
+...
+else if(HDR_X2)
+...
+write timestamp in complicated way
+....
+else
+call rkcif_vb_done_oneframe(); (see below)
+
+
+void rkcif_vb_done_oneframe(struct rkcif_stream *stream,struct vb2_v4l2_buffer *vb_done){
+...
+if (stream->cifdev->hdr.mode == NO_HDR){
+		vb_done->vb2_buf.timestamp = ktime_get_ns();
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

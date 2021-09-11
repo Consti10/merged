@@ -1,0 +1,124 @@
+
+external/rkmedia/src/flow/video_encoder_flow.cc
+
+VideoEncoderFlow::VideoEncoderFlow(const char *param){
+MediaConfig mc;
+ParseMediaConfigFromMap(enc_params, mc);
+auto encoder = REFLECTOR(Encoder)::Create<VideoEncoder>(
+      ccodec_name, enc_param_str.c_str());
+encoder->InitConfig(mc)
+}
+
+bool encode(Flow *f, MediaBufferVector &input_vector){ 
+std::shared_ptr<MediaBuffer> &src = input_vector[0];
+dst = std::make_shared<MediaBuffer>();
+enc->Process(src, dst, extra_dst)
+}
+
+
+
+
+external/rkmedia/src/rkmpp/mpp_encoder.cc
+
+//Note: mv_buff is "move detection buff" with todo from rockchip "unimplemented"
+int MPPEncoder::Process(const std::shared_ptr<MediaBuffer> &input,std::shared_ptr<MediaBuffer> &output,std::shared_ptr<MediaBuffer> extra_output)
+...
+ret = Process(frame, packet, mv_buf);
+...
+
+int MPPEncoder::Process(MppFrame frame, MppPacket &packet, MppBuffer &mv_buf)
+int ret = mpi->encode_put_frame(ctx, frame);
+ret = mpi->encode_get_packet(ctx, &packet);
+
+
+external/mpp/mpp/mpi.cpp
+
+static MPP_RET mpi_encode_put_frame(MppCtx ctx, MppFrame frame)
+p->ctx->put_frame(frame);
+
+static MPP_RET mpi_encode_get_packet(MppCtx ctx, MppPacket *packet)
+p->ctx->get_packet(packet);
+
+
+external/mpp/mpp/mpp.cpp
+
+MPP_RET Mpp::put_frame(MppFrame frame)
+...
+if(mInputTask==0){
+	ret = poll(MPP_PORT_INPUT, mInputTimeout);
+	ret = dequeue(MPP_PORT_INPUT, &mInputTask);
+}
+ret = mpp_task_meta_set_frame(mInputTask, KEY_INPUT_FRAME, frame);
+//dump input
+mpp_ops_enc_put_frm(mDump, frame);
+...
+// ? enqueue input task and wait for it to finish ?
+
+MPP_RET Mpp::get_packet(MppPacket *packet)
+ret = poll(MPP_PORT_OUTPUT, mOutputTimeout);
+ret = dequeue(MPP_PORT_OUTPUT, &task);
+ret = mpp_task_meta_get_packet(task, KEY_OUTPUT_PACKET, packet);
+// dump output
+mpp_ops_enc_get_pkt(mDump, *packet);
+ret = enqueue(MPP_PORT_OUTPUT, task);
+
+
+
+external/mpp/mpp/mpp_impl.cpp
+
+MPP_RET mpp_ops_enc_put_frm(MppDump info, MppFrame frame)
+...
+dump_frame(p->fp_in, frame, p->fp_buf, p->dump_width, p->dump_height);
+
+
+MPP_RET mpp_ops_enc_get_pkt(MppDump info, MppPacket pkt)
+...
+if (p->fp_out) {
+	fwrite(mpp_packet_get_data(pkt), 1, length, p->fp_out);
+	fflush(p->fp_out);
+}
+
+
+static void dump_frame(FILE *fp, MppFrame frame, RK_U8 *tmp, RK_U32 w, RK_U32 h)
+...
+fwrite(tmp, 1, width * height * 3 / 2, fp);
+fflush(fp);
+
+// ehm what the fuck is this dump stuff ?
+
+
+
+external/mpp/mpp/base/mpp_task.cpp
+
+MPP_RET mpp_task_meta_set_frame(MppTask task, MppMetaKey key, MppFrame frame)
+return mpp_meta_set_frame(impl->meta, key, frame);
+
+MPP_RET mpp_task_meta_get_packet(MppTask task, MppMetaKey key, MppPacket *packet)
+MPP_RET ret = mpp_meta_get_packet(impl->meta, key, packet);
+
+
+
+external/mpp/mpp/base/mpp_meta.cpp
+MPP_RET mpp_meta_set_frame(MppMeta meta, MppMetaKey key, MppFrame frame)
+MppMetaImpl *impl = (MppMetaImpl *)meta;
+return set_val_by_key(impl, key, TYPE_FRAME, &meta_val);
+
+
+MPP_RET mpp_meta_get_packet(MppMeta meta, MppMetaKey key, MppPacket *packet)
+MPP_RET ret = get_val_by_key(impl, key, TYPE_FRAME, &meta_val);
+ *frame = (ret) ? NULL : meta_val.frame;
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
