@@ -139,8 +139,13 @@ MPP_RET h264e_sps_update(H264eSps *sps, MppEncCfgSet *cfg)
     }
 
     //Consti10
-    //mpp_env_get_u32("roi_enable", &p->roi_enable, 0);
-    
+    int consti10_poc;
+    mpp_env_get_u32("consti10_poc", &consti10_poc, 0);
+    if(consti10_poc){
+        sps->log2_max_frame_num_minus4 = 1;
+        sps->log2_max_poc_lsb_minus4 = 1;
+        mpp_log("Consti10: Set these poc related params\n");
+    }
 
     // max one reference frame
     sps->num_ref_frames = info->dpb_size;
