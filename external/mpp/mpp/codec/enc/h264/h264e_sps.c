@@ -138,6 +138,10 @@ MPP_RET h264e_sps_update(H264eSps *sps, MppEncCfgSet *cfg)
             sps->log2_max_poc_lsb_minus4 = log2_poc_lsb;
     }
 
+    //Consti10
+    //mpp_env_get_u32("roi_enable", &p->roi_enable, 0);
+    
+
     // max one reference frame
     sps->num_ref_frames = info->dpb_size;
 

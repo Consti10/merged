@@ -408,6 +408,9 @@ MPP_RET test_mpp_enc_cfg_setup(MpiEncTestData *p)
         mpp_enc_cfg_set_s32(cfg, "split:arg", p->split_arg);
     }
 
+    //Consti10
+    mpp_enc_cfg_set_s32(cfg, "h264:gaps_not_allowed", 1);
+
     ret = mpi->control(ctx, MPP_ENC_SET_CFG, cfg);
     if (ret) {
         mpp_err("mpi control enc set cfg failed ret %d\n", ret);
