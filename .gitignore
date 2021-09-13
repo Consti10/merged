@@ -34,6 +34,9 @@ external/rknn-toolkit/*
 external/rknpu/*
 external/tensorflow/*
 
+# temporary
+zconsti_file/codec_data/mpi_encode/raw.nv12
+
 
 
 
