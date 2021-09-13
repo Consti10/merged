@@ -1,0 +1,46 @@
+// the default test file from rkmedia
+adb push mpp_enc_test_320_240.nv12 /userdata/mpp_enc_test_320_240.nv12
+
+// generate raw file from camera (this file is placed here,too). 1080p nv12 
+./rkmedia_vi_get_frame_test -a -o /userdata/raw.nv12 -c 120
+ 
+ 
+ // h264
+./mpi_enc_test -i /userdata/mpp_enc_test_320_240.nv12 -o /userdata/mpp_enc_test_320_240.h264 -w 320 -h 240 -f NV12 -t 7 -r 120 
+// stored here adb pull /userdata/mpp_enc_test_320_240.h264
+./mpi_enc_test -i /userdata/raw.nv12 -o /userdata/t1.h264 -w 1920 -h 1080 -f NV12 -t 7 -r 120
+// stored here adb pull /userdata/t1.h264
+
+
+// h265
+./mpi_enc_test -i /userdata/mpp_enc_test_320_240.nv12 -o /userdata/mpp_enc_test_320_240.h265 -w 320 -h 240 -f NV12 -t 16777220 -r 120 
+// stored here: adb pull /userdata/mpp_enc_test_320_240.h265
+./mpi_enc_test -i /userdata/raw.nv12 -o /userdata/t1.h265 -w 1920 -h 1080 -f NV12 -t 16777220 -r 120
+// stored here: adb pull /userdata/t1.h265
+ 
+
+// modify mpi_enc_test to test the behaviour when setting various (h264) encoding parameters
+// test 1: check split mode
+export split_mode=1
+export split_arg=1024
+./mpi_enc_test -i /userdata/raw.nv12 -o /userdata/t_x1.h264 -w 1920 -h 1080 -f NV12 -t 7 -r 120
+// stored here adb pull /userdata/t_x1.h264 
+
+// test 2: check gop intervall
+export gop_len=1
+./mpi_enc_test -i /userdata/raw.nv12 -o /userdata/t_x2.h264 -w 1920 -h 1080 -f NV12 -t 7 -r 120
+// stored here adb pull /userdata/t_x2.h264
+
+
+// test 3: 
+ 
+  ./mpi_enc_test -i mpp_enc_test_320_240.nv12 -o t1.h264 -w 320 -h 240 -f NV12 -t 7
+ ./mpi_enc_test -i rec1.nv12 -o t2.h264 -w 1920 -h 1080 -f NV12 -t 7
+ 
+ ./mpi_dec_test -i t2.h264 -o /dev/null --debug 2
+
+
+
+// play back the .h264 with gstreamer:
+gst-launch-1.0 -v filesrc location=/media/consti10/ade719d9-e80a-46da-8802-58ca3b8e08bc/merged/zconsti_file/codec_data/mpi_encode/t1.h264 ! h264parse ! decodebin ! autovideosink
+gst-launch-1.0 -v filesrc location=/media/consti10/ade719d9-e80a-46da-8802-58ca3b8e08bc/merged/zconsti_file/codec_data/mpi_encode/t1.h265 ! h265parse ! decodebin ! autovideosink
