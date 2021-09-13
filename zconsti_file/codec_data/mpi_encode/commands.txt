@@ -27,13 +27,31 @@ export split_arg=1024
 // stored here adb pull /userdata/t_x1.h264 
 
 // test 2: check gop intervall
-export gop_len=1
-./mpi_enc_test -i /userdata/raw.nv12 -o /userdata/t_x2.h264 -w 1920 -h 1080 -f NV12 -t 7 -r 120
+// from mpi_enc_utils gop_mode:gop_len:vi_len
+./mpi_enc_test -i /userdata/raw.nv12 -o /userdata/t_x2.h264 -w 1920 -h 1080 -f NV12 -t 7 -r 120 -g 0:1:0
 // stored here adb pull /userdata/t_x2.h264
 
 
-// test 3: 
- 
+// test 3: set these 2 (log2_max_frame_num_minus4,log2_max_poc_lsb_minus4) to 1 by environment variable
+export consti10_poc=1
+./mpi_enc_test -i /userdata/raw.nv12 -o /userdata/t_x3.h264 -w 1920 -h 1080 -f NV12 -t 7 -r 120
+adb pull /userdata/t_x3.h264
+
+// test 4
+// added (hard_coded) gaps_not allowed (note: flag in sps should be 0(same as dji=> gaps NOT allowed)
+export consti10_poc=1
+./mpi_enc_test -i /userdata/raw.nv12 -o /userdata/t_x4.h264 -w 1920 -h 1080 -f NV12 -t 7 -r 120
+adb pull /userdata/t_x4.h264
+
+
+// test 5 additionally to test 4(same, no gaps, 1 for 2 values) also use a gop of 1
+export consti10_poc=1
+./mpi_enc_test -i /userdata/raw.nv12 -o /userdata/t_x5.h264 -w 1920 -h 1080 -f NV12 -t 7 -r 120 -g 0:1:0
+adb pull /userdata/t_x5.h264
+
+
+
+
   ./mpi_enc_test -i mpp_enc_test_320_240.nv12 -o t1.h264 -w 320 -h 240 -f NV12 -t 7
  ./mpi_enc_test -i rec1.nv12 -o t2.h264 -w 1920 -h 1080 -f NV12 -t 7
  
@@ -44,3 +62,10 @@ export gop_len=1
 // play back the .h264 with gstreamer:
 gst-launch-1.0 -v filesrc location=/media/consti10/ade719d9-e80a-46da-8802-58ca3b8e08bc/merged/zconsti_file/codec_data/mpi_encode/t1.h264 ! h264parse ! decodebin ! autovideosink
 gst-launch-1.0 -v filesrc location=/media/consti10/ade719d9-e80a-46da-8802-58ca3b8e08bc/merged/zconsti_file/codec_data/mpi_encode/t1.h265 ! h265parse ! decodebin ! autovideosink
+
+//usefull: export h264e_debug=3
+//one can find them all here:external/mpp/mpp/codec/enc/h264/h264e_debug.h
+export h264e_debug=0x00000100
+
+//from hal
+export dump_l1_reg=1
