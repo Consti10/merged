@@ -121,6 +121,7 @@ static void print_usage(const RK_CHAR *name) {
          "[-c 10] "
          "[-d rkispp_scale0] "
          "[-I 0] "
+         "[-f 30] "
          "[-o out.nv12] \n",
          name);
 #endif
