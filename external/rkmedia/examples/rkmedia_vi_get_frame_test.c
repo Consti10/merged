@@ -90,6 +90,7 @@ static const struct option long_options[] = {
     {"height", required_argument, NULL, 'h'},
     {"frame_cnt", required_argument, NULL, 'c'},
     {"output", required_argument, NULL, 'o'},
+    {"fps", required_argument, NULL, 'f'},
     {"camid", required_argument, NULL, 'I'},
     {"multictx", required_argument, NULL, 'M'},
     {"help", optional_argument, NULL, '?'},
@@ -130,6 +131,7 @@ static void print_usage(const RK_CHAR *name) {
   printf("\t-I | --camid: camera ctx id, Default 0\n");
   printf("\t-c | --frame_cnt: record frame, Default:-1(unlimit)\n");
   printf("\t-o | --output: output path, Default:NULL\n");
+  printf("\t-f | --fps: set frame rate\n");
   printf("Notice: fmt always NV12\n");
 }
 
@@ -141,6 +143,7 @@ int main(int argc, char *argv[]) {
   RK_CHAR *pOutPath = NULL;
   RK_CHAR *pIqfilesPath = NULL;
   RK_S32 s32CamId = 0;
+  int fps=30;
 #ifdef RKAIQ
   RK_BOOL bMultictx = RK_FALSE;
 #endif
@@ -167,6 +170,9 @@ int main(int argc, char *argv[]) {
       break;
     case 'c':
       frameCnt = atoi(optarg);
+      break;
+    case 'f':
+      fps = atoi(optarg);
       break;
     case 'o':
       pOutPath = optarg;
@@ -203,7 +209,6 @@ int main(int argc, char *argv[]) {
     printf("#####Aiq xml dirpath: %s\n\n", pIqfilesPath);
     printf("#bMultictx: %d\n\n", bMultictx);
     rk_aiq_working_mode_t hdr_mode = RK_AIQ_WORKING_MODE_NORMAL;
-    int fps = 30;
     SAMPLE_COMM_ISP_Init(s32CamId, hdr_mode, bMultictx, pIqfilesPath);
     SAMPLE_COMM_ISP_Run(s32CamId);
     SAMPLE_COMM_ISP_SetFrameRate(s32CamId, fps);
