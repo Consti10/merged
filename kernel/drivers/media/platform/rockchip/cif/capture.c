@@ -1156,8 +1156,8 @@ static void rkcif_assign_new_buffer_pingpong(struct rkcif_stream *stream,
                  "Consti10:rkcif_assign_new_buffer_pingpong:init:%d,mbus_cfg->type:%d\n",init,mbus_cfg->type);
         // Doc by Consti10:
         // Depending on which frame is ready (frame 0 or 1) obtain the register index for the y and uv plane (also in Bayer)
-        // When Frame 0 is ready, obtain the addresses for frame 0
-        // When Frame 1 is ready, obtain the addresses for frame 1
+        // When Frame 0 is ready, obtain the indices of the addresses for frame 0
+        // When Frame 1 is ready, obtain the indices of the addresses for frame 1
 		if (mbus_cfg->type == V4L2_MBUS_CSI2 ||
 		    mbus_cfg->type == V4L2_MBUS_CCP2) {
 			frm_addr_y = stream->frame_phase & CIF_CSI_FRAME0_READY ?
@@ -4137,6 +4137,7 @@ static void rkcif_update_stream(struct rkcif_device *cif_dev,
 	// Doc by Consti10:
 	// When Frame 0 is ready, active_buf stores pointer to curr_buf
 	// When Frame 1 is ready, active_buf stores pointer to next_buf
+	// I think one needs to store the address to the finished buffer here, since else it is overwritten by rkcif_assign_new_buffer_pingpong
 	if (stream->frame_phase & CIF_CSI_FRAME1_READY) {
         v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
                  "Consti10:rkcif_update_stream CIF_CSI_FRAME1_READY | next_buf:%s now:[%lld]ns\n",stream->next_buf ? "yes" : "no",ktime_get_ns());
@@ -4167,6 +4168,7 @@ static void rkcif_update_stream(struct rkcif_device *cif_dev,
 	}
 
 	if (cif_dev->hdr.mode == NO_HDR) {
+	    // After that I think that the buffer is available for the pipeline sink
 		if (active_buf)
 			rkcif_vb_done_oneframe(stream, vb_done);
 	} else {
