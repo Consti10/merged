@@ -1085,6 +1085,9 @@ static void rkcif_assign_new_buffer_pingpong(struct rkcif_stream *stream,
 	struct rkcif_buffer *buffer = NULL;
 	u32 frm_addr_y, frm_addr_uv;
 
+    v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
+             "Consti10:rkcif_assign_new_buffer_pingpong:start\n");
+
 	if (init) {
 		u32 frm0_addr_y, frm0_addr_uv;
 		u32 frm1_addr_y, frm1_addr_uv;
@@ -1196,6 +1199,8 @@ static void rkcif_assign_new_buffer_pingpong(struct rkcif_stream *stream,
 				 "frame drop to dummy buf, stream id %d\n", stream->id);
 		}
 	}
+    v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
+             "Consti10:rkcif_assign_new_buffer_pingpong:end\n");
 }
 
 static void rkcif_csi_get_vc_num(struct rkcif_device *dev,
@@ -3661,7 +3666,7 @@ static void rkcif_vb_done_oneframe(struct rkcif_stream *stream,
         now_us=ktime_get_ns();
         latency1=now_us-vb_done->vb2_buf.timestamp;
         v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
-                 "Consti10:rkcif_vb_done_oneframe now:[%lld] buffTs:[%lld] latency:[%lld]\n",now_us,vb_done->vb2_buf.timestamp,latency1);
+                 "Consti10:rkcif_vb_done_oneframe now:[%lld]ns buffTs:[%lld]ns latency:[%lld]ns\n",now_us,vb_done->vb2_buf.timestamp,latency1);
         vb_done->vb2_buf.timestamp = now_us;
     }
 
@@ -3688,6 +3693,7 @@ void rkcif_irq_oneframe(struct rkcif_device *cif_dev)
 	stream = &cif_dev->stream[RKCIF_STREAM_CIF];
 
 	//Consti10: Cannot get messages from here in dmesg
+	// yes, because you are in the "oneframe path" ;)
     v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
              "Consti10:rkcif_irq_oneframe\n");
 
@@ -4096,7 +4102,7 @@ static void rkcif_update_stream(struct rkcif_device *cif_dev,
 
 	// yes
     v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
-             "Consti10:rkcif_update_stream\n");
+             "Consti10:rkcif_update_stream start, cif_dev->hdr.mode:%d, stream->frame_phase:%d, mipi_id:%d\n",cif_dev->hdr.mode,stream->frame_phase,mipi_id);
 
 	spin_lock(&stream->fps_lock);
 	if (stream->frame_phase & CIF_CSI_FRAME1_READY) {
@@ -4187,6 +4193,9 @@ static void rkcif_update_stream(struct rkcif_device *cif_dev,
 	}
 
 	stream->frame_idx++;
+
+    v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
+             "Consti10:rkcif_update_stream end\n");
 }
 
 u32 rkcif_get_sof(struct rkcif_device *cif_dev)
@@ -4611,7 +4620,7 @@ void rkcif_irq_pingpong(struct rkcif_device *cif_dev)
 
 	//Consti10 yes
     v4l2_dbg(1, rkcif_debug, &cif_dev->v4l2_dev,
-             "Consti10:rkcif_irq_pingpong\n");
+             "Consti10:rkcif_irq_pingpong start. now:[%lld]ns\n",ktime_get_ns());
 
 	if (!cif_dev->active_sensor)
 		return;
@@ -4631,6 +4640,9 @@ void rkcif_irq_pingpong(struct rkcif_device *cif_dev)
 
 		intstat = rkcif_read_register(cif_dev, CIF_REG_MIPI_LVDS_INTSTAT);
 		lastline = rkcif_read_register(cif_dev, CIF_REG_MIPI_LVDS_LINE_LINE_CNT_ID0_1);
+
+        v4l2_dbg(1, rkcif_debug, &cif_dev->v4l2_dev,
+                 "Consti10:rkcif_irq_pingpong:intstat:%d[0x%x] lastline: %d\n",intstat,intstat,lastline);
 
 		/* clear all interrupts that has been triggered */
 		rkcif_write_register(cif_dev, CIF_REG_MIPI_LVDS_INTSTAT, intstat);
@@ -4659,6 +4671,8 @@ void rkcif_irq_pingpong(struct rkcif_device *cif_dev)
 		}
 
 		if (intstat & CSI_FRAME0_START_ID0) {
+            v4l2_dbg(1, rkcif_debug, &cif_dev->v4l2_dev,
+                     "Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[%lld]ns\n",ktime_get_ns());
 			if (mbus->type == V4L2_MBUS_CSI2)
 				rkcif_csi2_event_inc_sof();
 			else if (mbus->type == V4L2_MBUS_CCP2)
@@ -4666,6 +4680,8 @@ void rkcif_irq_pingpong(struct rkcif_device *cif_dev)
 		}
 
 		if (intstat & CSI_FRAME1_START_ID0) {
+            v4l2_dbg(1, rkcif_debug, &cif_dev->v4l2_dev,
+                     "Consti10:rkcif_irq_pingpong:CSI_FRAME1_START_ID0 now:[%lld]ns\n",ktime_get_ns());
 			if (mbus->type == V4L2_MBUS_CSI2)
 				rkcif_csi2_event_inc_sof();
 			else if (mbus->type == V4L2_MBUS_CCP2)
@@ -4674,6 +4690,8 @@ void rkcif_irq_pingpong(struct rkcif_device *cif_dev)
 
 		/* if do not reach frame dma end, return irq */
 		mipi_id = rkcif_csi_g_mipi_id(&cif_dev->v4l2_dev, intstat);
+        v4l2_dbg(1, rkcif_debug, &cif_dev->v4l2_dev,
+                 "Consti10:rkcif_irq_pingpong:mipi_id %d\n",mipi_id);
 		if (mipi_id < 0)
 			return;
 
@@ -4723,6 +4741,7 @@ void rkcif_irq_pingpong(struct rkcif_device *cif_dev)
 		u32 cif_frmst, frmid, int_en;
 		struct rkcif_stream *stream;
 
+		// we seem to never reach this branch
         v4l2_dbg(1, rkcif_debug, &cif_dev->v4l2_dev,
                  "Consti10:rkcif_irq_pingpong:mbus_type:no\n");
 
@@ -4849,6 +4868,8 @@ void rkcif_irq_pingpong(struct rkcif_device *cif_dev)
 			cif_dev->irq_stats.all_frm_end_cnt++;
 		}
 	}
+    v4l2_dbg(1, rkcif_debug, &cif_dev->v4l2_dev,
+             "Consti10:rkcif_irq_pingpong end. now:[%lld]ns\n",ktime_get_ns());
 }
 
 void rkcif_irq_lite_lvds(struct rkcif_device *cif_dev)
