@@ -2671,6 +2671,12 @@ static void rkcif_set_fmt(struct rkcif_stream *stream,
 			 pixm->width, pixm->height,
 			 stream->pixm.width, stream->pixm.height);
 	}
+	// %d:%d:%d:%d:%d:%d:%d
+    v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
+             "Consti10:%s: pixm->pixelformat:%d cif_input_fmt: %d:%d:%d:%d:%d | cif_output_fmt: %d:%d:%d:XXX:%d:%d:%d \n",
+             __func__,pixm->pixelformat,
+             cif_fmt_in->mbus_code,cif_fmt_in->dvp_fmt_val,cif_fmt_in->csi_fmt_val,cif_fmt_in->fmt_type,cif_fmt_in->field,
+             fmt->fourcc,fmt->cplanes,fmt->mplanes/*,fmt->bpp*/,fmt->raw_bpp,(int)fmt->csi_fmt_val,fmt->fmt_type);
 }
 
 void rkcif_stream_init(struct rkcif_device *dev, u32 id)
@@ -4713,13 +4719,12 @@ void rkcif_irq_pingpong(struct rkcif_device *cif_dev)
 		}
 		cif_dev->irq_stats.all_frm_end_cnt++;
 	} else {
-        //Consti10
-        v4l2_dbg(1, rkcif_debug, &cif_dev->v4l2_dev,
-                 "Consti10:rkcif_irq_pingpong:mbus_type:no\n");
-
 		u32 lastline, lastpix, ctl;
 		u32 cif_frmst, frmid, int_en;
 		struct rkcif_stream *stream;
+
+        v4l2_dbg(1, rkcif_debug, &cif_dev->v4l2_dev,
+                 "Consti10:rkcif_irq_pingpong:mbus_type:no\n");
 
 		intstat = rkcif_read_register(cif_dev, CIF_REG_DVP_INTSTAT);
 		cif_frmst = rkcif_read_register(cif_dev, CIF_REG_DVP_FRAME_STATUS);
