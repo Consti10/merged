@@ -1088,9 +1088,13 @@ static void rkcif_assign_new_buffer_pingpong(struct rkcif_stream *stream,
     v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
              "Consti10:rkcif_assign_new_buffer_pingpong:start\n");
 
+    // while running, I think init is always 0 (called with 0 or 1 everywhere)
 	if (init) {
 		u32 frm0_addr_y, frm0_addr_uv;
 		u32 frm1_addr_y, frm1_addr_uv;
+		// aka we never go here after init
+        v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
+                 "Consti10:rkcif_assign_new_buffer_pingpong:init:%d\n",init);
 
 		if (mbus_cfg->type == V4L2_MBUS_CSI2 ||
 		    mbus_cfg->type == V4L2_MBUS_CCP2) {
@@ -1148,6 +1152,12 @@ static void rkcif_assign_new_buffer_pingpong(struct rkcif_stream *stream,
 		}
 		spin_unlock(&stream->vbq_lock);
 	} else {
+        v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
+                 "Consti10:rkcif_assign_new_buffer_pingpong:init:%d,mbus_cfg->type:%d\n",init,mbus_cfg->type);
+        // Doc by Consti10:
+        // Depending on which frame is ready (frame 0 or 1) obtain the register index for the y and uv plane (also in Bayer)
+        // When Frame 0 is ready, obtain the addresses for frame 0
+        // When Frame 1 is ready, obtain the addresses for frame 1
 		if (mbus_cfg->type == V4L2_MBUS_CSI2 ||
 		    mbus_cfg->type == V4L2_MBUS_CCP2) {
 			frm_addr_y = stream->frame_phase & CIF_CSI_FRAME0_READY ?
@@ -1162,9 +1172,15 @@ static void rkcif_assign_new_buffer_pingpong(struct rkcif_stream *stream,
 			frm_addr_uv = stream->frame_phase & CIF_CSI_FRAME0_READY ?
 				      CIF_FRM0_ADDR_UV : CIF_FRM1_ADDR_UV;
 		}
-
+        // Doc by Consti10:
+		// Depending on which frame is ready, assign either curr_buff or next_buff a new buffer from the queue
+		// When Frame 0 is ready, update the curr_buff with new buffer
+		// When Frame 1 is ready, update the next_buff with new buffer
 		spin_lock(&stream->vbq_lock);
 		if (!list_empty(&stream->buf_head)) {
+            v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
+                     "Consti10:rkcif_assign_new_buffer_pingpong:list not empty\n");
+            // Here, depending of t
 			if (stream->frame_phase == CIF_CSI_FRAME0_READY) {
 				stream->curr_buf = list_first_entry(&stream->buf_head,
 								    struct rkcif_buffer, queue);
@@ -1177,6 +1193,9 @@ static void rkcif_assign_new_buffer_pingpong(struct rkcif_stream *stream,
 				buffer = stream->next_buf;
 			}
 		} else {
+		    // never happens on debug output
+            v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
+                     "Consti10:rkcif_assign_new_buffer_pingpong:list empty\n");
 			if (stream->frame_phase == CIF_CSI_FRAME0_READY)
 				stream->curr_buf = NULL;
 			if (stream->frame_phase == CIF_CSI_FRAME1_READY)
@@ -1184,8 +1203,13 @@ static void rkcif_assign_new_buffer_pingpong(struct rkcif_stream *stream,
 			buffer = NULL;
 		}
 		spin_unlock(&stream->vbq_lock);
-
+        // Doc by Consti10:
+		// Here the address value of the "buffer" (either curr or prev, since switch above) is written into the proper rkcif register
+		// e.g Fill the y/uv register (by index) with the address of the buffer
+		// When Frame 0 is ready (buffer==curr_buf) write address of curr_buf to cif
+		// When Frame 1 is ready (buffer==next_buf) write address of next_buf to cif
 		if (buffer) {
+            // second param is the cif register index, third param the value
 			rkcif_write_register(dev, frm_addr_y,
 					     buffer->buff_addr[RKCIF_PLANE_Y]);
 			if (stream->cif_fmt_out->fmt_type != CIF_FMT_TYPE_RAW)
@@ -3666,7 +3690,7 @@ static void rkcif_vb_done_oneframe(struct rkcif_stream *stream,
         now_us=ktime_get_ns();
         latency1=now_us-vb_done->vb2_buf.timestamp;
         v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
-                 "Consti10:rkcif_vb_done_oneframe now:[%lld]ns buffTs:[%lld]ns latency:[%lld]ns\n",now_us,vb_done->vb2_buf.timestamp,latency1);
+                 "Consti10:rkcif_vb_done_oneframe now:[%lld]ns buffTs:[%lld]ns latency:[%lld]ns sequence:%d\n",now_us,vb_done->vb2_buf.timestamp,latency1,vb_done->sequence);
         vb_done->vb2_buf.timestamp = now_us;
     }
 
@@ -3874,6 +3898,9 @@ static void rkcif_monitor_reset_event(struct rkcif_device *dev)
 	unsigned int cycle = 0;
 	u64 fps, timestamp0, timestamp1;
 	unsigned long lock_flags = 0, fps_flags = 0;
+    v4l2_dbg(1, rkcif_debug, &dev->v4l2_dev,
+             "Consti10:rkcif_monitor_reset_event. timer->monitor_mode:%d, timer->is_running:%d now:[%lld]ns\n",
+             timer->monitor_mode,timer->is_running,ktime_get_ns());
 
 	if (timer->monitor_mode == RKCIF_MONITOR_MODE_IDLE)
 		return;
@@ -3948,6 +3975,7 @@ static void rkcif_rdbk_frame_end(struct rkcif_stream *stream)
 	int ret, fps = -1;
 
     //Consti10: Cannot get messages from here in dmesg
+    // yes, because in non-hdr mode, for some reason rkcif_vb_done_oneframe is called instead (this function also calls rkcif_vb_done_oneframe, but later)
     v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
              "Consti10:rkcif_rdbk_frame_end dev->hdr.mode: %d\n",dev->hdr.mode);
 
@@ -4105,11 +4133,19 @@ static void rkcif_update_stream(struct rkcif_device *cif_dev,
              "Consti10:rkcif_update_stream start, cif_dev->hdr.mode:%d, stream->frame_phase:%d, mipi_id:%d\n",cif_dev->hdr.mode,stream->frame_phase,mipi_id);
 
 	spin_lock(&stream->fps_lock);
+	// next or curr buff is always not null
+	// Doc by Consti10:
+	// When Frame 0 is ready, active_buf stores pointer to curr_buf
+	// When Frame 1 is ready, active_buf stores pointer to next_buf
 	if (stream->frame_phase & CIF_CSI_FRAME1_READY) {
+        v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
+                 "Consti10:rkcif_update_stream CIF_CSI_FRAME1_READY | next_buf:%s now:[%lld]ns\n",stream->next_buf ? "yes" : "no",ktime_get_ns());
 		if (stream->next_buf)
 			active_buf = stream->next_buf;
 		stream->fps_stats.frm1_timestamp = ktime_get_ns();
 	} else if (stream->frame_phase & CIF_CSI_FRAME0_READY) {
+        v4l2_dbg(1, rkcif_debug, &stream->cifdev->v4l2_dev,
+                 "Consti10:rkcif_update_stream CIF_CSI_FRAME0_READY | curr_buf:%s now:[%lld]ns\n",stream->curr_buf ? "yes" : "no",ktime_get_ns());
 		if (stream->curr_buf)
 			active_buf = stream->curr_buf;
 		stream->fps_stats.frm0_timestamp = ktime_get_ns();
@@ -4692,8 +4728,11 @@ void rkcif_irq_pingpong(struct rkcif_device *cif_dev)
 		mipi_id = rkcif_csi_g_mipi_id(&cif_dev->v4l2_dev, intstat);
         v4l2_dbg(1, rkcif_debug, &cif_dev->v4l2_dev,
                  "Consti10:rkcif_irq_pingpong:mipi_id %d\n",mipi_id);
-		if (mipi_id < 0)
-			return;
+		if (mipi_id < 0){
+            v4l2_dbg(1, rkcif_debug, &cif_dev->v4l2_dev,
+                     "Consti10:rkcif_irq_pingpong end (mipi_id<0). now:[%lld]ns\n",ktime_get_ns());
+            return;
+		}
 
 		for (i = 0; i < RKCIF_MAX_STREAM_MIPI; i++) {
 			mipi_id = rkcif_csi_g_mipi_id(&cif_dev->v4l2_dev,

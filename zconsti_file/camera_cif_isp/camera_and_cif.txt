@@ -1,0 +1,241 @@
+ 
+As found out from "optaining frames from camera after isp",
+The pipeline of camera frames seems to be:
+cif
+isp
+V4L2CaptureStream::Read
+
+Investigation 1: Which format is the camera frame in cif (to determine if pre or after isp is right) :
+kernel/drivers/media/platform/rockchip/cif/capture.c
+
+NOTE: imx415 outputs MEDIA_BUS_FMT_SGBRG10_1X10
+
+cif_input_fmt: has (for example):
+{
+	.mbus_code	= MEDIA_BUS_FMT_SGBRG10_1X10,
+	.dvp_fmt_val	= INPUT_MODE_RAW | RAW_DATA_WIDTH_10,
+	.csi_fmt_val	= CSI_WRDDR_TYPE_RAW10,
+	.fmt_type	= CIF_FMT_TYPE_RAW,
+	.field		= V4L2_FIELD_NONE,
+},
+cif_output_fmt doesn't use the "MEDIA_BUS_..." values but rather V4L2_PIX_FMT
+The closest one is probably:
+{
+	.fourcc = V4L2_PIX_FMT_SGBRG10,
+	.cplanes = 1,
+	.mplanes = 1,
+	.bpp = { 16 },
+	.raw_bpp = 10,
+	.csi_fmt_val = CSI_WRDDR_TYPE_RAW10,
+	.fmt_type = CIF_FMT_TYPE_RAW,
+}
+
+
+
+there is rkcif_set_fmt
+which does:
+cif_output_fmt fmt = find_output_fmt(stream, pixm->pixelformat);
+AND
+cif_input_fmt cif_fmt_in = get_input_fmt(dev->active_sensor->sd,
+			      &input_rect, stream->id + 1);
+stream->cif_fmt_in = cif_fmt_in;
+
+v4l2_dbg(1, rkcif_debug, &cif_dev->v4l2_dev,
+                     "Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[%lld]ns\n",ktime_get_ns());
+					 
+					 
+// kernel/drivers/media/platform/rockchip/cif/capture.c includes				 
+#include "dev.h"
+#include "mipi-csi2.h"
+
+stream->frame_phase is
+written by: rkcif_irq_oneframe, rkcif_irq_pingpong, rkcif_irq_lite_lvds
+read by & : rkcif_assign_new_buffer_pingpong, rkcif_update_stream,rkcif_irq_pingpong (only in unused branch though)
+
+echo 0x300 > /sys/module/video_rkcif/parameters/debug
+
+see cif_debug_enabled
+
+Pattern 1:
+[  177.945231] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[177941197823]ns
+[  177.945244] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  177.945254] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:2[0x2] lastline: 0
+[  177.945263] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME1_START_ID0 now:[177941246823]ns
+[  177.945295] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  177.956144] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[177952111116]ns
+[  177.956158] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  177.956169] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:512[0x200] lastline: 0
+[  177.956176] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  177.956187] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+[  177.956194] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  177.956202] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  177.956241] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  177.956256] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  177.956265] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[177952249657]ns
+
+rkcif_irq_pingpong start
+CSI_FRAME1_START_ID0 but mipi_id -22 -> return there (end is not printed then)
+(should be pinpong_end)
+rkcif_irq_pingpong start
+mipi_id 0
+	rkcif_update_stream start | cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+		rkcif_assign_new_buffer_pingpong start
+		frame drop to dummy buf, stream id 0
+		rkcif_assign_new_buffer_pingpong end
+	kcif_update_stream end 
+rkcif_irq_pingpong end	
+Deltas: pingpong start to FRAMEX_START:       177941246823-177941197823=49000       49000*1e-6=0.049ms
+Deltas: pingpong start first and second time: 177952111116-177941197823=10913293 10913293*1e-6=10.913293ms
+Deltas: pingpong (second) start->end        : 177952249657-177952111116=138541     138541*1e-6=0.138541ms
+
+
+Pattern 2:
+[  177.979013] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[177974980701]ns
+[  177.979027] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  177.979038] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:1[0x1] lastline: 0
+[  177.979047] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[177975031160]ns
+[  177.979078] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  177.989945] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[177985913244]ns
+[  177.989959] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  177.989971] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:256[0x100] lastline: 0
+[  177.989978] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  177.989988] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+[  177.989996] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  177.990003] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  177.990042] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  177.990056] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  177.990065] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[177986049453]ns
+
+rkcif_irq_pingpong start
+CSI_FRAME0_START_ID0 but mipi_id -22 -> return there (end is not printed then)
+rkcif_irq_pingpong start
+mipi_id 0
+	rkcif_update_stream start | cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+		rkcif_assign_new_buffer_pingpong start
+		frame drop to dummy buf, stream id 0
+		rkcif_assign_new_buffer_pingpong end
+	kcif_update_stream end 
+rkcif_irq_pingpong end	
+Deltas: pingpong start first and second time:   177985913244-177974980701=10932543 10932543*1e-6=10.932543ns
+
+Pattern 3:
+[  178.012817] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178008785455]ns
+[  178.012831] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.012842] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:2[0x2] lastline: 0
+[  178.012851] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME1_START_ID0 now:[178008835038]ns
+[  178.012880] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.023683] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178019650914]ns
+[  178.023695] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.023706] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:512[0x200] lastline: 0
+[  178.023714] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.023724] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+[  178.023732] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.023740] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.023781] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.023796] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.023805] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178019789456]ns
+
+rkcif_irq_pingpong start
+CSI_FRAME1_START_ID0 but mipi_id -22 -> return there (end is not printed then)
+rkcif_irq_pingpong start
+mipi_id 0
+	rkcif_update_stream start | cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+		rkcif_assign_new_buffer_pingpong start
+		frame drop to dummy buf, stream id 0
+		rkcif_assign_new_buffer_pingpong end
+	kcif_update_stream end 
+rkcif_irq_pingpong end
+
+
+Pattern 4:
+[  178.046645] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178042612667]ns
+[  178.046660] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.046671] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:1[0x1] lastline: 0
+[  178.046679] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[178042664000]ns
+[  178.046712] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.057815] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178053782043]ns
+[  178.057830] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.057841] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:256[0x100] lastline: 0
+[  178.057849] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.057859] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+[  178.057867] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.057874] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.057924] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.057939] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.057948] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178053932543]ns
+
+
+rkcif_irq_pingpong start
+CSI_FRAME0_START_ID0 but mipi_id -22 -> return there (end is not printed then)
+rkcif_irq_pingpong start
+mipi_id 0
+	rkcif_update_stream start | cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+		rkcif_assign_new_buffer_pingpong start
+		frame drop to dummy buf, stream id 0
+		rkcif_assign_new_buffer_pingpong end
+	kcif_update_stream end 
+rkcif_irq_pingpong end
+
+After that it repeats
+---------------------------------------------------------------------------
+1)
+rkcif_irq_pingpong start
+CSI_FRAME1_START_ID0 but mipi_id -22 -> return there (end is not printed then)
+(should be pinpong_end)
+rkcif_irq_pingpong start
+mipi_id 0
+	rkcif_update_stream start | cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+		rkcif_assign_new_buffer_pingpong start
+		frame drop to dummy buf, stream id 0
+		rkcif_assign_new_buffer_pingpong end
+	kcif_update_stream end 
+rkcif_irq_pingpong end	
+
+2)
+rkcif_irq_pingpong start
+CSI_FRAME0_START_ID0 but mipi_id -22 -> return there (end is not printed then)
+rkcif_irq_pingpong start
+mipi_id 0
+	rkcif_update_stream start | cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+		rkcif_assign_new_buffer_pingpong start
+		frame drop to dummy buf, stream id 0
+		rkcif_assign_new_buffer_pingpong end
+	kcif_update_stream end 
+rkcif_irq_pingpong end	
+
+3)
+rkcif_irq_pingpong start
+CSI_FRAME1_START_ID0 but mipi_id -22 -> return there (end is not printed then)
+rkcif_irq_pingpong start
+mipi_id 0
+	rkcif_update_stream start | cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+		rkcif_assign_new_buffer_pingpong start
+		frame drop to dummy buf, stream id 0
+		rkcif_assign_new_buffer_pingpong end
+	kcif_update_stream end 
+rkcif_irq_pingpong end
+
+4)
+rkcif_irq_pingpong start
+CSI_FRAME0_START_ID0 but mipi_id -22 -> return there (end is not printed then)
+rkcif_irq_pingpong start
+mipi_id 0
+	rkcif_update_stream start | cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+		rkcif_assign_new_buffer_pingpong start
+		frame drop to dummy buf, stream id 0
+		rkcif_assign_new_buffer_pingpong end
+	kcif_update_stream end 
+rkcif_irq_pingpong end
+
+
+
+------------------------------
+rkcif_vb_done_oneframe : calls vb2_buffer_done -> which has documentation
+kernel/include/media/videobuf2-core.h : called by the driver after a hardware operation on
+ * a buffer is finished and the buffer may be returned to userspace.
+
+There is CIF_CSI_FRAME1_READY and CIF_CSI_FRAME0_READY
+
+
+
+

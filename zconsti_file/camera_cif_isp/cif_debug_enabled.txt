@@ -1,0 +1,386 @@
+[  177.911431] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[177907398028]ns
+[  177.911446] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  177.911457] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:1[0x1] lastline: 0
+[  177.911466] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[177907449945]ns
+[  177.911507] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  177.922268] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[177918236362]ns
+[  177.922280] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  177.922291] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:256[0x100] lastline: 0
+[  177.922299] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  177.922309] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+[  177.922316] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  177.922324] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  177.922360] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  177.922381] rkcif_mipi_lvds: Consti10:rkcif_vb_done_oneframe now:[177918362071]ns buffTs:[177918361196]ns latency:[875]ns
+[  177.922404] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  177.922413] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[177918397946]ns
+[  177.945231] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[177941197823]ns
+[  177.945244] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  177.945254] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:2[0x2] lastline: 0
+[  177.945263] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME1_START_ID0 now:[177941246823]ns
+[  177.945295] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  177.956144] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[177952111116]ns
+[  177.956158] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  177.956169] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:512[0x200] lastline: 0
+[  177.956176] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  177.956187] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+[  177.956194] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  177.956202] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  177.956241] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  177.956256] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  177.956265] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[177952249657]ns
+[  177.979013] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[177974980701]ns
+[  177.979027] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  177.979038] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:1[0x1] lastline: 0
+[  177.979047] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[177975031160]ns
+[  177.979078] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  177.989945] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[177985913244]ns
+[  177.989959] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  177.989971] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:256[0x100] lastline: 0
+[  177.989978] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  177.989988] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+[  177.989996] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  177.990003] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  177.990042] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  177.990056] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  177.990065] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[177986049453]ns
+[  178.012817] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178008785455]ns
+[  178.012831] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.012842] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:2[0x2] lastline: 0
+[  178.012851] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME1_START_ID0 now:[178008835038]ns
+[  178.012880] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.023683] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178019650914]ns
+[  178.023695] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.023706] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:512[0x200] lastline: 0
+[  178.023714] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.023724] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+[  178.023732] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.023740] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.023781] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.023796] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.023805] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178019789456]ns
+[  178.046645] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178042612667]ns
+[  178.046660] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.046671] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:1[0x1] lastline: 0
+[  178.046679] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[178042664000]ns
+[  178.046712] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.057815] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178053782043]ns
+[  178.057830] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.057841] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:256[0x100] lastline: 0
+[  178.057849] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.057859] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+[  178.057867] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.057874] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.057924] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.057939] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.057948] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178053932543]ns
+[  178.080427] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178076395253]ns
+[  178.080441] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.080452] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:2[0x2] lastline: 0
+[  178.080461] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME1_START_ID0 now:[178076444837]ns
+[  178.080490] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.091361] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178087328671]ns
+[  178.091375] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.091386] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:512[0x200] lastline: 0
+[  178.091394] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.091404] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+[  178.091411] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.091419] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.091461] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.091477] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.091486] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178087470421]ns
+[  178.114203] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178110171715]ns
+[  178.114217] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.114227] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:1[0x1] lastline: 0
+[  178.114236] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[178110220132]ns
+[  178.114266] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.125175] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178121142174]ns
+[  178.125188] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.125199] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:256[0x100] lastline: 0
+[  178.125207] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.125217] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+[  178.125225] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.125232] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.125283] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.125298] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.125308] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178121291508]ns
+[  178.148063] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178144030427]ns
+[  178.148078] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.148089] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:2[0x2] lastline: 0
+[  178.148098] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME1_START_ID0 now:[178144082343]ns
+[  178.148132] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.158973] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178154939928]ns
+[  178.158987] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.158999] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:512[0x200] lastline: 0
+[  178.159007] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.159016] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+[  178.159024] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.159031] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.159070] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.159086] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.159094] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178155079344]ns
+[  178.181862] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178177829638]ns
+[  178.181876] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.181887] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:1[0x1] lastline: 0
+[  178.181895] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[178177879805]ns
+[  178.181923] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.192708] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178188676431]ns
+[  178.192720] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.192731] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:256[0x100] lastline: 0
+[  178.192738] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.192748] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+[  178.192756] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.192763] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.192801] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.192816] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.192825] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178188809431]ns
+[  178.215666] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178211633809]ns
+[  178.215680] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.215692] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:2[0x2] lastline: 0
+[  178.215701] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME1_START_ID0 now:[178211684850]ns
+[  178.215731] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.226567] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178222533393]ns
+[  178.226581] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.226593] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:512[0x200] lastline: 0
+[  178.226600] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.226609] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+[  178.226616] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.226624] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.226663] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.226678] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.226687] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178222671643]ns
+[  178.249472] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178245439437]ns
+[  178.249486] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.249497] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:1[0x1] lastline: 0
+[  178.249505] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[178245489895]ns
+[  178.249536] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.260368] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178256336105]ns
+[  178.260383] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.260394] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:256[0x100] lastline: 0
+[  178.260401] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.260412] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+[  178.260419] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.260426] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.260468] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.260482] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.260491] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178256475813]ns
+[  178.283258] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178279225524]ns
+[  178.283272] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.283283] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:2[0x2] lastline: 0
+[  178.283291] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME1_START_ID0 now:[178279275690]ns
+[  178.283321] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.294172] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178290140566]ns
+[  178.294187] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.294198] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:512[0x200] lastline: 0
+[  178.294206] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.294215] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+[  178.294222] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.294230] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.294269] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.294284] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.294293] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178290277650]ns
+[  178.317063] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178313030860]ns
+[  178.317077] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.317088] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:1[0x1] lastline: 0
+[  178.317098] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[178313081319]ns
+[  178.317127] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.327978] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178323946195]ns
+[  178.327992] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.328004] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:256[0x100] lastline: 0
+[  178.328012] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.328022] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+[  178.328029] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.328037] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.328079] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.328093] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.328102] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178324087070]ns
+[  178.350867] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178346835030]ns
+[  178.350881] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.350892] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:2[0x2] lastline: 0
+[  178.350901] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME1_START_ID0 now:[178346885489]ns
+[  178.350930] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.361783] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178357750657]ns
+[  178.361797] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.361808] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:512[0x200] lastline: 0
+[  178.361815] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.361826] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+[  178.361833] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.361840] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.361879] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.361894] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.361904] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178357887740]ns
+[  178.384673] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178380640950]ns
+[  178.384686] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.384697] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:1[0x1] lastline: 0
+[  178.384706] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[178380689950]ns
+[  178.384733] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.395766] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178391733910]ns
+[  178.395782] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.395794] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:256[0x100] lastline: 0
+[  178.395801] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.395811] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+[  178.395819] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.395826] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.395876] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.395891] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.395900] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178391884993]ns
+[  178.418496] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178414464371]ns
+[  178.418510] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.418522] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:2[0x2] lastline: 0
+[  178.418530] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME1_START_ID0 now:[178414515121]ns
+[  178.418561] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.429413] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178425380872]ns
+[  178.429427] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.429439] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:512[0x200] lastline: 0
+[  178.429446] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.429456] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+[  178.429464] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.429471] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.429512] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.429527] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.429536] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178425520288]ns
+[  178.452284] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178448251332]ns
+[  178.452298] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.452309] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:1[0x1] lastline: 0
+[  178.452318] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[178448302082]ns
+[  178.452348] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.463218] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178459185042]ns
+[  178.463232] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.463244] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:256[0x100] lastline: 0
+[  178.463251] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.463261] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+[  178.463269] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.463277] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.463314] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.463330] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.463338] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178459323000]ns
+[  178.486298] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178482264919]ns
+[  178.486311] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.486322] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:2[0x2] lastline: 3
+[  178.486331] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME1_START_ID0 now:[178482315377]ns
+[  178.486374] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.497022] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178492990087]ns
+[  178.497036] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.497048] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:512[0x200] lastline: 0
+[  178.497055] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.497065] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+[  178.497072] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.497080] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.497119] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.497134] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.497142] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178493127170]ns
+[  178.519895] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178515862006]ns
+[  178.519909] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.519920] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:1[0x1] lastline: 0
+[  178.519929] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[178515912756]ns
+[  178.519958] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.530810] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178526777049]ns
+[  178.530824] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.530835] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:256[0x100] lastline: 0
+[  178.530842] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.530852] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+[  178.530859] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.530867] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.530906] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.530921] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.530930] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178526914715]ns
+[  178.553700] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178549666759]ns
+[  178.553713] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.553724] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:2[0x2] lastline: 0
+[  178.553733] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME1_START_ID0 now:[178549717217]ns
+[  178.553762] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.564632] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178560600469]ns
+[  178.564646] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.564658] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:512[0x200] lastline: 0
+[  178.564665] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.564675] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+[  178.564683] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.564691] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.564730] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.564744] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.564753] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178560738135]ns
+[  178.587455] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178583421929]ns
+[  178.587468] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.587479] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:1[0x1] lastline: 0
+[  178.587487] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[178583471804]ns
+[  178.587519] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.598437] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178594404639]ns
+[  178.598451] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.598462] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:256[0x100] lastline: 0
+[  178.598469] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.598480] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+[  178.598487] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.598495] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.598531] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.598547] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.598556] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178594540555]ns
+[  178.621328] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178617296391]ns
+[  178.621343] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.621354] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:2[0x2] lastline: 0
+[  178.621362] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME1_START_ID0 now:[178617346558]ns
+[  178.621391] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.632415] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178628382350]ns
+[  178.632430] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.632442] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:512[0x200] lastline: 0
+[  178.632449] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.632459] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+[  178.632466] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.632474] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.632527] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.632542] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.632551] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178628536059]ns
+[  178.655113] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178651081311]ns
+[  178.655127] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.655137] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:1[0x1] lastline: 0
+[  178.655146] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[178651130603]ns
+[  178.655175] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.666063] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178662030479]ns
+[  178.666078] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.666090] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:256[0x100] lastline: 0
+[  178.666097] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.666107] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+[  178.666115] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.666123] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.666175] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.666190] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.666199] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178662183604]ns
+[  178.688939] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178684905898]ns
+[  178.688952] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.688963] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:2[0x2] lastline: 0
+[  178.688972] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME1_START_ID0 now:[178684956356]ns
+[  178.689002] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.699835] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178695802274]ns
+[  178.699849] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.699861] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:512[0x200] lastline: 0
+[  178.699868] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.699878] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
+[  178.699885] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.699893] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.699930] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.699945] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.699954] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178695938774]ns
+[  178.722742] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178718709776]ns
+[  178.722756] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.722767] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:1[0x1] lastline: 0
+[  178.722776] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME0_START_ID0 now:[178718760234]ns
+[  178.722803] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.733589] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178729556861]ns
+[  178.733602] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.733613] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:256[0x100] lastline: 0
+[  178.733620] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.733631] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:1, mipi_id:0
+[  178.733638] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:start
+[  178.733646] rkcif_mipi_lvds: frame drop to dummy buf, stream id 0
+[  178.733687] rkcif_mipi_lvds: Consti10:rkcif_assign_new_buffer_pingpong:end
+[  178.733702] rkcif_mipi_lvds: Consti10:rkcif_update_stream end
+[  178.733711] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong end. now:[178729695694]ns
+[  178.756552] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178752519780]ns
+[  178.756566] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.756577] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:2[0x2] lastline: 0
+[  178.756586] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:CSI_FRAME1_START_ID0 now:[178752569946]ns
+[  178.756614] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id -22
+[  178.767471] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong start. now:[178763438322]ns
+[  178.767485] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mbus_type:yes
+[  178.767497] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:intstat:512[0x200] lastline: 0
+[  178.767505] rkcif_mipi_lvds: Consti10:rkcif_irq_pingpong:mipi_id 0
+[  178.767514] rkcif_mipi_lvds: Consti10:rkcif_update_stream start, cif_dev->hdr.mode:0, stream->frame_phase:2, mipi_id:0
