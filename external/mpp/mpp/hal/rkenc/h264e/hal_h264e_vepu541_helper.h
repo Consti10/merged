@@ -1,0 +1,8 @@
+//
+// Created by consti10 on 15.09.21.
+//
+
+#ifndef MERGED_HAL_H264E_VEPU541_HELPER_H
+#define MERGED_HAL_H264E_VEPU541_HELPER_H
+
+#endif //MERGED_HAL_H264E_VEPU541_HELPER_H
