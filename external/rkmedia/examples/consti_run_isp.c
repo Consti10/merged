@@ -1,0 +1,108 @@
+// Copyright 2020 Fuzhou Rockchip Electronics Co., Ltd. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include <assert.h>
+#include <fcntl.h>
+#include <getopt.h>
+#include <signal.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
+#include <inttypes.h>
+
+#include "common/sample_common.h"
+#include "rkmedia_api.h"
+#include "rkmedia_venc.h"
+
+#include <sys/time.h>
+//socket
+#include <errno.h>
+#include <string.h>
+#include <unistd.h>
+#include <netdb.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
+static bool quit = false;
+static void sigterm_handler(int sig) {
+    fprintf(stderr, "signal %d\n", sig);
+    quit = true;
+}
+
+static RK_CHAR optstr[] = "?:f:e";
+static const struct option long_options[] = {
+        {"framerate", required_argument, NULL, 'f'},
+        {"extra", required_argument, NULL, 'e'},
+        {NULL, 0, NULL, 0},
+};
+
+static void print_usage(const RK_CHAR *name) {
+    printf("usage example:\n");
+    printf("\t%s "
+           "[-f | --framerate 30] \n",
+           name);
+}
+
+
+// start the ISP, I think this only has to run somewhere, not necessarily in the same thread
+int main(int argc, char *argv[]) {
+    RK_CHAR *iq_file_dir = NULL;
+    RK_S32 s32CamId = 0;
+    RK_U32 m_framerate=30;
+    RK_U32 m_shutter=0;
+    RK_U32 m_gain=0;
+    iq_file_dir = "/oem/etc/iqfiles";
+    int extra=0;
+
+    int ret = 0;
+    int c;
+    while ((c = getopt_long(argc, argv, optstr, long_options, NULL)) != -1) {
+        switch (c) {
+            case 'f':
+                m_framerate = atoi(optarg);
+                break;
+            case 'e':
+                extra = atoi(optarg);
+                break;
+            case '?':
+            default:
+                print_usage(argv[0]);
+                return 0;
+        }
+    }
+
+    printf("#Aiq xml dirpath: %s\n", iq_file_dir);
+    rk_aiq_working_mode_t hdr_mode = RK_AIQ_WORKING_MODE_NORMAL;
+    RK_BOOL fec_enable = RK_FALSE;
+    int fps = m_framerate;
+    ret=SAMPLE_COMM_ISP_Init(s32CamId,hdr_mode, fec_enable, iq_file_dir);
+    printf("X1:%d",ret);
+    ret=SAMPLE_COMM_ISP_Run(s32CamId);
+    printf("X2:%d",ret);
+    ret=SAMPLE_COMM_ISP_SetFrameRate(s32CamId,fps);
+    printf("X3:%d\n",ret);
+
+    if(extra){
+        ret=SAMPLE_COMM_ISP_SET_ManualExposureManualGain(s32CamId,m_shutter,m_gain);
+        printf("Manual Exposure and Gain:%d\n",ret);
+    }
+
+    printf("Done initializing, ISP should be running now\n");
+    signal(SIGINT, sigterm_handler);
+
+    while (!quit) {
+        usleep(5*1000000); //x ms
+        SAMPLE_COMM_ISP_DumpExpInfo(s32CamId,hdr_mode);
+    }
+
+    printf("Stopping ISP\n");
+
+    ret=SAMPLE_COMM_ISP_Stop(s32CamId); // isp aiq stop before vi streamoff
+    printf("X5:%d",ret);
+
+    printf("ISP stopped,DONE\n");
+}
