@@ -42,7 +42,10 @@ static char* M_IP="192.168.0.11";
 static uint64_t frameDeltaAvgSum=0;
 static uint64_t frameDeltaAvgCount=0;
 
-static uint8_t fakeNALU[4]={0,0,0,1};
+// this is just a NALU with no content
+static __attribute__((unused)) uint8_t fakeNALU[4]={0,0,0,1};
+// this is the data for an h264 AUD unit
+static __attribute__((unused)) uint8_t EXAMPLE_AUD[6]={0,0,0,1,9,48};
 
 // this thread should run as close to realtime as possible
 static void __attribute__((unused)) setThreadParamsMaxRealtime(pthread_t target){
@@ -116,6 +119,7 @@ static void __attribute__((unused)) mySendTo(void* data,int data_length){
 // send a "empty NALU" to decrease latency (obviosly this works, but we want RTP instead)
 static void __attribute__((unused)) sendFakeNALU(){
     mySendTo(fakeNALU,sizeof(fakeNALU));
+    //mySendTo(EXAMPLE_AUD,sizeof(EXAMPLE_AUD));
 }
 
 
@@ -163,11 +167,11 @@ void video_packet_cb(MEDIA_BUFFER mb) {
     lastTimeStamp=ts;
     printf("Current time %" PRIu64 "(ms), delta %" PRIu64 "(ms) MB ts:%" PRIu64 "\n",ts,delta,buffer_ts);
     RK_MPI_MB_TsNodeDump(mb);
-    //COnsti10: add end
+    //Consti10: add end
     RK_MPI_MB_ReleaseBuffer(mb);
 }
 
-static RK_CHAR optstr[] = "?:a::h:w:e:d:f:";
+static RK_CHAR optstr[] = "?:a::h:w:e:d:f:i";
 static const struct option long_options[] = {
         {"aiq", optional_argument, NULL, 'a'},
         {"height", required_argument, NULL, 'h'},
@@ -297,6 +301,10 @@ int main(int argc, char *argv[]) {
     vi_chn_attr.u32Height = u32Height;
     vi_chn_attr.enPixFmt = m_image_type;
     vi_chn_attr.enWorkMode = VI_WORK_MODE_NORMAL;
+    // did I accidentally remove this ?!
+    // somewhere it says VI_CHN_BUF_TYPE_DMA = 0, // Default , so perhaps I should have been using MMAP ?!
+    //vi_chn_attr.enBufType = VI_CHN_BUF_TYPE_MMAP;
+    printf("Consti10: Used vi_chn_attr.enBufType:%d\n",vi_chn_attr.enBufType);
     ret = RK_MPI_VI_SetChnAttr(0, 0, &vi_chn_attr);
     ret |= RK_MPI_VI_EnableChn(0, 0);
     if (ret) {
