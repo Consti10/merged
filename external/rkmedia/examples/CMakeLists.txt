@@ -34,6 +34,12 @@ add_dependencies(consti_test easymedia)
 target_link_libraries(consti_test easymedia)
 target_include_directories(consti_test PRIVATE ${CMAKE_SOURCE_DIR}/include)
 install(TARGETS consti_test RUNTIME DESTINATION "bin")
+#Consti10
+add_executable(consti_run_isp consti_run_isp.c ${COMMON_SRC})
+add_dependencies(consti_run_isp easymedia)
+target_link_libraries(consti_run_isp easymedia)
+target_include_directories(consti_run_isp PRIVATE ${CMAKE_SOURCE_DIR}/include)
+install(TARGETS consti_run_isp RUNTIME DESTINATION "bin")
 
 #--------------------------
 # rkmedia_vi_venc_rtsp_test
