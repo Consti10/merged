@@ -1,0 +1,13 @@
+// somehow camera_enginge_rkisp needs to optain the camera frames (after) cif.
+
+I think this is done in 
+external/camera_engine_rkaiq/hwi/isp20/Isp20PollThread.cpp
+Isp20PollThread::trigger_readback()
+
+trigger_readback() is called in multiple places:
+set_hdr_frame_readback_infos(int frame_id, int times)
+sync_tx_buf() 3x
+
+sync_tx_buf() is called from handle_tx_buf()
+which in turn is called from mipi_poll_buffer_loop()
+which in turn is called from MipiPollThread::loop()

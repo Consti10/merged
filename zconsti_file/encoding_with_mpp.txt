@@ -116,8 +116,10 @@ MPP_RET ret = get_val_by_key(impl, key, TYPE_FRAME, &meta_val);
 // external/mpp/mpp/hal/rkenc/h264e/hal_h264e_vepu541.c
 
 
-
-
+// regarding encoding latency: Calculating the latency is simple, since the encoding process always follows the same pattern,
+// which can be observed in external/rkmedia/src/rkmpp/mpp_encoder.cc -> int MPPEncoder::Process(MppFrame frame, MppPacket &packet, MppBuffer &mv_buf)
+1) mpi->encode_put_frame(ctx, frame);
+2) mpi->encode_get_packet(ctx, &packet);
 
 
 
