@@ -41,8 +41,8 @@
 // poc==2 workaround
 #include "hal_h264e_vepu541_helper.h"
 
-// workaround
-/*typedef struct HalH264eVepuStreamAmend_t {
+//workaround
+typedef struct HalH264eVepuStreamAmend_t {
     RK_S32          enable;
     H264eSlice      *slice;
     H264ePrefixNal  *prefix;
@@ -56,7 +56,7 @@
     RK_S32          buf_base;
     RK_S32          old_length;
     RK_S32          new_length;
-} HalH264eVepuStreamAmend;*/
+} HalH264eVepuStreamAmend;
 
 typedef struct HalH264eVepu541Ctx_t {
     MppEncCfgSet            *cfg;
@@ -95,7 +95,7 @@ typedef struct HalH264eVepu541Ctx_t {
     /* osd */
     Vepu541OsdCfg           osd_cfg;
 
-    // workaround
+    //workaround
     //HalH264eVepuStreamAmend amend;
 
     /* register */
