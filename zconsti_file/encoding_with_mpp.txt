@@ -122,7 +122,9 @@ MPP_RET ret = get_val_by_key(impl, key, TYPE_FRAME, &meta_val);
 2) mpi->encode_get_packet(ctx, &packet);
 
 
-
+// mpp also has its own stopwatch, look for 
+mpp_stopwatch_record
+it is enabled if mpp_debug & MPP_DBG_TIMING 
 
 
 

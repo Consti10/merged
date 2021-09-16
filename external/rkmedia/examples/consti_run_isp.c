@@ -49,6 +49,7 @@ static void print_usage(const RK_CHAR *name) {
 
 
 // start the ISP, I think this only has to run somewhere, not necessarily in the same thread
+// maybe use rkisp_demo instead ?!
 int main(int argc, char *argv[]) {
     RK_CHAR *iq_file_dir = NULL;
     RK_S32 s32CamId = 0;
