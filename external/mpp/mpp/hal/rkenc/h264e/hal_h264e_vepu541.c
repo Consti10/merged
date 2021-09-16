@@ -39,7 +39,7 @@
 #include "vepu541_common.h"
 
 // poc==2 workaround
-#include "hal_h264e_vepu541_helper.h"
+#include "hal_h264e_vepu541_ammend.h"
 
 typedef struct HalH264eVepu541Ctx_t {
     MppEncCfgSet            *cfg;
