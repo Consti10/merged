@@ -118,8 +118,8 @@ static void __attribute__((unused)) mySendTo(void* data,int data_length){
 
 // send a "empty NALU" to decrease latency (obviosly this works, but we want RTP instead)
 static void __attribute__((unused)) sendFakeNALU(){
-    mySendTo(fakeNALU,sizeof(fakeNALU));
-    //mySendTo(EXAMPLE_AUD,sizeof(EXAMPLE_AUD));
+    //mySendTo(fakeNALU,sizeof(fakeNALU));
+    mySendTo(EXAMPLE_AUD,sizeof(EXAMPLE_AUD));
 }
 
 

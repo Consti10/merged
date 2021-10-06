@@ -33,17 +33,20 @@ static void sigterm_handler(int sig) {
     quit = true;
 }
 
-static RK_CHAR optstr[] = "?:f:e";
+static RK_CHAR optstr[] = "?:f:s:g";
 static const struct option long_options[] = {
         {"framerate", required_argument, NULL, 'f'},
-        {"extra", required_argument, NULL, 'e'},
+        {"shutter", required_argument, NULL, 's'},
+        {"gain", required_argument, NULL, 'g'},
         {NULL, 0, NULL, 0},
 };
 
 static void print_usage(const RK_CHAR *name) {
     printf("usage example:\n");
     printf("\t%s "
-           "[-f | --framerate 30] \n",
+           "[-f | --framerate 30] \n"
+           "[-s | --shutter] \n"
+           "[-g | --gain] \n",
            name);
 }
 
@@ -57,7 +60,7 @@ int main(int argc, char *argv[]) {
     RK_U32 m_shutter=0;
     RK_U32 m_gain=0;
     iq_file_dir = "/oem/etc/iqfiles";
-    int extra=0;
+    int useManualShutterGain=0;
 
     int ret = 0;
     int c;
@@ -66,8 +69,13 @@ int main(int argc, char *argv[]) {
             case 'f':
                 m_framerate = atoi(optarg);
                 break;
-            case 'e':
-                extra = atoi(optarg);
+            case 's':
+                m_shutter = atoi(optarg);
+                useManualShutterGain=1;
+                break;
+            case 'g':
+                m_gain = atoi(optarg);
+                useManualShutterGain=1;
                 break;
             case '?':
             default:
@@ -87,17 +95,20 @@ int main(int argc, char *argv[]) {
     ret=SAMPLE_COMM_ISP_SetFrameRate(s32CamId,fps);
     printf("X3:%d\n",ret);
 
-    if(extra){
+    if(useManualShutterGain){
         ret=SAMPLE_COMM_ISP_SET_ManualExposureManualGain(s32CamId,m_shutter,m_gain);
         printf("Manual Exposure and Gain:%d\n",ret);
+        //./consti_run_isp -s 19999 -f 90
     }
 
     printf("Done initializing, ISP should be running now\n");
     signal(SIGINT, sigterm_handler);
 
     while (!quit) {
-        usleep(5*1000000); //x ms
+        usleep(1*1000000); //x ms
         SAMPLE_COMM_ISP_DumpExpInfo(s32CamId,hdr_mode);
+        // Integration time - gain | MeanLuma | stCCT.CCT
+        // isp exp dump: M:29999-251.8 LM:2.3 CT:6610.5
     }
 
     printf("Stopping ISP\n");
