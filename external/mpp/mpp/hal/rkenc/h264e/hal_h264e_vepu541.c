@@ -123,10 +123,6 @@ static RK_S32 h264_I_aq_step_default[16] = {
     0,  1,  3,  3,
     4,  5,  8,  8,
 };
-//workaround - ?
-//static RK_S32 h264_I_aq_step_default[16] = {
-//        4,  5,  8,  8,
-//};
 
 static MPP_RET hal_h264e_vepu541_deinit(void *hal)
 {
@@ -1590,23 +1586,12 @@ static MPP_RET hal_h264e_vepu541_status_check(void *hal)
     return MPP_OK;
 }
 
-// if the amend operation should be performed, do so.
-// Else do nothing
-void Xamend_if_enabled(HalH264eVepu541Ctx* ctx){
-    RK_U32 length = ctx->regs_ret.st_bsl.bs_lgth;
-    HalH264eVepuStreamAmend *amend = &ctx->amend;
-    if (amend->enable) {
-        mpp_log("h264e_amend %d %d\n", length, ctx->regs_ret.st_bsl.bs_lgth);
-        amend->old_length = length;
-        Xh264e_vepu_stream_amend_proc(amend);
-        length = amend->new_length;
-    }
-}
-
 static MPP_RET hal_h264e_vepu541_wait(void *hal, HalEncTask *task)
 {
     MPP_RET ret = MPP_OK;
     HalH264eVepu541Ctx *ctx = (HalH264eVepu541Ctx *)hal;
+    RK_U32 length = 0;
+    HalH264eVepuStreamAmend *amend = &ctx->amend;
 
     hal_h264e_dbg_func("enter %p\n", hal);
 
@@ -1615,9 +1600,18 @@ static MPP_RET hal_h264e_vepu541_wait(void *hal, HalEncTask *task)
         mpp_err_f("poll cmd failed %d\n", ret);
         ret = MPP_ERR_VPUHW;
     } else {
-        Xamend_if_enabled(ctx);//Workaround
+        length = ctx->regs_ret.st_bsl.bs_lgth;
+        if (amend->enable) {
+            mpp_log("h264e_amend %d %d\n", length, ctx->regs_ret.st_bsl.bs_lgth);
+            amend->old_length = length;
+            Xh264e_vepu_stream_amend_proc(amend);
+            length = amend->new_length;
+        }else if(amend->prefix){
+            amend->old_length = length;
+            Xh264e_vepu_stream_amend_sync_ref_idc(amend);
+        }
         hal_h264e_vepu541_status_check(hal);
-        task->hw_length += ctx->regs_ret.st_bsl.bs_lgth;
+        task->hw_length += length;
     }
 
     hal_h264e_dbg_func("leave %p\n", hal);

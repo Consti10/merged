@@ -389,8 +389,6 @@ MPP_RET test_mpp_enc_cfg_setup(MpiEncTestData *p)
         mpp_enc_cfg_set_s32(cfg, "h264:cabac_en", 1);
         mpp_enc_cfg_set_s32(cfg, "h264:cabac_idc", 0);
         mpp_enc_cfg_set_s32(cfg, "h264:trans8x8", 1);
-        // test
-        mpp_enc_cfg_set_s32(cfg, "h264:poc_type", 2);
     } break;
     case MPP_VIDEO_CodingHEVC :
     case MPP_VIDEO_CodingMJPEG :
@@ -505,11 +503,8 @@ MPP_RET test_mpp_run(MpiEncTestData *p)
             void *ptr   = mpp_packet_get_pos(packet);
             size_t len  = mpp_packet_get_length(packet);
 
-            if (p->fp_output){
+            if (p->fp_output)
                 fwrite(ptr, 1, len, p->fp_output);
-                // added
-                //mySendTo(ptr,len);
-            }
         }
 
         mpp_packet_deinit(&packet);
@@ -587,6 +582,89 @@ MPP_RET test_mpp_run(MpiEncTestData *p)
         mpp_packet_set_length(packet, 0);
         mpp_meta_set_packet(meta, KEY_OUTPUT_PACKET, packet);
 
+        if (p->osd_enable || p->user_data_enable || p->roi_enable) {
+            if (p->user_data_enable) {
+                MppEncUserData user_data;
+                char *str = "this is user data\n";
+
+                if ((p->frame_count & 10) == 0) {
+                    user_data.pdata = str;
+                    user_data.len = strlen(str) + 1;
+                    mpp_meta_set_ptr(meta, KEY_USER_DATA, &user_data);
+                }
+                static RK_U8 uuid_debug_info[16] = {
+                    0x57, 0x68, 0x97, 0x80, 0xe7, 0x0c, 0x4b, 0x65,
+                    0xa9, 0x06, 0xae, 0x29, 0x94, 0x11, 0xcd, 0x9a
+                };
+
+                MppEncUserDataSet data_group;
+                MppEncUserDataFull datas[2];
+                char *str1 = "this is user data 1\n";
+                char *str2 = "this is user data 2\n";
+                data_group.count = 2;
+                datas[0].len = strlen(str1) + 1;
+                datas[0].pdata = str1;
+                datas[0].uuid = uuid_debug_info;
+
+                datas[1].len = strlen(str2) + 1;
+                datas[1].pdata = str2;
+                datas[1].uuid = uuid_debug_info;
+
+                data_group.datas = datas;
+
+                mpp_meta_set_ptr(meta, KEY_USER_DATAS, &data_group);
+            }
+
+            if (p->osd_enable) {
+                /* gen and cfg osd plt */
+                mpi_enc_gen_osd_plt(&p->osd_plt, p->frame_count);
+
+                p->osd_plt_cfg.change = MPP_ENC_OSD_PLT_CFG_CHANGE_ALL;
+                p->osd_plt_cfg.type = MPP_ENC_OSD_PLT_TYPE_USERDEF;
+                p->osd_plt_cfg.plt = &p->osd_plt;
+
+                ret = mpi->control(ctx, MPP_ENC_SET_OSD_PLT_CFG, &p->osd_plt_cfg);
+                if (ret) {
+                    mpp_err("mpi control enc set osd plt failed ret %d\n", ret);
+                    goto RET;
+                }
+
+                /* gen and cfg osd plt */
+                mpi_enc_gen_osd_data(&p->osd_data, p->buf_grp, p->width,
+                                     p->height, p->frame_count);
+                mpp_meta_set_ptr(meta, KEY_OSD_DATA, (void*)&p->osd_data);
+            }
+
+            if (p->roi_enable) {
+                MppEncROIRegion *region = p->roi_region;
+
+                /* calculated in pixels */
+                region->x = 304;
+                region->y = 480;
+                region->w = 1344;
+                region->h = 600;
+                region->intra = 0;              /* flag of forced intra macroblock */
+                region->quality = 24;           /* qp of macroblock */
+                region->abs_qp_en = 1;
+                region->area_map_en = 1;
+                region->qp_area_idx = 0;
+
+                region++;
+                region->x = region->y = 16;
+                region->w = region->h = 64;    /* 16-pixel aligned is better */
+                region->intra = 1;              /* flag of forced intra macroblock */
+                region->quality = 10;           /* qp of macroblock */
+                region->abs_qp_en = 1;
+                region->area_map_en = 1;
+                region->qp_area_idx = 1;
+
+                p->roi_cfg.number = 2;
+                p->roi_cfg.regions = p->roi_region;
+
+                mpp_meta_set_ptr(meta, KEY_ROI_DATA, (void*)&p->roi_cfg); // new way for roi
+            }
+        }
+
         /*
          * NOTE: in non-block mode the frame can be resent.
          * The default input timeout mode is block.
@@ -622,15 +700,15 @@ MPP_RET test_mpp_run(MpiEncTestData *p)
                 p->pkt_eos = mpp_packet_get_eos(packet);
 
                 if (p->fp_output){
-                    fwrite(ptr, 1, len, p->fp_output);
+                    //fwrite(ptr, 1, len, p->fp_output);
                     // added
                     {
                         uint64_t ts=getTimeMs();
                         uint64_t delta=ts-lastTimeStamp;
                         lastTimeStamp=ts;
-                        //mySendTo(ptr,len);
+                        mySendTo(ptr,len);
                         // send a fake nalu to reduce latency (next frame to determine end of prev. frame issue).
-                        //sendFakeNALU();
+                        sendFakeNALU();
                         printf("Current time %" PRIu64 "(ms), delta %" PRIu64 "(ms)",ts,delta);
                     }
                 }

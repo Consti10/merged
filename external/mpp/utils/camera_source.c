@@ -32,6 +32,7 @@
 #include "mpp_log.h"
 #include "mpp_mem.h"
 #include "camera_source.h"
+#include <inttypes.h>
 
 typedef struct CamFrame_t {
     void        *start;
@@ -370,6 +371,7 @@ RK_S32 camera_source_get_frame(CamSource *ctx)
     if (V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE == type)
         buf.bytesused = buf.m.planes[0].bytesused;
 
+    printf("Buff timestamp %" PRIu64 "(ms), sequence:%d, index:%d\n",buf.timestamp,buf.sequence,buf.index);
     return buf.index;
 }
 
