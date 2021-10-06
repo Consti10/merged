@@ -84,4 +84,5 @@ RK_S32 SAMPLE_COMM_ISP_SET_mirror(RK_S32 CamId, RK_U32 u32Value);
 RK_S32 SAMPLE_COMM_ISP_SET_BypassStreamRotation(RK_S32 CamId,
                                                  RK_S32 S32Rotation);
 RK_S32 SAMPLE_COMM_ISP_SET_Crop(RK_S32 CamId, rk_aiq_rect_t rect);
+RK_S32 SAMPLE_COMM_ISP_GET_Crop(RK_S32 CamId, rk_aiq_rect_t* rect);
 #endif

@@ -38,6 +38,7 @@ static const struct option long_options[] = {
         {"framerate", required_argument, NULL, 'f'},
         {"shutter", required_argument, NULL, 's'},
         {"gain", required_argument, NULL, 'g'},
+        {"crop", required_argument, NULL, 'c'},
         {NULL, 0, NULL, 0},
 };
 
@@ -46,7 +47,8 @@ static void print_usage(const RK_CHAR *name) {
     printf("\t%s "
            "[-f | --framerate 30] \n"
            "[-s | --shutter] \n"
-           "[-g | --gain] \n",
+           "[-g | --gain] \n"
+           "[-c | --crop crop to 720p enable/disable] \n",
            name);
 }
 
@@ -61,6 +63,7 @@ int main(int argc, char *argv[]) {
     RK_U32 m_gain=0;
     iq_file_dir = "/oem/etc/iqfiles";
     int useManualShutterGain=0;
+    bool m_TestCrop=false;
 
     int ret = 0;
     int c;
@@ -77,6 +80,9 @@ int main(int argc, char *argv[]) {
                 m_gain = atoi(optarg);
                 useManualShutterGain=1;
                 break;
+            case 'c':
+                m_TestCrop=true;
+                break;
             case '?':
             default:
                 print_usage(argv[0]);
@@ -89,9 +95,20 @@ int main(int argc, char *argv[]) {
     RK_BOOL fec_enable = RK_FALSE;
     int fps = m_framerate;
     ret=SAMPLE_COMM_ISP_Init(s32CamId,hdr_mode, fec_enable, iq_file_dir);
-    printf("X1:%d",ret);
+    if(m_TestCrop){
+        rk_aiq_rect_t cropRect;
+        ret=SAMPLE_COMM_ISP_GET_Crop(s32CamId,&cropRect);
+        printf("Consti10: current crop is %d:%d:%d:%d\n",cropRect.left,cropRect.top,cropRect.width,cropRect.height);
+        cropRect.left = 0;
+        cropRect.top = 0;
+        cropRect.width = 1280;
+        cropRect.height = 720;
+        ret=SAMPLE_COMM_ISP_SET_Crop(s32CamId,cropRect);
+        printf("Consti10: applying crop%d\n",ret);
+    }
+    printf("X1:%d\n",ret);
     ret=SAMPLE_COMM_ISP_Run(s32CamId);
-    printf("X2:%d",ret);
+    printf("X2:%d\n",ret);
     ret=SAMPLE_COMM_ISP_SetFrameRate(s32CamId,fps);
     printf("X3:%d\n",ret);
 

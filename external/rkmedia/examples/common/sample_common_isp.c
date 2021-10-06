@@ -851,4 +851,18 @@ rk_aiq_uapi_sysctl_setCrop(aiq_ctx, rect);*/
   pthread_mutex_unlock(&aiq_ctx_mutex[CamId]);
   return ret;
 }
+
+RK_S32 SAMPLE_COMM_ISP_GET_Crop(RK_S32 CamId, rk_aiq_rect_t* rect) {
+  if (CamId >= MAX_AIQ_CTX || !g_aiq_ctx[CamId]) {
+    printf("%s : CamId is over 3 or not init\n", __FUNCTION__);
+    return -1;
+  }
+  RK_S32 ret = 0;
+  pthread_mutex_lock(&aiq_ctx_mutex[CamId]);
+  if (g_aiq_ctx[CamId]) {
+    ret = rk_aiq_uapi_sysctl_getCrop(g_aiq_ctx[CamId], rect);
+  }
+  pthread_mutex_unlock(&aiq_ctx_mutex[CamId]);
+  return ret;
+}
 #endif
