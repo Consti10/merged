@@ -1,0 +1,30 @@
+digraph board {
+	rankdir=TB
+	n00000001 [label="stream_cif_mipi_id0\n/dev/video0", shape=box, style=filled, fillcolor=yellow]
+	n00000005 [label="stream_cif_mipi_id1\n/dev/video1", shape=box, style=filled, fillcolor=yellow]
+	n00000009 [label="stream_cif_mipi_id2\n/dev/video2", shape=box, style=filled, fillcolor=yellow]
+	n0000000d [label="stream_cif_mipi_id3\n/dev/video3", shape=box, style=filled, fillcolor=yellow]
+	n00000011 [label="{{<port0> 0} | rockchip-mipi-csi2\n/dev/v4l-subdev2 | {<port1> 1 | <port2> 2 | <port3> 3 | <port4> 4}}", shape=Mrecord, style=filled, fillcolor=green]
+	n00000011:port1 -> n00000001
+	n00000011:port1 -> n00000005 [style=dashed]
+	n00000011:port1 -> n00000009 [style=dashed]
+	n00000011:port1 -> n0000000d [style=dashed]
+	n00000011:port2 -> n00000001 [style=dashed]
+	n00000011:port2 -> n00000005
+	n00000011:port2 -> n00000009 [style=dashed]
+	n00000011:port2 -> n0000000d [style=dashed]
+	n00000011:port3 -> n00000001 [style=dashed]
+	n00000011:port3 -> n00000005 [style=dashed]
+	n00000011:port3 -> n00000009
+	n00000011:port3 -> n0000000d [style=dashed]
+	n00000011:port4 -> n00000001 [style=dashed]
+	n00000011:port4 -> n00000005 [style=dashed]
+	n00000011:port4 -> n00000009 [style=dashed]
+	n00000011:port4 -> n0000000d
+	n00000017 [label="{{<port0> 0} | rockchip-mipi-dphy-rx\n/dev/v4l-subdev3 | {<port1> 1}}", shape=Mrecord, style=filled, fillcolor=green]
+	n00000017:port1 -> n00000011:port0
+	n0000001c [label="rkcif-mipi-luma\n/dev/video4", shape=box, style=filled, fillcolor=yellow]
+	n0000001f [label="{{} | m00_f_imx415 1-001a\n/dev/v4l-subdev4 | {<port0> 0}}", shape=Mrecord, style=filled, fillcolor=green]
+	n0000001f:port0 -> n00000017:port0
+	n00000023 [label="{{} | m01_f_ircut\n/dev/v4l-subdev5 | {}}", shape=Mrecord, style=filled, fillcolor=green]
+}

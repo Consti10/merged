@@ -1,0 +1,3 @@
+// should be stream_cif_mipi_id0
+v4l2-ctl -d /dev/video0 --set-fmt-video=width=1920,height=1080,pixelformat=BG12 --stream-mmap=4 --stream-count=1 --stream-to=/userdata/video0.raw --stream-poll 
+adb pull /userdata/video0.raw

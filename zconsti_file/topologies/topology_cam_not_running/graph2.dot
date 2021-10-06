@@ -1,0 +1,20 @@
+digraph board {
+	rankdir=TB
+	n00000001 [label="rkispp_input_image\n/dev/video17", shape=box, style=filled, fillcolor=yellow]
+	n00000001 -> n00000021:port0 [style=dashed]
+	n00000005 [label="rkispp_m_bypass\n/dev/video18", shape=box, style=filled, fillcolor=yellow]
+	n00000009 [label="rkispp_scale0\n/dev/video19", shape=box, style=filled, fillcolor=yellow]
+	n0000000d [label="rkispp_scale1\n/dev/video20", shape=box, style=filled, fillcolor=yellow]
+	n00000011 [label="rkispp_scale2\n/dev/video21", shape=box, style=filled, fillcolor=yellow]
+	n00000015 [label="rkispp_iqtool\n/dev/video22", shape=box, style=filled, fillcolor=yellow]
+	n00000019 [label="rkispp_input_params\n/dev/video23", shape=box, style=filled, fillcolor=yellow]
+	n00000019 -> n00000021:port1
+	n0000001d [label="rkispp-stats\n/dev/video24", shape=box, style=filled, fillcolor=yellow]
+	n00000021 [label="{{<port0> 0 | <port1> 1} | rkispp-subdev\n/dev/v4l-subdev0 | {<port2> 2 | <port3> 3}}", shape=Mrecord, style=filled, fillcolor=green]
+	n00000021:port3 -> n0000001d
+	n00000021:port2 -> n00000005
+	n00000021:port2 -> n00000009
+	n00000021:port2 -> n0000000d
+	n00000021:port2 -> n00000011
+	n00000021:port2 -> n00000015
+}

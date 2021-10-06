@@ -7,5 +7,19 @@ camera_engine_rkaiq  | v1.0x45.4   | v2.3.1                       | v1.0x66.0   
                                                                                 with comment THIS VERSION ONLY SUPPORT rk356x NOW)
 																				
 																				
-																				
+This repo (firefly):	
+https://www.t-firefly.com/doc/download/101.html
+https://pan.baidu.com/s/1lEncHt6-ogW_U2jpynbALg#list/path=%2Fsharelink1414141670-414406419801371%2FLinux_SDK&parentPath=%2Fsharelink1414141670-414406419801371
+code:ffly 
 
+has rv1126_rv1109_linux_release_20210306.tgz
+
+
+The ebaina repo:
+https://pan.baidu.com/share/init?surl=0ZlibhmVzezX7H5eWrBEYA
+code: y355
+
+has rv1126_rv1109_linux_sdk_v1.8.0_20210705.tar.gz
+
+
+4

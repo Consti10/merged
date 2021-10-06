@@ -1,0 +1,33 @@
+digraph board {
+	rankdir=TB
+	n00000001 [label="{{<port0> 0 | <port1> 1} | rkisp-isp-subdev\n/dev/v4l-subdev6 | {<port2> 2 | <port3> 3}}", shape=Mrecord, style=filled, fillcolor=green]
+	n00000001:port2 -> n0000000d:port0
+	n00000001:port2 -> n00000011 [style=dashed]
+	n00000001:port2 -> n00000017
+	n00000001:port3 -> n00000047
+	n00000001:port3 -> n00000053
+	n00000006 [label="{{<port0> 0} | rkisp-csi-subdev\n/dev/v4l-subdev7 | {<port1> 1 | <port2> 2 | <port3> 3 | <port4> 4 | <port5> 5}}", shape=Mrecord, style=filled, fillcolor=green]
+	n00000006:port2 -> n0000001d
+	n00000006:port3 -> n00000023
+	n00000006:port4 -> n00000029
+	n00000006:port5 -> n0000002f
+	n0000000d [label="{{<port0> 0} | rkisp-bridge-ispp\n | {}}", shape=Mrecord, style=filled, fillcolor=green]
+	n00000011 [label="rkisp_mainpath\n/dev/video5", shape=box, style=filled, fillcolor=yellow]
+	n00000017 [label="rkisp_selfpath\n/dev/video6", shape=box, style=filled, fillcolor=yellow]
+	n0000001d [label="rkisp_rawwr0\n/dev/video7", shape=box, style=filled, fillcolor=yellow]
+	n00000023 [label="rkisp_rawwr1\n/dev/video8", shape=box, style=filled, fillcolor=yellow]
+	n00000029 [label="rkisp_rawwr2\n/dev/video9", shape=box, style=filled, fillcolor=yellow]
+	n0000002f [label="rkisp_rawwr3\n/dev/video10", shape=box, style=filled, fillcolor=yellow]
+	n00000035 [label="rkisp_rawrd0_m\n/dev/video11", shape=box, style=filled, fillcolor=yellow]
+	n00000035 -> n00000001:port0
+	n0000003b [label="rkisp_rawrd2_s\n/dev/video12", shape=box, style=filled, fillcolor=yellow]
+	n0000003b -> n00000001:port0
+	n00000041 [label="rkisp_rawrd1_l\n/dev/video13", shape=box, style=filled, fillcolor=yellow]
+	n00000041 -> n00000001:port0
+	n00000047 [label="rkisp-statistics\n/dev/video14", shape=box, style=filled, fillcolor=yellow]
+	n0000004d [label="rkisp-input-params\n/dev/video15", shape=box, style=filled, fillcolor=yellow]
+	n0000004d -> n00000001:port1
+	n00000053 [label="rkisp-mipi-luma\n/dev/video16", shape=box, style=filled, fillcolor=yellow]
+	n00000059 [label="{{} | rkcif_mipi_lvds\n/dev/v4l-subdev8 | {<port0> 0}}", shape=Mrecord, style=filled, fillcolor=green]
+	n00000059:port0 -> n00000001:port0
+}

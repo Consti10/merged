@@ -69,3 +69,38 @@ export h264e_debug=0x00000100
 
 //from hal
 export dump_l1_reg=1
+
+
+// -------------------
+using mpp directly for streaming (isp running in a different terminal)
+./consti_run_isp -f 90
+./mpi_enc_test -i /dev/video19 -m 100 -o /userdata/cam1.h264 -t 7 -r 120 -w 1920 -h 1080
+adb pull /userdata/cam1.h264
+
+//------------------
+// set poc_type=2 with ammend stuff
+./mpi_enc_test -i /userdata/raw.nv12 -o /userdata/tx1.h264 -w 1920 -h 1080 -f NV12 -t 7 -r 120
+-> mpp[1252]: hal_h264e_vepu541: h264e_amend 23793 23793
+adb pull /userdata/tx1.h264
+
+// not setting poc_type=2 with ammend stuff (works)
+./mpi_enc_test -i /userdata/raw.nv12 -o /userdata/tx2.h264 -w 1920 -h 1080 -f NV12 -t 7 -r 120
+no ammend
+adb pull /userdata/tx2.h264
+
+// setting poc_type=2 with ammend, after also adding the one mising ammend method
+./mpi_enc_test -i /userdata/raw.nv12 -o /userdata/tx3.h264 -w 1920 -h 1080 -f NV12 -t 7 -r 120
+adb pull /userdata/tx3.h264
+
+// poc_type=2 once again, but this time the data comes from the camera:
+./mpi_enc_test -i /dev/video19 -o /userdata/tx4.h264 -w 1920 -h 1080 -f NV12 -t 7 -r 120
+adb pull /userdata/tx4.h264
+
+
+
+
+
+
+
+
+

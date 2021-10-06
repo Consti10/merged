@@ -20,3 +20,13 @@ v4l2-ctl --stream-mmap --stream-count=1000 -d
  
  
  nc -ul 5600 > /dev/udp/192.168.61.245/5600
+
+// setting log level of camera_engine_rkaiq:
+export persist_camera_engine_log=0x4ff4
+
+// this should be CAMHW Debug (24 x 0 added)
+export persist_camera_engine_log=0x4000000FF4
+
+
+
+export persist_camera_engine_log=0x200FF4

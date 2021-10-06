@@ -1,0 +1,53 @@
+search for (v4l2) DQBUF:
+/xcore/v4l2_device.cpp                 V4l2Device::dequeue_buffer(SmartPtr<V4l2Buffer> &buf)
+-""---/fake_v4l2_device.cpp            FakeV4l2Device::dequeue_buffer(SmartPtr<V4l2Buffer> &buf)
+/hwi/isp20/Isp20OfflineFrmRead.cpp     OfflineFrmRdThread::dequeue_all_buffer ()
+								       OfflineFrmRdThread::loop () 
+rkisp_api/rkisp_api.cpp                rkisp_api_buf *rkisp_get_frame(const struct rkisp_api_ctx *ctx,int timeout_ms)	
+
+rkisp_get_frame is only called from external/rkfacial, so aparently not used for video streaming
+OfflineFrmRdThread is used nowhere ?!
+
+V4l2Device is used a lot - for example:
+/hwi/CamHwBase.h : SmartPtr<V4l2Device> mIsppStatsDev; ...
+/hwi/fakecamera/FakeCamHwIsp20.cpp 
+/hwi/fakecamera/FakeSensorHw.cpp
+/hwi/isp20/CamHwIsp20:  SmartPtr<V4l2Device> _mipi_tx_devs[3];
+    					SmartPtr<V4l2Device> _mipi_rx_devs[3];
+/hwi/isp20/Isp20OfflineFrmRead.cpp OfflineFrmRdThread::set_mipi_devs(SmartPtr<V4l2Device> mipi_rx_devs[3], SmartPtr<V4l2SubDevice> isp_dev)
+/hwi/isp20/Isp20PollThread
+
+Looking at CamHwIsp20.cpp: Searching for "real sensor name" in debug log -> yes:
+[06:07:36.948061][CAMHW]:XCAM DEBUG CamHwIsp20.cpp:227: parse_module_info:227, real sensor name imx415, module ori f, module id m00
+-> class is used
+Looking at the code, I think _mipi_tx_devs[0] is the only one used in non-hdr mode:
+if (_hdr_mode == RK_AIQ_WORKING_MODE_NORMAL) {
+        // use _mipi_tx_devs[0] only
+        // id0 as normal
+        // do nothing
+        LOGD_CAMHW_SUBM(ISP20HW_SUBM, "CIF tx: %s -> normal",
+                        _mipi_tx_devs[0]->get_device_name());
+    }
+	
+I think 	
+/hwi/SensorHw.cpp is just a wrapper around the sensor capabilities with getter / setter methods. For example,
+SensorHw::set_working_mode(int mode) sets NO_HDR or HDR_MODE_2_LINE_HDR or _3_LINE_HDR
+perhaps also interesting there:
+SensorHw::handle_sof(int64_t time, int frameid) : Called, confirmed via log:
+[06:08:25.279730][CAMHW]:XCAM DEBUG SensorHw.cpp:635: handle_sof: frameid=160, exp_list size=0, gain_list size=0
+
+I think one could see how frames go through the isp by just extending the debug output from v4l2_device.cpp - the debug output for example has:
+
+[06:08:25.142829][XCORE]:XCAM DEBUG v4l2_device.cpp:1045: device(/dev/video0) multi planar dequeue buffer index:1, length: 2826240n
+[06:08:25.143479][XCORE]:XCAM DEBUG v4l2_device.cpp:1052: device(/dev/video4) dequeue buffer index:3, length: 200
+[06:08:25.147015][XCORE]:XCAM DEBUG v4l2_device.cpp:1045: device(/dev/video12) multi planar dequeue buffer index:0, length: 2826240n
+[06:08:25.154720][XCORE]:XCAM DEBUG v4l2_device.cpp:1052: device(/dev/video4) dequeue buffer index:0, length: 200
+[06:08:25.160514][XCORE]:XCAM DEBUG v4l2_device.cpp:1052: device(/dev/video15) dequeue buffer index:0, length: 10384
+[06:08:25.160629][XCORE]:XCAM DEBUG v4l2_device.cpp:1045: device(/dev/video0) multi planar dequeue buffer index:2, length: 2826240n
+[06:08:25.164691][XCORE]:XCAM DEBUG v4l2_device.cpp:1045: device(/dev/video12) multi planar dequeue buffer index:1, length: 2826240n
+[06:08:25.167045][XCORE]:XCAM DEBUG v4l2_device.cpp:1052: device(/dev/video4) dequeue buffer index:1, length: 200
+[06:08:25.177369][XCORE]:XCAM DEBUG v4l2_device.cpp:1052: device(/dev/video15) dequeue buffer index:0, length: 10384
+...
+
+From overview_media_ctl: Sensor output: /dev/video0 ... /dev/video3 and Luma ?! /dev/video4
+
