@@ -1040,16 +1040,16 @@ V4l2Device::dequeue_buffer(SmartPtr<V4l2Buffer> &buf)
 
     if (V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE == _buf_type ||
             V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE == _buf_type) {
-        XCAM_LOG_DEBUG ("device(%s) multi planar dequeue buffer index:%d, length: %dn",
+        XCAM_LOG_DEBUG ("device(%s) multi planar dequeue buffer index:%d, length: %dn timestamp:%" PRIu64 "(?)",
                         XCAM_STR (_name), v4l2_buf.index,
-                        v4l2_buf.m.planes[0].length);
+                        v4l2_buf.m.planes[0].length,v4l2_buf.timestamp); //Consti10
         if (V4L2_MEMORY_DMABUF == _memory_type) {
             XCAM_LOG_DEBUG ("device(%s) multi planar index:%d, fd: %d",
                             XCAM_STR (_name), v4l2_buf.index, v4l2_buf.m.planes[0].m.fd);
         }
     } else {
-        XCAM_LOG_DEBUG ("device(%s) dequeue buffer index:%d, length: %d",
-                        XCAM_STR (_name), v4l2_buf.index, v4l2_buf.length);
+        XCAM_LOG_DEBUG ("device(%s) dequeue buffer index:%d, length: %d timestamp:%" PRIu64 "(?)",
+                        XCAM_STR (_name), v4l2_buf.index, v4l2_buf.length,v4l2_buf.timestamp); //Consti10
     }
 
     if (v4l2_buf.index > _buf_count) {
@@ -1139,16 +1139,16 @@ V4l2Device::queue_buffer (SmartPtr<V4l2Buffer> &buf, bool locked)
 
     if (V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE == _buf_type ||
             V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE == _buf_type) {
-        XCAM_LOG_DEBUG ("device(%s) queue buffer index:%d, memory:%d, type:%d, multiply planar:%d, length:%d, fd:%d, ptr:%p",
+        XCAM_LOG_DEBUG ("device(%s) queue buffer index:%d, memory:%d, type:%d, multiply planar:%d, length:%d, fd:%d, ptr:%p timestamp:%" PRIu64 "(?)",
                         XCAM_STR (_name), v4l2_buf.index, v4l2_buf.memory,
-                        v4l2_buf.type, v4l2_buf.length, v4l2_buf.m.planes[0].length, buf->get_expbuf_fd(), buf->get_expbuf_usrptr());
+                        v4l2_buf.type, v4l2_buf.length, v4l2_buf.m.planes[0].length, buf->get_expbuf_fd(), buf->get_expbuf_usrptr(),v4l2_buf.timestamp); //Consti10
         memset(planes, 0, sizeof(struct v4l2_plane) * _mplanes_count);
         v4l2_buf.m.planes = planes;
         planes[0] = buf->get_buf ().m.planes[0];
     } else {
-        XCAM_LOG_DEBUG ("device(%s) queue buffer index:%d, memory:%d, type:%d, length:%d, fd:%d",
+        XCAM_LOG_DEBUG ("device(%s) queue buffer index:%d, memory:%d, type:%d, length:%d, fd:%d timestamp:%" PRIu64 "(?)",
                         XCAM_STR (_name), v4l2_buf.index, v4l2_buf.memory,
-                        v4l2_buf.type, v4l2_buf.length, buf->get_expbuf_fd());
+                        v4l2_buf.type, v4l2_buf.length, buf->get_expbuf_fd(),v4l2_buf.timestamp); //Consti10
     }
 
     if (v4l2_buf.type == V4L2_BUF_TYPE_META_OUTPUT)
