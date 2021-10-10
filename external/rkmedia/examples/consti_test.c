@@ -42,6 +42,9 @@ static char* M_IP="192.168.0.11";
 static uint64_t frameDeltaAvgSum=0;
 static uint64_t frameDeltaAvgCount=0;
 
+static uint64_t bytesSinceLastCalculation=0;
+static uint64_t lastBitrateCalculationMs=0;
+
 // this is just a NALU with no content
 static __attribute__((unused)) uint8_t fakeNALU[4]={0,0,0,1};
 // this is the data for an h264 AUD unit
@@ -146,10 +149,14 @@ void video_packet_cb(MEDIA_BUFFER mb) {
            RK_MPI_MB_GetSize(mb), RK_MPI_MB_GetModeID(mb));
     // hm how exactly does one get the sps/pps ?!
 
+    uint64_t before=getTimeMs();
     // send out NALU data via udp (raw)
     mySendTo( RK_MPI_MB_GetPtr(mb),RK_MPI_MB_GetSize(mb));
     // send a fake nalu to reduce latency (next frame to determine end of prev. frame issue).
     sendFakeNALU();
+    uint64_t delaySending=getTimeMs()-before;
+    printf("Sending UDP data took: %d ms Size: %d kB\n",(int)delaySending,RK_MPI_MB_GetSize(mb)/1024);
+
 
     //Consti10: print time to check for fps
     uint64_t ts=getTimeMs();
@@ -163,6 +170,14 @@ void video_packet_cb(MEDIA_BUFFER mb) {
         printf("Avg of frame delta: %f\n",avgFrameDelta);
         frameDeltaAvgSum=0;
         frameDeltaAvgCount=0;
+    }
+
+    bytesSinceLastCalculation+=RK_MPI_MB_GetSize(mb);
+    if(ts-lastBitrateCalculationMs>=1000){
+        float avgBitrateMbits=(double)bytesSinceLastCalculation/1024.0f/1024.0f;
+        printf("Avg bitrate is %f MBit/s\n",avgBitrateMbits);
+        lastBitrateCalculationMs=ts;
+        bytesSinceLastCalculation=0;
     }
     lastTimeStamp=ts;
     printf("Current time %" PRIu64 "(ms), delta %" PRIu64 "(ms) MB ts:%" PRIu64 "\n",ts,delta,buffer_ts);
@@ -180,6 +195,7 @@ static const struct option long_options[] = {
         {"framerate", required_argument, NULL, 'f'},
         {"device_name", required_argument, NULL, 'd'},
         {"ip_address",required_argument,NULL, 'i'},
+        {"crop",required_argument,NULL, 'c'},
         {NULL, 0, NULL, 0},
 };
 
@@ -225,6 +241,7 @@ int main(int argc, char *argv[]) {
     RK_CHAR *device_name = "rkispp_m_bypass";
     RK_CHAR *iq_file_dir = NULL;
     RK_S32 s32CamId = 0;
+    bool m_crop=false;
     
     int ret = 0;
     int c;
@@ -259,6 +276,9 @@ int main(int argc, char *argv[]) {
             case 'i':
                 M_IP=optarg;
                 break;
+            case 'c':
+                m_crop=true;
+                break;
             case '?':
             default:
                 print_usage(argv[0]);
@@ -288,6 +308,19 @@ int main(int argc, char *argv[]) {
     RK_BOOL fec_enable = RK_FALSE;
     int fps = m_framerate;
     SAMPLE_COMM_ISP_Init(s32CamId,hdr_mode, fec_enable, iq_file_dir);
+    // no matter what, disable LSC. LSC gives errors when the resolution in the iqfile
+    // does not match the exact isp input resolution.
+    SAMPLE_COMM_ISP_Consti10_DisableLSC(s32CamId);
+    if(m_crop){
+        // crop the image before it goes into the ISP
+        rk_aiq_rect_t cropRect;
+        cropRect.left = 0;
+        cropRect.top = 0;
+        cropRect.width = u32Width;
+        cropRect.height = u32Height;
+        ret=SAMPLE_COMM_ISP_SET_Crop(s32CamId,cropRect);
+        printf("Consti10: applying crop%d\n",ret);
+    }
     SAMPLE_COMM_ISP_Run(s32CamId);
     SAMPLE_COMM_ISP_SetFrameRate(s32CamId,fps);
 #endif
@@ -340,11 +373,16 @@ int main(int argc, char *argv[]) {
     // Consti10: if we use 1 as GOP, we obviously increase bit rate a lot, but each frame can be decoded independently.
     // however, we probably want to make this user-configurable later. For latency testing though it is nice to have it at 1,
     // since it makes everything more consistently
+    // Note: Without gop==1 the size of NALUs fluctuates immensely
     venc_chn_attr.stRcAttr.stH264Cbr.u32Gop = 1;
+    //venc_chn_attr.stRcAttr.stH264Cbr.u32Gop = 10;
     //venc_chn_attr.stRcAttr.stH264Cbr.u32BitRate = 1920 * 1080 * 30 / 14;
     //1920 * 1080 * 30 / 14 == 4443428.57143 (4.4 MBit/s)
-    // use a fixed X MBit/s as bit rate  
-    venc_chn_attr.stRcAttr.stH264Cbr.u32BitRate = 5*1000*1000;
+    // use a fixed X MBit/s as bit rate
+    // Weirdly, a higher bit rate actually seems to result in slightly lower or more consistently low latency.
+    // Perhaps, if you decrease the bit rate too much, the decoder needs to do "too much" compression work
+    //venc_chn_attr.stRcAttr.stH264Cbr.u32BitRate = 5*1000*1000;
+    venc_chn_attr.stRcAttr.stH264Cbr.u32BitRate = 20*1000*1000;
     venc_chn_attr.stRcAttr.stH264Cbr.fr32DstFrameRateDen = 0;
     venc_chn_attr.stRcAttr.stH264Cbr.fr32DstFrameRateNum = m_framerate;
     venc_chn_attr.stRcAttr.stH264Cbr.u32SrcFrameRateDen = 0;

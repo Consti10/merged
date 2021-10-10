@@ -95,10 +95,13 @@ int main(int argc, char *argv[]) {
     RK_BOOL fec_enable = RK_FALSE;
     int fps = m_framerate;
     ret=SAMPLE_COMM_ISP_Init(s32CamId,hdr_mode, fec_enable, iq_file_dir);
+    printf("X1:%d\n",ret);
+    // get and print the current crop
+    rk_aiq_rect_t cropRect;
+    ret=SAMPLE_COMM_ISP_GET_Crop(s32CamId,&cropRect);
+    printf("Consti10: current crop is %d:%d:%d:%d\n",cropRect.left,cropRect.top,cropRect.width,cropRect.height);
+    // if enabled, set a manual crop for testing
     if(m_TestCrop){
-        rk_aiq_rect_t cropRect;
-        ret=SAMPLE_COMM_ISP_GET_Crop(s32CamId,&cropRect);
-        printf("Consti10: current crop is %d:%d:%d:%d\n",cropRect.left,cropRect.top,cropRect.width,cropRect.height);
         cropRect.left = 0;
         cropRect.top = 0;
         cropRect.width = 1280;
@@ -106,9 +109,12 @@ int main(int argc, char *argv[]) {
         ret=SAMPLE_COMM_ISP_SET_Crop(s32CamId,cropRect);
         printf("Consti10: applying crop%d\n",ret);
     }
-    printf("X1:%d\n",ret);
     ret=SAMPLE_COMM_ISP_Run(s32CamId);
     printf("X2:%d\n",ret);
+
+    // test: disable stuff, as much as possible
+    SAMPLE_COMM_ISP_Consti10_DisableStuff(s32CamId);
+
     ret=SAMPLE_COMM_ISP_SetFrameRate(s32CamId,fps);
     printf("X3:%d\n",ret);
 
