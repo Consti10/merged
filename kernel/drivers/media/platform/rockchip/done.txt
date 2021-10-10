@@ -1,0 +1,8 @@
+copied cif from toybrick here
+deleted
+
+copied cif from firefly here, since it has one more change added even though the version number is the same
+
+fixed compilation error by adding stuff to kernel/include
+
+reverted this change, changing the cif resulted in nothing working anymore

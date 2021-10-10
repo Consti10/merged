@@ -937,7 +937,7 @@ static __maybe_unused const struct regval imx415_linear_10bit_3864x2192_2376_reg
         {IMX415_PIX_VST_L,IMX415_FETCH_16BIT_L((1080)*2)}, //PIX_VST Effective pixel Star position (Vertical direction) Designated in V units ( Line×2 ) | Default in spec: 0x000
         {IMX415_PIX_VST_H,IMX415_FETCH_16BIT_H((1080)*2)}, //""
         {IMX415_PIX_VWIDTH_L,IMX415_FETCH_16BIT_L((1+12+8+1080+8+2+1)*2)}, //PIX_VWIDTH Effective pixel Cropping width (Vertical direction) Designated in V units ( Line×2 ) | Default in spec: 0x1120==4384
-        {IMX415_PIX_VWIDTH_H,IMX415_FETCH_16BIT_H((1+12+8+2160+8+2+1)*2)},
+        {IMX415_PIX_VWIDTH_H,IMX415_FETCH_16BIT_H((1+12+8+1080+8+2+1)*2)}, //ehm did I mess up something here ?!
         //
         //{0x30D9,0x02}, //DIG_CLP_VSTAET ? 0x02=binning 0x06=All-pixel scan mode , default 0x06
         //{0x30DA,0x01}, //DIG_CLP_VNUM ? 0x01=binning 0x02=all-pixel scan mode, default 0x02

@@ -323,7 +323,8 @@ static const struct imx415_mode supported_modes[] = {
             .mipi_freq_idx = 3,
             .bpp = 10,
     },
-    /*tested, gives 3 lines, then black image{
+    /*tested, gives 3 lines, then black image*/
+    /*{
             .bus_fmt = MEDIA_BUS_FMT_SGBRG10_1X10,
             //.width = 3840+(12+12),
             //.height = 2160+(1+12+8+8+2+1),
