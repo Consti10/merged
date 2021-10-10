@@ -19,3 +19,20 @@ hclk_ispp  250000000
 TNR: Temporal noise reduction https://www.dpreview.com/articles/0588929508/qualcomm-explains-snapdragon-low-light-processing
 NR : probably also noise reduction
 SHARP: probably some sharpening
+
+
+RK_MODULE_DPCC Bad pixel detection and correction
+RK_MODULE_BLS black level
+RK_MODULE_LSC lens shading correction
+RK_MODULE_AWB_GAIN white balance gain
+RK_MODULE_CTK color correction
+RK_MODULE_GOC Gamma
+RK_MODULE_SHARP sharpen
+RK_MODULE_AE exposure
+RK_MODULE_AWB white balance
+RK_MODULE_NR denoising
+RK_MODULE_GIC green balance
+RK_MODULE_3DLUT 3DLUT
+RK_MODULE_LDCH LDCH
+RK_MODULE_TNR 3D denoising
+RK_MODULE_FEC fisheye correction

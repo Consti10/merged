@@ -8,6 +8,8 @@ echo 0x300 > /sys/module/rk_vcodec/parameters/mpp_dev_debug
 echo 0x300 > /sys/module/video_rkcif/parameters/debug
 echo 0x000 > /sys/module/videobuf2_v4l2/parameters/debug
 
+cat /sys/kernel/debug/clk/clk_summary
+
 
 -f 44
 

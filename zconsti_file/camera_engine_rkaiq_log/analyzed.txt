@@ -51,3 +51,4 @@ I think one could see how frames go through the isp by just extending the debug 
 
 From overview_media_ctl: Sensor output: /dev/video0 ... /dev/video3 and Luma ?! /dev/video4
 
+[06:08:25.037471][XCORE]:XCAM DEBUG v4l2_device.cpp:1045: device(/dev/video0) multi planar dequeue buffer index:3, length: 2826240n

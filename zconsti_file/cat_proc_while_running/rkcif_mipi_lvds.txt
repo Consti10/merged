@@ -1,0 +1,27 @@
+ [root@RV1126_RV1109:/proc]# cat rkcif_mipi_lvds 
+Driver Version:v00.01.09
+Work Mode:ping pong
+Monitor Mode:idle
+aclk_cif:500000000
+hclk_cif:250000000
+dclk_cif:297000000
+Input Info:
+	src subdev:m00_f_imx415 1-001a
+	interface:mipi csi2
+	lanes:4
+	vc channel: 0
+	hdr mode: normal
+	format:SGBRG10_1X10/1944x1097@180
+	crop.bounds:(12, 8)/1920x1080
+Output Info:
+	format:GB10/1280x720(12,8)
+	compact:enable
+	frame amount:15699
+	fps:125
+	irq statistics:
+			total:15699
+			csi over flow:0
+			csi bandwidth lack:0
+			all err count:0
+			frame dma end:15699
+
