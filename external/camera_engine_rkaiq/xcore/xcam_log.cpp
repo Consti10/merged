@@ -198,10 +198,15 @@ char* timeString() {
 
 void xcam_print_log (int module, int sub_modules, int level, const char* format, ...) {
     //Consti10
-    if (level <= g_xcore_log_infos[module].log_level &&
-            (sub_modules & g_xcore_log_infos[module].sub_modules)) {
+    bool override=false;
+    //ISP20POLL_SUBM (0x2)
+    override = (module==XCORE_LOG_MODULE_CAMHW) && (sub_modules==0x2);
+    //if (level <= g_xcore_log_infos[module].log_level &&
+    //        (sub_modules & g_xcore_log_infos[module].sub_modules)) {
     //Consti10
     //if(true){
+    if ((level <= g_xcore_log_infos[module].log_level &&
+        (sub_modules & g_xcore_log_infos[module].sub_modules)) || override) {
         char buffer[XCAM_MAX_STR_SIZE] = {0};
         va_list va_list;
         va_start (va_list, format);

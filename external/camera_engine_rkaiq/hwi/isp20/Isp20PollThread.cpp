@@ -159,6 +159,14 @@ const struct capture_fmt Isp20PollThread::csirx_fmts[] =
     },
 };
 
+//Consti10:
+static uint64_t __attribute__((unused)) getTimeUs(){
+    struct timeval time;
+    gettimeofday(&time, NULL);
+    uint64_t micros = (time.tv_sec * ((uint64_t)1000*1000)) + ((uint64_t)time.tv_usec);
+    return micros;
+}
+
 const char*
 Isp20PollThread::mipi_poll_type_to_str[ISP_POLL_MIPI_MAX] =
 {
@@ -251,6 +259,13 @@ Isp20PollThread::new_video_buffer(SmartPtr<V4l2Buffer> buf,
 {
     ENTER_CAMHW_FUNCTION();
     SmartPtr<VideoBuffer> video_buf = nullptr;
+    //Consti10
+    //uint64_t nowUs=getTimeUs();
+    //uint64_t delay=nowUs-(tg.frame_timestamp/1000);
+    LOGD_CAMHW_SUBM(ISP20POLL_SUBM, "new_video_buffer %s type: %d\n",
+                    dev->get_device_name(),type);
+    //NOTE: Name is always /dev/video14 -> rkisp-statistics
+    // type is always 1
 
     if (type == ISP_POLL_3A_STATS) {
         SmartPtr<RkAiqIspParamsProxy> ispParams = nullptr;
@@ -889,13 +904,19 @@ Isp20PollThread::trigger_readback()
             tg.sof_timestamp = sof_timestamp;
             tg.frame_timestamp = buf_proxy->get_timestamp () * 1000;
             // tg.times = 1;//fixed to three times readback
+            //Consti10
+            uint64_t nowUs=getTimeUs();
+            uint64_t delaySOF=nowUs-(tg.sof_timestamp/1000);
+            uint64_t delayFTS=nowUs-(tg.frame_timestamp/1000);
             LOGD_CAMHW_SUBM(ISP20POLL_SUBM,
-                            "frame[%d]: sof_ts %" PRId64 "ms, frame_ts %" PRId64 "ms, globalTmo(%d), readback(%d)\n",
+                            "frame[%d]: sof_ts %" PRId64 "ms, frame_ts %" PRId64 "ms, globalTmo(%d), readback(%d) delaySOF:%" PRId64 " ms delayFTS:%" PRId64 " ms \n",
                             sequence,
                             tg.sof_timestamp / 1000 / 1000,
                             tg.frame_timestamp / 1000 / 1000,
                             isHdrGlobalTmo,
-                            tg.times);
+                            tg.times,
+                            delaySOF / 1000 ,
+                            delayFTS / 1000 );
 
             if (ret == XCAM_RETURN_NO_ERROR)
                 _isp_core_dev->io_control(RKISP_CMD_TRIGGER_READ_BACK, &tg);

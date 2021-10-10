@@ -2444,6 +2444,10 @@ void Isp20Params::setModuleStatus(rk_aiq_module_id_t mId, bool en)
         //case RK_MODULE_DHAZ:
         //    _ISP_MODULE_CFG_(RK_ISP2X_DHAZ_ID);
         //break;
+    //Consti10 doesn't work yet
+    case RK_MODULE_HDRTMO:
+        _ISP_MODULE_CFG_(RK_ISP2X_HDRTMO_ID);
+        break;
     }
 }
 

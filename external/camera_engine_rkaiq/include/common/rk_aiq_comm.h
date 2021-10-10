@@ -469,6 +469,7 @@ typedef enum {
     RK_MODULE_TNR,//14
     RK_MODULE_FEC,
     RK_MODULE_RAWNR,//16
+    RK_MODULE_HDRTMO, //Consti10 doesn't work yet
     RK_MODULE_MAX
 } rk_aiq_module_id_t;
 

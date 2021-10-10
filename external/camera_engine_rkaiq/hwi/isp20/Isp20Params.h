@@ -24,7 +24,7 @@
 
 namespace RkCam {
 
-#define ISP20PARAM_SUBM (0x2)
+#define ISP20PARAM_SUBM (0x3) //Consti10 - was same as ISP20POLL_SUBM (0x2)
 
 class Isp20Params {
 public:
