@@ -1,4 +1,4 @@
-echo 0x300 > /sys/module/video_rkisp/parameters/debug
+oecho 0x300 > /sys/module/video_rkisp/parameters/debug
 
 echo 0x300 > /sys/module/video_rkispp/parameters/debug
 
@@ -32,3 +32,31 @@ export persist_camera_engine_log=0x4000000FF4
 
 
 export persist_camera_engine_log=0x200FF4
+
+
+----------
+print info:
+media-ctl -pd /dev/media0
+
+change sensor "mode":
+media-ctl -v -d /dev/media0 --set-v4l2 '"m00_f_imx415 1-001a":0[fmt:SGBRG10_1X10/3864x2192]'
+media-ctl -v -d /dev/media1 --set-v4l2 '"rkisp-isp-subdev":0[fmt:SGBRG10_1X10/3864x2192]'
+media-ctl -v -d /dev/media1 --set-v4l2 '"rkisp-isp-subdev":0[crop:(24,17)/3864x2192]'
+media-ctl -v -d /dev/media1 --set-v4l2 '"rkisp-isp-subdev":2[fmt:SGBRG10_1X10/3864x2192]'
+media-ctl -v -d /dev/media1 --set-v4l2 '"rkisp-isp-subdev":2[crop:(24,17)/3864x2192]'
+
+
+media-ctl -v -d /dev/media0 --set-v4l2 '"m00_f_imx415 1-001a":0[fmt:SGBRG12_1X12/1944x1097]'
+// NOTE: Is /dev/media0 in the tutorial, but probably should be media1
+media-ctl -v -d /dev/media1 --set-v4l2 '"rkisp-isp-subdev":0[fmt:SGBRG12_1X12/1944x1097]'
+media-ctl -v -d /dev/media1 --set-v4l2 '"rkisp-isp-subdev":0[crop:(24,17)/1944x1097]'
+media-ctl -v -d /dev/media1 --set-v4l2 '"rkisp-isp-subdev":2[fmt:SGBRG12_1X12/1944x1097]'
+media-ctl -v -d /dev/media1 --set-v4l2 '"rkisp-isp-subdev":2[crop:(24,17)/1944x1097]'
+
+# the wait line stuff:
+echo 2000 > /sys/devices/platform/rkcif_mipi_lvds/wait_line
+echo 2000 > /sys/module/video_rkisp/parameters/wait_line
+echo 2000 > /sys/module/video_rkispp/parameters/wait_line
+
+./rkmedia_vi_venc_test -a -o /userdata/x5.h264
+gst-launch-1.0 filesrc location=/home/consti10/Desktop/hmm/x5.h264 ! h264parse ! avdec_h264 ! xvimagesink

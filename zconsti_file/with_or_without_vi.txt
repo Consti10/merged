@@ -1,0 +1,109 @@
+Rockchip Driver Guide VI En v1.0.8 says:
+
+On the RV1126/RV1106 platform
+Link relationship, isp0->ispp0 and isp1->ispp1 are fixed configuration RV1126.dtsi
+Mipi into isp or cif into isp is optional.
+E.g:
+sensor0->csi_dphy0->csi2->vicap->isp0->ispp0
+sensor1->csi_dphy1->isp1->ispp1
+
+Example reference arch/arm/boot/dts/RV1109-evb-ddr3-v12-facial-gate.dts
+gc2053->csi_dphy0->csi2->cif->isp1->ispp1
+ov2718->csi_dphy1->isp0->ispp0
+
+
+Looking into the dts file:
+
+For gc2053:
+ucam_out0: endpoint {
+	remote-endpoint = <&mipi_in_ucam0>;
+	data-lanes = <1 2>;
+};
+			
+ov2718:	
+ucam_out1: endpoint {
+	remote-endpoint = <&csi_dphy1_input>;
+	data-lanes = <1 2>;
+};
+
+
+For gc2053:
+&csi_dphy0 {
+	status = "okay";
+	ports {
+		port@0 {
+			mipi_in_ucam0: endpoint@1 {
+				remote-endpoint = <&ucam_out0>;
+				data-lanes = <1 2>;
+			};
+		};
+		port@1 {
+			csidphy0_out: endpoint@0 {
+				remote-endpoint = <&mipi_csi2_input>;
+				data-lanes = <1 2>;
+			};
+		};
+	};
+};
+&mipi_csi2 {
+	status = "okay";
+	ports {
+		port@0 {
+			mipi_csi2_input: endpoint@1 {
+				remote-endpoint = <&csidphy0_out>;
+				data-lanes = <1 2>;
+			};
+		};
+
+		port@1 {
+			mipi_csi2_output: endpoint@0 {
+				remote-endpoint = <&cif_mipi_in>;
+				data-lanes = <1 2>;
+			};
+		};
+	};
+};
+&rkisp_vir1 {
+	status = "okay";
+	ports {
+		port@0 {
+			reg = <0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			isp_virt1_in: endpoint@0 {
+				reg = <0>;
+				remote-endpoint = <&cif_sditf>;
+			};
+		};
+	};
+};
+
+
+For ov2718:
+&csi_dphy1 {
+	status = "okay";
+	ports {
+		port@0 {
+			csi_dphy1_input: endpoint@1 {
+				remote-endpoint = <&ucam_out1>;
+				data-lanes = <1 2>;
+			};
+		};
+		port@1 {
+			csi_dphy1_output: endpoint@0 {
+				remote-endpoint = <&isp_in>;
+				data-lanes = <1 2>;
+			};
+		};
+	};
+};
+&rkisp_vir0 {
+	ports {
+		port@0 {
+			isp_in: endpoint@0 {
+				remote-endpoint = <&csi_dphy1_output>;
+			};
+		};
+	};
+};

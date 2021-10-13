@@ -1,0 +1,108 @@
+When ethernet is "not working":
+
+[root@RV1126_RV1109:/]# dmesg | grep "eth"
+[    0.000000] psci: probing for conduit method from DT.
+[    0.195479] rk_gmac-dwmac ffc40000.ethernet: no regulator found
+[    0.195524] rk_gmac-dwmac ffc40000.ethernet: clock input or output? (output).
+[    0.195545] rk_gmac-dwmac ffc40000.ethernet: Can not read property: tx_delay.
+[    0.195606] rk_gmac-dwmac ffc40000.ethernet: set tx_delay to 0x30
+[    0.195630] rk_gmac-dwmac ffc40000.ethernet: Can not read property: rx_delay.
+[    0.195657] rk_gmac-dwmac ffc40000.ethernet: set rx_delay to 0x10
+[    0.195686] rk_gmac-dwmac ffc40000.ethernet: integrated PHY? (no).
+[    0.195775] rk_gmac-dwmac ffc40000.ethernet: cannot get clock clk_mac_refout
+[    0.200840] rk_gmac-dwmac ffc40000.ethernet: init for RMII
+[    0.201153] rk_gmac-dwmac ffc40000.ethernet: User ID: 0x30, Synopsys ID: 0x51
+[    0.201186] rk_gmac-dwmac ffc40000.ethernet: 	DWMAC4/5
+[    0.201213] rk_gmac-dwmac ffc40000.ethernet: DMA HW capability register supported
+[    0.201238] rk_gmac-dwmac ffc40000.ethernet: RX Checksum Offload Engine supported
+[    0.201261] rk_gmac-dwmac ffc40000.ethernet: TX Checksum insertion supported
+[    0.201282] rk_gmac-dwmac ffc40000.ethernet: Wake-Up On Lan supported
+[    0.201350] rk_gmac-dwmac ffc40000.ethernet: TSO supported
+[    0.201369] rk_gmac-dwmac ffc40000.ethernet: Enable RX Mitigation via HW Watchdog Timer
+[    0.201388] rk_gmac-dwmac ffc40000.ethernet: TSO feature enabled
+[    0.201618] of_get_named_gpiod_flags: can't parse 'reset-gpios' property of node '/ethernet@ffc40000/mdio[0]'
+[    0.201640] of_get_named_gpiod_flags: can't parse 'reset-gpio' property of node '/ethernet@ffc40000/mdio[0]'
+[    0.201697] of_get_named_gpiod_flags: parsed 'snps,reset-gpio' property of node '/ethernet@ffc40000[0]' - status (0)
+[    0.272951] of_get_named_gpiod_flags: can't parse 'reset-gpios' property of node '/ethernet@ffc40000/mdio/phy@0[0]'
+[    0.392598] cpuidle: enable-method property 'psci' found operations
+[    0.392785] cpuidle: enable-method property 'psci' found operations
+[    0.392935] cpuidle: enable-method property 'psci' found operations
+[    0.393098] cpuidle: enable-method property 'psci' found operations
+[   10.942917] rk_gmac-dwmac ffc40000.ethernet: rk_get_eth_addr: mac address: 62:af:44:69:db:74
+[   10.942969] rk_gmac-dwmac ffc40000.ethernet: device MAC address 62:af:44:69:db:74
+[   10.953089] rk_gmac-dwmac ffc40000.ethernet eth0: No Safety Features support found
+[   10.953135] rk_gmac-dwmac ffc40000.ethernet eth0: IEEE 1588-2008 Advanced Timestamp supported
+[   10.953562] rk_gmac-dwmac ffc40000.ethernet eth0: registered PTP clock
+[   11.381904] using random self ethernet address
+[   11.381980] using random host ethernet address
+[   11.973289] rk_gmac-dwmac ffc40000.ethernet eth0: Link is Up - 10Mbps/Half - flow control off
+[   17.545712] NETDEV WATCHDOG: eth0 (rk_gmac-dwmac): transmit queue 0 timed out
+[   17.546922] rk_gmac-dwmac ffc40000.ethernet eth0: Reset adapter.
+[   17.566406] rk_gmac-dwmac ffc40000.ethernet eth0: No Safety Features support found
+[   17.566454] rk_gmac-dwmac ffc40000.ethernet eth0: IEEE 1588-2008 Advanced Timestamp supported
+[   17.566846] rk_gmac-dwmac ffc40000.ethernet eth0: registered PTP clock
+[   18.586504] rk_gmac-dwmac ffc40000.ethernet eth0: Link is Up - 10Mbps/Half - flow control off
+[   24.372993] rk_gmac-dwmac ffc40000.ethernet eth0: Reset adapter.
+[   24.391620] rk_gmac-dwmac ffc40000.ethernet eth0: No Safety Features support found
+[   24.391665] rk_gmac-dwmac ffc40000.ethernet eth0: IEEE 1588-2008 Advanced Timestamp supported
+[   24.392103] rk_gmac-dwmac ffc40000.ethernet eth0: registered PTP clock
+[   25.413138] rk_gmac-dwmac ffc40000.ethernet eth0: Link is Up - 10Mbps/Half - flow control off
+
+When it is working:
+[root@RV1126_RV1109:/]# dmesg | grep "eth"
+[    0.000000] psci: probing for conduit method from DT.
+[    0.200361] rk_gmac-dwmac ffc40000.ethernet: no regulator found
+[    0.200407] rk_gmac-dwmac ffc40000.ethernet: clock input or output? (input).
+[    0.200429] rk_gmac-dwmac ffc40000.ethernet: TX delay(0x2a).
+[    0.200457] rk_gmac-dwmac ffc40000.ethernet: RX delay(0x1a).
+[    0.200487] rk_gmac-dwmac ffc40000.ethernet: integrated PHY? (no).
+[    0.200579] rk_gmac-dwmac ffc40000.ethernet: clock input from PHY
+[    0.205626] rk_gmac-dwmac ffc40000.ethernet: init for RGMII
+[    0.205893] rk_gmac-dwmac ffc40000.ethernet: User ID: 0x30, Synopsys ID: 0x51
+[    0.205921] rk_gmac-dwmac ffc40000.ethernet: 	DWMAC4/5
+[    0.205949] rk_gmac-dwmac ffc40000.ethernet: DMA HW capability register supported
+[    0.205974] rk_gmac-dwmac ffc40000.ethernet: RX Checksum Offload Engine supported
+[    0.205999] rk_gmac-dwmac ffc40000.ethernet: TX Checksum insertion supported
+[    0.206022] rk_gmac-dwmac ffc40000.ethernet: Wake-Up On Lan supported
+[    0.206089] rk_gmac-dwmac ffc40000.ethernet: TSO supported
+[    0.206115] rk_gmac-dwmac ffc40000.ethernet: Enable RX Mitigation via HW Watchdog Timer
+[    0.206143] rk_gmac-dwmac ffc40000.ethernet: TSO feature enabled
+[    0.206342] of_get_named_gpiod_flags: can't parse 'reset-gpios' property of node '/ethernet@ffc40000/mdio[0]'
+[    0.206363] of_get_named_gpiod_flags: can't parse 'reset-gpio' property of node '/ethernet@ffc40000/mdio[0]'
+[    0.206420] of_get_named_gpiod_flags: parsed 'snps,reset-gpio' property of node '/ethernet@ffc40000[0]' - status (0)
+[    0.339149] of_get_named_gpiod_flags: can't parse 'reset-gpios' property of node '/ethernet@ffc40000/mdio/phy@0[0]'
+[    0.340595] usbcore: registered new interface driver cdc_ether
+[    0.460629] cpuidle: enable-method property 'psci' found operations
+[    0.460798] cpuidle: enable-method property 'psci' found operations
+[    0.460968] cpuidle: enable-method property 'psci' found operations
+[    0.461124] cpuidle: enable-method property 'psci' found operations
+[    9.905728] rk_gmac-dwmac ffc40000.ethernet: rk_get_eth_addr: mac address: 62:af:44:69:db:74
+[    9.905767] rk_gmac-dwmac ffc40000.ethernet: device MAC address 62:af:44:69:db:74
+[    9.905822] rk_gmac-dwmac ffc40000.ethernet eth0: No Safety Features support found
+[    9.905863] rk_gmac-dwmac ffc40000.ethernet eth0: IEEE 1588-2008 Advanced Timestamp supported
+[    9.906471] rk_gmac-dwmac ffc40000.ethernet eth0: registered PTP clock
+[   10.351032] using random self ethernet address
+[   10.351108] using random host ethernet address
+[   10.932879] rk_gmac-dwmac ffc40000.ethernet eth0: Link is Up - 1Gbps/Full - flow control rx/tx
+
+[root@RV1126_RV1109:/]# ifconfig
+eth0      Link encap:Ethernet  HWaddr 62:AF:44:69:DB:74  
+          inet addr:192.168.0.14  Bcast:192.168.0.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:73 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:28 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:11871 (11.5 KiB)  TX bytes:4813 (4.7 KiB)
+          Interrupt:62 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+
+
+
