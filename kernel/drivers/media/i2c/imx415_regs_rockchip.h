@@ -1098,4 +1098,156 @@ static __maybe_unused int calculateFrameRate(int pixel_rate,int image_width,int 
 // Note that this setting value unit is 1[HMAX] *1 period regardless of the readout drive mode
 // with foot note: 1[HMAX] = Setting value of register HMAX × 72MHz clock
 
+/*
+IMX415-AAQR 2/2-line binning & Window cropping 2568x1440 CSI-2_4lane 24MHz AD:10bit Output:12bit 1440Mbps Master Mode 119.988fps Integration Time 8ms Gain:6dB
+Ver8.0
+*/
+// VMAX=0x066C=1644
+// HMAX=0x016D=365
+static __maybe_unused const struct regval imx415_linear_10bit_720p_120fps_bin_and_crop_regs[] = {
+0x3008,0x54  // BCWAIT_TIME[9:0] | regarding INCK, different obviously
+0x300A,0x3B  // CPWAIT_TIME[9:0] | regarding INCK, different obviously
+0x301C,0x04  // WINMODE[3:0]     | yes, means cropping
+0x3020,0x01  // HADD             | 1 means horizontal 2x2 binning
+0x3021,0x01  // VADD             | 1 means vertical 2x2 binning
+0x3022,0x01  // ADDMODE[1:0]     | 1 means horizontal/vertical binning
+0x3024,0x6C  // VMAX[19:0]       | yes, vmax low
+0x3025,0x06  //                  | yes, vmax high
+0x3028,0x6D  // HMAX[15:0]       | yes, hmax low
+0x3029,0x01  //                  | yes, hmax high
+0x3031,0x00  // ADBIT[1:0]       | same as other, 0 means 10 bit
+0x3033,0x08  // SYS_MODE[3:0]    | sometimes 0x05, sometimes 0x08 - well, gives the operating mode. 8 means 1140 / 1485 Mbps
+0x3040,0x88  // PIX_HST[12:0]    | yes, here is the crop -> 0x0288=648
+0x3041,0x02  //                  | ""
+0x3042,0x08  // PIX_HWIDTH[12:0] | yes, crop   -> 0x0A08  = 2568
+0x3043,0x0A  //                  | ""
+0x3044,0xF0  // PIX_VST[12:0]    | yes, crop   -> 0x02F0  = 752
+0x3045,0x02  //                  | ""
+0x3046,0x40  // PIX_VWIDTH[12:0] | yes, crop    -> 0x0B40 = 2880
+0x3047,0x0B  //
+0x3050,0x42  // SHR0[19:0]       | yes, depends
+0x3090,0x14  // GAIN_PCG_0[8:0]  | no
+0x30C1,0x00  // XVS_DRV[1:0]     | yes, same
+0x30D9,0x02  // DIG_CLP_VSTART[4:0] | 2== binning
+0x30DA,0x01  // DIG_CLP_VNUM[1:0]   | 2== binning
+0x3116,0x23  // INCKSEL2[7:0]       | 0x24 or 0x28
+0x3118,0xB4  // INCKSEL3[10:0]      | you know
+0x311A,0xFC  // INCKSEL4[10:0]      | you know
+0x311E,0x23  // INCKSEL5[7:0]       | you know
+0x32D4,0x21  // -                   | same
+0x32EC,0xA1  // -                   | same
+0x344C,0x2B  // -                   | no
+0x344D,0x01  // -                   | no
+0x344E,0xED  // -                   | no
+0x344F,0x01  // -                   | no
+0x3450,0xF6  // -                   | no
+0x3451,0x02  // -                   | no
+0x3452,0x7F  // -                   | same
+0x3453,0x03  // -                   | same
+0x358A,0x04  // -                   | same
+0x35A1,0x02  // -                   | same
+0x35EC,0x27  // -                   | no
+0x35EE,0x8D  // -                   | no
+0x35F0,0x8D  // -                   | no
+0x35F2,0x29  // -                   | no
+0x36BC,0x0C  // -                   | same
+0x36CC,0x53  // -                   | same
+0x36CD,0x00  // -                   | same
+0x36CE,0x3C  // -                   | same
+0x36D0,0x8C  // -                   | same
+0x36D1,0x00  // -                   | same
+0x36D2,0x71  // -                   | same
+0x36D4,0x3C  // -                   | same
+0x36D6,0x53  // -                   | same
+0x36D7,0x00  // -                   | same
+0x36D8,0x71  // -                   | same
+0x36DA,0x8C  // -                   | same
+0x36DB,0x00  // -                   | same
+0x3701,0x00  // ADBIT1[7:0]         | same
+0x3720,0x00  // -                   | no
+0x3724,0x02  // -                   | same
+0x3726,0x02  // -                   | same
+0x3732,0x02  // -                   | same
+0x3734,0x03  // -                   | same
+0x3736,0x03  // -                   | same
+0x3742,0x03  // -                   | same
+0x3862,0xE0  // -                   | same
+0x38CC,0x30  // -                   | same
+0x38CD,0x2F  // -                   | same
+0x395C,0x0C  // -                   | same
+0x39A4,0x07  // -                   | no
+0x39A8,0x32  // -                   | no
+0x39AA,0x32  // -                   | no
+0x39AC,0x32  // -                   | no
+0x39AE,0x32  // -                   | no
+0x39B0,0x32  // -                   | no
+0x39B2,0x2F  // -                   | no
+0x39B4,0x2D  // -                   | no
+0x39B6,0x28  // -                   | no
+0x39B8,0x30  // -                   | no
+0x39BA,0x30  // -                   | no
+0x39BC,0x30  // -                   | no
+0x39BE,0x30  // -                   | no
+0x39C0,0x30  // -                   | no
+0x39C2,0x2E  // -                   | no
+0x39C4,0x2B  // -                   | no
+0x39C6,0x25  // -                   | no
+0x3A42,0xD1  // -                   | same
+0x3A4C,0x77  // -                   | same
+0x3AE0,0x02  // -                   | same
+0x3AEC,0x0C  // -                   | same
+0x3B00,0x2E  // -                   | same
+0x3B06,0x29  // -                   | same
+0x3B98,0x25  // -                   | same
+0x3B99,0x21  // -                   | same
+0x3B9B,0x13  // -                   | same
+0x3B9C,0x13  // -                   | same
+0x3B9D,0x13  // -                   | same
+0x3B9E,0x13  // -                   | same
+0x3BA1,0x00  // -                   | same
+0x3BA2,0x06  // -                   | same
+0x3BA3,0x0B  // -                   | same
+0x3BA4,0x10  // -                   | same
+0x3BA5,0x14  // -                   | same
+0x3BA6,0x18  // -                   | same
+0x3BA7,0x1A  // -                   | same
+0x3BA8,0x1A  // -                   | same
+0x3BA9,0x1A  // -                   | same
+0x3BAC,0xED  // -                   | same
+0x3BAD,0x01  // -                   | same
+0x3BAE,0xF6  // -                   | same
+0x3BAF,0x02  // -                   | same
+0x3BB0,0xA2  // -                   | same
+0x3BB1,0x03  // -                   | same
+0x3BB2,0xE0  // -                   | same
+0x3BB3,0x03  // -                   | same
+0x3BB4,0xE0  // -                   | same
+0x3BB5,0x03  // -                   | same
+0x3BB6,0xE0  // -                   | same
+0x3BB7,0x03  // -                   | same
+0x3BB8,0xE0  // -                   | same
+0x3BBA,0xE0  // -                   | same
+0x3BBC,0xDA  // -                   | same
+0x3BBE,0x88  // -                   | same
+0x3BC0,0x44  // -                   | same
+0x3BC2,0x7B  // -                   | same
+0x3BC4,0xA2  // -                   | same
+0x3BC8,0xBD  // -                   | same
+0x3BCA,0xBD  // -                   | same
+0x4004,0x00  // TXCLKESC_FREQ[15:0]
+0x4005,0x06  //                    |
+0x4018,0x9F  // TCLKPOST[15:0]
+0x401A,0x57  // TCLKPREPARE[15:0]
+0x401C,0x57  // TCLKTRAIL[15:0]
+0x401E,0x87  // TCLKZERO[15:0]
+0x4020,0x5F  // THSPREPARE[15:0]
+0x4022,0xA7  // THSZERO[15:0]
+0x4024,0x5F  // THSTRAIL[15:0]
+0x4026,0x97  // THSEXIT[15:0]
+0x4028,0x4F  // TLPX[15:0]
+
+//0x3000,0x00  | is IMX415_REG_CTRL_MODE
+//wait_ms(30)
+//0x3002,0x00                       | same
+};
 #endif //MEDIASEVER_IMX415_REGS_ROCKCHIP_H

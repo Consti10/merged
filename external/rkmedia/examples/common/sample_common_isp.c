@@ -852,6 +852,7 @@ rk_aiq_uapi_sysctl_setCrop(aiq_ctx, rect);*/
   return ret;
 }
 
+//Consti10
 RK_S32 SAMPLE_COMM_ISP_GET_Crop(RK_S32 CamId, rk_aiq_rect_t* rect) {
   if (CamId >= MAX_AIQ_CTX || !g_aiq_ctx[CamId]) {
     printf("%s : CamId is over 3 or not init\n", __FUNCTION__);
